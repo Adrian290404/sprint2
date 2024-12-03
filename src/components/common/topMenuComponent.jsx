@@ -1,18 +1,27 @@
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { CgMail } from "react-icons/cg";
-import { CiBellOn } from "react-icons/ci";
-import { IoLogOutOutline } from "react-icons/io5";
-import { Container } from "./styles/topMenuStyles";
-import { Hamburguer } from "./styles/topMenuStyles";
+import { CgMail } from "react-icons/cg"
+import { CiBellOn } from "react-icons/ci"
+import { IoLogOutOutline } from "react-icons/io5"
+import { Container, Left, Right, Title } from "./styles/topMenuStyles"
+import { Hamburguer, CursorPointer } from "./styles/icons"
 
 export const TopMenuComponent = () => {
     return (
         <Container>
-            <Hamburguer><HiOutlineMenuAlt2 size={30} color=""/></Hamburguer>
-            <h1>Dashboard</h1>
-            <CgMail size={30} color=""/>
-            <CiBellOn size={30} color=""/>
-            <IoLogOutOutline size={30} color=""/>
+            <Left>
+                <Hamburguer size={30} color=""/>
+                <Title>Dashboard</Title>
+            </Left>
+            <Right>
+                <CursorPointer>
+                    <CgMail size={30} color=""/>
+                </CursorPointer>
+                <CursorPointer>
+                    <CiBellOn size={30} color=""/>
+                </CursorPointer>
+                <CursorPointer>
+                    <IoLogOutOutline size={30} color=""/>
+                </CursorPointer>
+            </Right>
         </Container>
     )
 }

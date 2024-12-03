@@ -1,5 +1,7 @@
 
 
 export const DashBoardPage = () => {
-    return <h1>DashBoardPage</h1>
+    return <>
+        <h1>DashBoardPage</h1>
+    </>
 }

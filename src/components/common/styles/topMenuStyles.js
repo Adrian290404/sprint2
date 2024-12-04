@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
 
 export const Container = styled.div`
     display: flex;

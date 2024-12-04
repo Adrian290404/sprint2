@@ -1,0 +1,7 @@
+- `/` Muestra la pantalla de inicio de sesión.
+- `/dashboard` Muestra el panel de control con información general.
+- `/room` Permite gestionar las habitaciones.
+- `/bookings` Muestra todas las reservas.
+- `/guest` Información y gestión de huéspedes.
+- `/concierge` Servicios de conserjería y soporte.
+- `/user` Configuración y detalles del usuario.

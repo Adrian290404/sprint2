@@ -3,12 +3,21 @@ import { CiBellOn } from "react-icons/ci"
 import { IoLogOutOutline } from "react-icons/io5"
 import { Container, Left, Right, Title } from "./styles/topMenuStyles"
 import { Hamburguer, CursorPointer } from "./styles/icons"
-import { useLocation } from "react-router-dom";
+import { useLocation, useMatch, useParams } from "react-router-dom"
+import { bookings } from "../../data/bookings"
 
 export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
     const location = useLocation()
+    const { bookingId } = useParams()
 
     const getTitle = () => {
+        if (bookingId) {
+            const booking = bookings.find(b => b.id === parseInt(bookingId))
+            if (booking) {
+                return booking.name
+            }
+        }
+
         switch (location.pathname) {
             case "/dashboard":
                 return "Dashboard"
@@ -16,12 +25,10 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
                 return "Room"
             case "/bookings":
                 return "Bookings"
-            case "/guest":
-                return "Guest"
             case "/concierge":
                 return "Concierge"
-            case "/user":
-                return "User"
+            case "/profile":
+                return "Profile"
             default:
                 return ""
         }

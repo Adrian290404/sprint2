@@ -41,13 +41,6 @@ export const SideMenuComponent = () => {
                         <p>Bookings</p>
                     </Content>
                 </PageNavigation>
-                <PageNavigation onClick={() => changePageHandler("/guest")}>
-                    <Marker active={location.pathname === "/guest"}></Marker>
-                    <Content active={location.pathname === "/guest"}>
-                        <FaRegUser size={30} color=""/>
-                        <p>Guest</p>
-                    </Content>
-                </PageNavigation>
                 <PageNavigation onClick={() => changePageHandler("/concierge")}>
                     <Marker active={location.pathname === "/concierge"}></Marker>
                     <Content active={location.pathname === "/concierge"}>
@@ -60,7 +53,7 @@ export const SideMenuComponent = () => {
                     <UserContent>
                         <UserName>William Johanson</UserName>
                         <UserEmail>williamjohn@mail.com</UserEmail>
-                        <EditButton onClick={() => changePageHandler("/user")}>Edit</EditButton>
+                        <EditButton onClick={() => changePageHandler("/profile")}>Edit</EditButton>
                     </UserContent>
                 </UserContainer>
             </Navbar>

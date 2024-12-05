@@ -24,9 +24,10 @@ export const Header = styled.header`
     transition: left 0.3s ease;
 `;
 export const Content = styled.main`
-    background-color: purple; //prueba
+    background-color: #f8f8f8;
     margin-left: ${(props) => (props.isSidebarVisible ? "15.4em" : "0")};
     margin-top: 5.4em;
     flex-grow: 1;
     transition: margin-left 0.3s ease;
+    padding: 2em;
 `;

@@ -1,7 +1,9 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import { bookings } from "../../data/bookings"
 import { rooms } from "../../data/rooms"
-import { Table, Row, Th, Td, GuestContainer, GuestInfoContainer, GuestImage, GuestId, GuestHour, GuestNotes, GuestStatus, RoomContainer, RoomInfoContainer, RoomId, RoomImage, RoomPrice, RoomLittleText, RoomStatus} from "./styles/listStyles"
+import { employees } from "../../data/employees"
+import { Table, Row, Th, Td, Container, InfoContainer, Image, TextLight, GuestHour, GuestNotes, GuestStatus, RoomPrice, RoomLittleText, RoomStatus, ConciergeStatus } from "./styles/listStyles"
+import { FaPhoneAlt } from "react-icons/fa";
 
 export const ListComponent = () => {
     const navigate = useNavigate()
@@ -9,7 +11,8 @@ export const ListComponent = () => {
 
     const json = {
         "/bookings": bookings,
-        "/room": rooms
+        "/room": rooms,
+        "/concierge": employees
     }
 
     const showHead = () => {
@@ -43,10 +46,10 @@ export const ListComponent = () => {
     }
 
     const handleNavigate = (id) => {
-        navigate(`${location.pathname}/${id}`);
-    };
+        navigate(`${location.pathname}/${id}`)
+    }
 
-    function formatDateHalf1(dateString) {
+    const formatDateHalf1 = (dateString) => {
         const date = new Date(dateString)
         const options = { month: "short", day: "numeric", year: "numeric" }
         let formattedDate = new Intl.DateTimeFormat("en-US", options).format(date)
@@ -61,13 +64,28 @@ export const ListComponent = () => {
         )
         return formattedDate
     }
-    function formatDateHalf2(dateString) {
+
+    const formatDateHalf2 = (dateString) => {
         const date = new Date(dateString)
         const hours = date.getHours() % 12 || 12
         const minutes = String(date.getMinutes()).padStart(2, "0")
         const ampm = date.getHours() >= 12 ? "PM" : "AM"
         return `${hours}.${minutes} ${ampm}`
     }
+
+    const isActive = (dateString) => {
+        const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const [startDay, endDay] = dateString.split(", ").map(day => day.trim());
+        const startIndex = weekDays.indexOf(startDay);
+        const endIndex = weekDays.indexOf(endDay);
+        const todayIndex = new Date().getDay()
+        const normalizedTodayIndex = (todayIndex === 0) ? 6 : todayIndex - 1
+        if (startIndex <= endIndex) {
+            return normalizedTodayIndex >= startIndex && normalizedTodayIndex <= endIndex;
+        } else {
+            return normalizedTodayIndex >= startIndex || normalizedTodayIndex <= endIndex;
+        }
+    };
 
     return <Table>
         <thead>
@@ -85,13 +103,13 @@ export const ListComponent = () => {
                     return (
                         <Row key={data.id} type="body">
                             <Td>
-                                <GuestContainer onClick={() => handleNavigate(data.id)}>
-                                    <GuestImage src={data.image} alt={data.name} />
-                                    <GuestInfoContainer>
+                                <Container onClick={() => handleNavigate(data.id)}>
+                                    <Image type="guest" src={data.image} alt={data.name} />
+                                    <InfoContainer>
                                         <p>{data.name}</p>
-                                        <GuestId>#{data.id}</GuestId>
-                                    </GuestInfoContainer>
-                                </GuestContainer>
+                                        <TextLight>#{data.id}</TextLight>
+                                    </InfoContainer>
+                                </Container>
                             </Td>
                             <Td top>
                                 {formatDate(data.order_date)}
@@ -121,13 +139,13 @@ export const ListComponent = () => {
                     return (
                         <Row key={data.id} type="body">
                             <Td>
-                                <RoomContainer onClick={() => handleNavigate(data.id)}>
-                                    <RoomImage src={data.image} alt={data.name} />
-                                    <RoomInfoContainer>
-                                        <RoomId>#{data.id}</RoomId>
+                                <Container onClick={() => handleNavigate(data.id)}>
+                                    <Image type="room" src={data.image} alt={data.room_name} />
+                                    <InfoContainer>
+                                        <TextLight type="room">#{data.id}</TextLight>
                                         <p>{data.room_name}</p>
-                                    </RoomInfoContainer>
-                                </RoomContainer>
+                                    </InfoContainer>
+                                </Container>
                             </Td>
                             <Td>
                                 {data.bed_type}
@@ -144,6 +162,35 @@ export const ListComponent = () => {
                             </Td>
                             <Td>
                                 <RoomStatus avaiable={data.avaiable}>{data.avaiable ? "Avaiable" : "Booked"}</RoomStatus>
+                            </Td>
+                        </Row>
+                    )
+                }
+
+                if (location.pathname === "/concierge") {
+                    return (
+                        <Row key={data.id} type="body">
+                            <Td>
+                                <Container onClick={() => handleNavigate(data.id)}>
+                                    <Image type="employee" src={data.image} alt={data.name} />
+                                    <InfoContainer>
+                                        <p>{data.name}</p>
+                                        <TextLight type="employee">#{data.id}</TextLight>
+                                        <TextLight>{formatDateHalf1(data.join)}</TextLight>
+                                    </InfoContainer>
+                                </Container>
+                            </Td>
+                            <Td>
+                                {data.job_desk}
+                            </Td>
+                            <Td>
+                                {data.schedule}
+                            </Td>
+                            <Td>
+                                <FaPhoneAlt /> {data.contact}
+                            </Td>
+                            <Td>
+                                <ConciergeStatus active={isActive(data.schedule)}>{isActive(data.schedule) ? "Active" : "Inactive"}</ConciergeStatus>
                             </Td>
                         </Row>
                     )

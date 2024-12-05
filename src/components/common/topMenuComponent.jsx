@@ -6,6 +6,7 @@ import { Hamburguer, CursorPointer } from "./styles/icons"
 import { useLocation, useParams } from "react-router-dom"
 import { bookings } from "../../data/bookings"
 import { rooms } from "../../data/rooms"
+import { employees } from "../../data/employees"
 
 export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
     const location = useLocation()
@@ -22,6 +23,12 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
             const room = rooms.find(data => data.id === parseInt(id))
             if (room) {
                 return room.room_name
+            }
+        }
+        else if (location.pathname.split("/")[1] === "concierge") {
+            const employee = employees.find(data => data.id === parseInt(id))
+            if (employee) {
+                return employee.name
             }
         }
 

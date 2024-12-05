@@ -3,7 +3,6 @@ import userPhoto from "../../assets/userPhoto.png"
 import { MdOutlineDashboard } from "react-icons/md";
 import { GiHouseKeys } from "react-icons/gi";
 import { TbCalendarCheck } from "react-icons/tb";
-import { FaRegUser } from "react-icons/fa";
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 import { Navbar, PageNavigation, Marker, Content, UserContainer, UserContent, UserImage, UserName, UserEmail, EditButton, Footer, FooterTitle } from "./styles/sideMenuStyles";
 import { useLocation, useNavigate } from "react-router-dom";

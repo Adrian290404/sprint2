@@ -30,28 +30,31 @@ export const Td = styled.td`
     font-family: "Poppins", sans-serif;
     vertical-align: ${(props) => (props.top ? " top" : "middle")};
 `
-
-// BOOKINGS LIST
-
-
-export const GuestContainer = styled.div`
+export const Container = styled.div`
     display: flex;
     font-weight: 500;
     cursor: pointer;
+    align-items: center;
 `
-export const GuestInfoContainer = styled.div`
+export const InfoContainer = styled.div`
     margin-left: 1em;
 `
-export const GuestImage = styled.img`
-    width: 45px;
-    height: 45px;
+export const Image = styled.img`
     border-radius: 1em;
+    ${(props) => (props.type === "guest" && "width: 45px; height: 45px")};
+    ${(props) => (props.type === "room" && "width: 150px; height: auto")};
+    ${(props) => (props.type === "employee" && "width: 88px; height: 88px")};
 `
-export const GuestId = styled.p`
+export const TextLight = styled.p`
     color: #799283;
     font-size: 0.875rem;
     font-weight: 300;
+    ${(props) => (props.type === "room" && "margin-bottom: .5em")};
+    ${(props) => (props.type === "employee" && "margin: .5em 0")};
 `
+
+
+// BOOKINGS LIST
 export const GuestHour = styled.p`
     font-size: 0.875rem;
     font-weight: 300;
@@ -90,20 +93,6 @@ export const GuestStatus = styled.button`
 `
 
 // ROOMS LIST
-export const RoomContainer = styled.div`
-    display: flex;
-    font-weight: 500;
-    cursor: pointer;
-    align-items: center;
-`
-export const RoomInfoContainer = styled.div`
-    margin-left: 1em;
-`
-export const RoomImage = styled.img`
-    width: 150px;
-    height: auto;
-    border-radius: 1em;
-`
 export const RoomId = styled.p`
     color: #799283;
     font-size: 0.875rem;
@@ -129,4 +118,14 @@ export const RoomStatus = styled.button`
     border: none;
     color: #FFFFFF;
     background-color: ${(props) => (props.avaiable) ? "#5AD07A" : "#E23428"};
+`
+
+// EMPLOYEES LIST
+export const ConciergeStatus = styled.p`
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    font-size: 1rem;
+    border: none;
+    background: transparent;
+    color: ${(props) => (props.active) ? "#5AD07A" : "#E23428"};
 `

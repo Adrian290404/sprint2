@@ -11,7 +11,7 @@ export const PaginationComponent = () => {
         "/room": "Room" 
     }
 
-    const showSelector = () => {
+    const showMenu = () => {
         switch (location.pathname) {
             case "/bookings":
                 return ["All Guest", "Pending", "Booked", "Cancelled", "Refund"]
@@ -24,10 +24,23 @@ export const PaginationComponent = () => {
         }
     }
 
+    const showOptions = () => {
+        switch (location.pathname) {
+            case "/bookings":
+                return ["Newest", "Guest", "Check in", "Check out"]
+            case "/concierge":
+                return ["Newest", "Alphabetic"]
+            case "/room" :
+                return ["Newest", "Available", "Highest price", "Lowest price"]
+            default:
+                return []
+        }
+    }
+
     return (
         <Container>
             <List>
-                {showSelector().map((li, index) => (
+                {showMenu().map((li, index) => (
                     <Item
                         key={index}
                         isSelected={selectedIndex === index}
@@ -40,10 +53,11 @@ export const PaginationComponent = () => {
             <div>
                 <Button> + New {page[location.pathname]} </Button>
                 <Filter>
-                    <option value="Newest">Newest</option>
-                    <option value="Guest">Guest</option>
-                    <option value="Check in">Check in</option>
-                    <option value="Check out">Check out</option>
+                    {showOptions().map((option, index) => (
+                        <option key={index} value={option}>
+                            {option}
+                        </option>
+                    ))}
                 </Filter>
             </div>
         </Container>

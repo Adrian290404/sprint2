@@ -1,64 +1,42 @@
-import { useLocation } from "react-router-dom"
-import { Container, List, Item, Button, Filter } from "../common/styles/paginationStyles"
 import { useState } from "react"
+import { Container, Button } from "./styles/paginationStyles"
 
 export const PaginationComponent = () => {
-    const location = useLocation()
-    const [selectedIndex, setSelectedIndex] = useState(0)
-    const page = {
-        "/bookings": "Booking",
-        "/concierge": "Employee",
-        "/room": "Room" 
+    const [buttonIndex, setButtonIndex] = useState(1)
+
+    const changeIndex = (index) => {
+        setButtonIndex(index)
     }
 
-    const showMenu = () => {
-        switch (location.pathname) {
-            case "/bookings":
-                return ["All Guest", "Pending", "Booked", "Cancelled", "Refund"]
-            case "/concierge":
-                return ["All Employee", "Active Employee", "Inactive Employee"]
-            case "/room" :
-                 return ["All Rooms", "Active Employee", "Inactive Employee"]
-            default:
-                return []
-        }
-    }
-
-    const showOptions = () => {
-        switch (location.pathname) {
-            case "/bookings":
-                return ["Newest", "Guest", "Check in", "Check out"]
-            case "/concierge":
-                return ["Newest", "Alphabetic"]
-            case "/room" :
-                return ["Newest", "Available", "Highest price", "Lowest price"]
-            default:
-                return []
-        }
-    }
+    const totalPages = 4
 
     return (
         <Container>
-            <List>
-                {showMenu().map((li, index) => (
-                    <Item
-                        key={index}
-                        isSelected={selectedIndex === index}
-                        onClick={() => setSelectedIndex(index)}
-                    >
-                        {li}
-                    </Item>
-                ))}
-            </List>
+            <p>Showing 5 of 102 Data</p>
             <div>
-                <Button> + New {page[location.pathname]} </Button>
-                <Filter>
-                    {showOptions().map((option, index) => (
-                        <option key={index} value={option}>
-                            {option}
-                        </option>
-                    ))}
-                </Filter>
+                <Button controller onClick={() => changeIndex(buttonIndex === 1 ? totalPages : buttonIndex - 1)}>
+                    Prev
+                </Button>
+
+                {(() => {
+                    let buttons = []
+                    for (let index = 0; index < totalPages; index++) {
+                        buttons.push(
+                            <Button
+                                key={index}
+                                isSelected={buttonIndex === index + 1}
+                                onClick={() => changeIndex(index + 1)}
+                            >
+                                {index + 1}
+                            </Button>
+                        )
+                    }
+                    return buttons
+                })()}
+                
+                <Button controller onClick={() => changeIndex(buttonIndex === totalPages ? 1 : buttonIndex + 1)}>
+                    Next
+                </Button>
             </div>
         </Container>
     )

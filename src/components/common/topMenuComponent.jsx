@@ -3,18 +3,25 @@ import { CiBellOn } from "react-icons/ci"
 import { IoLogOutOutline } from "react-icons/io5"
 import { Container, Left, Right, Title } from "./styles/topMenuStyles"
 import { Hamburguer, CursorPointer } from "./styles/icons"
-import { useLocation, useMatch, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { bookings } from "../../data/bookings"
+import { rooms } from "../../data/rooms"
 
 export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
     const location = useLocation()
-    const { bookingId } = useParams()
+    const { id } = useParams()
 
     const getTitle = () => {
-        if (bookingId) {
-            const booking = bookings.find(b => b.id === parseInt(bookingId))
+        if (location.pathname.split("/")[1] === "bookings") {
+            const booking = bookings.find(data => data.id === parseInt(id))
             if (booking) {
                 return booking.name
+            }
+        }
+        else if (location.pathname.split("/")[1] === "room") {
+            const room = rooms.find(data => data.id === parseInt(id))
+            if (room) {
+                return room.room_name
             }
         }
 

@@ -28,22 +28,22 @@ export const SideMenuComponent = () => {
                     </Content>
                 </PageNavigation>
                 <PageNavigation onClick={() => changePageHandler("/room")}>
-                    <Marker active={location.pathname === "/room"}></Marker>
-                    <Content active={location.pathname === "/room"}>
+                    <Marker active={location.pathname === "/room" || location.pathname.split("/")[1] === "room"}></Marker>
+                    <Content active={location.pathname === "/room" || location.pathname.split("/")[1] === "room"}>
                         <GiHouseKeys size={30} color=""/>
                         <p>Room</p>
                     </Content>
                 </PageNavigation>
                 <PageNavigation onClick={() => changePageHandler("/bookings")}>
-                    <Marker active={location.pathname === "/bookings"}></Marker>
-                    <Content active={location.pathname === "/bookings"}>
+                    <Marker active={location.pathname === "/bookings" || location.pathname.split("/")[1] === "bookings"}></Marker>
+                    <Content active={location.pathname === "/bookings" || location.pathname.split("/")[1] === "bookings"}>
                         <TbCalendarCheck size={30} color=""/>
                         <p>Bookings</p>
                     </Content>
                 </PageNavigation>
                 <PageNavigation onClick={() => changePageHandler("/concierge")}>
-                    <Marker active={location.pathname === "/concierge"}></Marker>
-                    <Content active={location.pathname === "/concierge"}>
+                    <Marker active={location.pathname === "/concierge" || location.pathname.split("/")[1] === "concierge"}></Marker>
+                    <Content active={location.pathname === "/concierge" || location.pathname.split("/")[1] === "concierge"}>
                         <IoExtensionPuzzleOutline size={30} color=""/>
                         <p>Concierge</p>
                     </Content>

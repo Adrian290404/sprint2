@@ -48,14 +48,14 @@ function App() {
             <Route path="room">
               <Route index element={<RoomListPage />} /> {/* Room List */}
               <Route path="create" element={<RoomCreatePage />} /> {/* Create Room */}
-              <Route path=":roomId" element={<RoomDetailsPage />} /> {/* Room details */}
+              <Route path=":id" element={<RoomDetailsPage />} /> {/* Room details */}
             </Route>
 
             {/* CRUD Bookings */}
             <Route path="bookings">
               <Route index element={<BookingsListPage />} /> {/* Bookings List */}
               <Route path="create" element={<BookingsCreatePage />} /> {/* Create Booking */}
-              <Route path=":bookingId" element={<BookingsDetailsPage />} /> {/* Bookings details */}
+              <Route path=":id" element={<BookingsDetailsPage />} /> {/* Bookings details */}
             </Route>
 
             <Route path="profile" element={<ProfilePage />} />
@@ -64,7 +64,7 @@ function App() {
             <Route path="concierge">
               <Route index element={<ConciergeListPage />} /> {/* User List */}
               <Route path="create" element={<ConciergeCreatePage />} /> {/* Create User */}
-              <Route path=":userId" element={<ConciergeDetailsPage />} /> {/* User details */}
+              <Route path=":id" element={<ConciergeDetailsPage />} /> {/* User details */}
             </Route>
           </Route>
         )}

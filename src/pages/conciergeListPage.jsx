@@ -1,5 +1,5 @@
-
+import { PaginationComponent } from "../components/common/paginationComponent"
 
 export const ConciergeListPage = () => {
-    return <h1>Concierge List Page</h1>
+    return <PaginationComponent />
 }

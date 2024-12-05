@@ -1,5 +1,5 @@
-
+import { PaginationComponent } from "../components/common/paginationComponent"
 
 export const RoomListPage = () => {
-    return <h1>Room List Page</h1>
+    return <PaginationComponent />
 }

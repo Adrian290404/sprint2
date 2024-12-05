@@ -1,7 +1,7 @@
 import { CgMail } from "react-icons/cg"
 import { CiBellOn } from "react-icons/ci"
 import { IoLogOutOutline } from "react-icons/io5"
-import { Container, Left, Right, Title } from "./styles/topMenuStyles"
+import { Container, Left, Right, Title, SubTitleContainer, TitleContainer, Page } from "./styles/topMenuStyles"
 import { Hamburguer, CursorPointer } from "./styles/icons"
 import { useLocation, useParams } from "react-router-dom"
 import { bookings } from "../../data/bookings"
@@ -12,46 +12,76 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
     const location = useLocation()
     const { id } = useParams()
 
-    const getTitle = () => {
-        if (location.pathname.split("/")[1] === "bookings") {
+    const getName = () => {
+        console.log(location.pathname.split("/").join(""))
+        if (location.pathname.split("/")[1] === "bookings" && location.pathname.split("/")[2] !== "create") {
             const booking = bookings.find(data => data.id === parseInt(id))
             if (booking) {
                 return booking.name
             }
         }
-        else if (location.pathname.split("/")[1] === "room") {
+        else if (location.pathname.split("/")[1] === "room" && location.pathname.split("/")[2] !== "create") {
             const room = rooms.find(data => data.id === parseInt(id))
             if (room) {
                 return room.room_name
             }
         }
-        else if (location.pathname.split("/")[1] === "concierge") {
+        else if (location.pathname.split("/")[1] === "concierge" && location.pathname.split("/")[2] !== "create") {
             const employee = employees.find(data => data.id === parseInt(id))
             if (employee) {
                 return employee.name
             }
         }
+        return ""
+    }
 
-        switch (location.pathname) {
-            case "/dashboard":
+    const getTitle = (details) => {
+        const pathArray = location.pathname.split("/");
+        if (!isNaN(Number(pathArray[pathArray.length - 1]))) {
+            pathArray.pop()
+            details && pathArray.push("details")
+        }
+        const pathString = pathArray.join("")
+
+        switch (pathString) {
+            case "dashboard":
                 return "Dashboard"
-            case "/room":
+            case "room":
                 return "Room"
-            case "/bookings":
+            case "roomcreate":
+                return "Room Create"
+            case "roomdetails":
+                return "Room Details"
+            case "bookings":
                 return "Bookings"
-            case "/concierge":
+            case "bookingscreate":
+                return "Bookings Create"
+            case "bookingsdetails":
+                return "Bookings Details"                
+            case "concierge":
                 return "Concierge"
-            case "/profile":
+            case "conciergecreate":
+                return "Concierge Create"
+            case "conciergedetails":
+                return "Concierge Details"
+            case "profile":
                 return "Profile"
             default:
                 return ""
         }
     }
+
     return (
         <Container>
             <Left>
                 <Hamburguer size={30} onClick={onToggleSidebar} />
-                <Title>{getTitle()}</Title>
+                <TitleContainer>
+                    <Title>{getName() !== "" ? getTitle(true) : getTitle(false)}</Title>
+                    <SubTitleContainer active={getName() !== ""}>
+                        <Page>{getName() !== "" &&  (getTitle(false) + " / ")}</Page>
+                        <p>&nbsp;{getName() !== "" &&  getName()}</p>
+                    </SubTitleContainer>
+                </TitleContainer>
             </Left>
             <Right>
                 <CursorPointer>

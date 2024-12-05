@@ -11,6 +11,7 @@ export const Left = styled.div`
     display: flex;
     justify-content: start;
     margin-left: 2em;
+    align-items: center;
 `
 export const Right = styled.div`
     display: flex;
@@ -22,5 +23,16 @@ export const Title = styled.h1`
     font-family: "Poppins", sans-serif;
     font-size: 1.75rem;
     font-weight: 600;
-    margin-left: 2em;
+    
+`
+export const TitleContainer = styled.div`
+    margin-left: 3em;
+`
+export const SubTitleContainer = styled.div`
+    color: #6E6E6E;
+    font-weight: 500;
+    ${(props) => (props.active ? "display: flex" : "display: none")};
+`
+export const Page = styled.p`
+    color: #135846;
 `

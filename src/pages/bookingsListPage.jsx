@@ -1,12 +1,5 @@
-import { ManagementComponent } from "../components/common/managementComponent"
-import { PaginationComponent } from "../components/common/paginationComponent"
-import { ListComponent } from "../components/common/listComponent"
-import { Background } from "../components/common/styles/layoutStyles"
+import { ListLayoutComponent } from "../components/common/listLayoutComponent"
 
 export const BookingsListPage = () => {
-    return <Background>
-        <ManagementComponent />
-        <ListComponent />
-        <PaginationComponent />
-    </Background>
+    return <ListLayoutComponent />
 }

@@ -1,8 +1,9 @@
-import { useLocation } from "react-router-dom"
-import { Container, List, Item, Button, Filter } from "./styles/managementStyles"
+import { useLocation, useNavigate } from "react-router-dom"
+import { Container, List, Item, Create, Filter } from "./styles/managementStyles"
 import { useState } from "react"
 
 export const ManagementComponent = () => {
+    const navigate = useNavigate()
     const location = useLocation()
     const [selectedIndex, setSelectedIndex] = useState(0)
     const page = {
@@ -37,21 +38,21 @@ export const ManagementComponent = () => {
         }
     }
 
+    const navigateTo = () => {
+        navigate(`${location.pathname}/create`)
+    }
+
     return (
         <Container>
             <List>
                 {showMenu().map((li, index) => (
-                    <Item
-                        key={index}
-                        isSelected={selectedIndex === index}
-                        onClick={() => setSelectedIndex(index)}
-                    >
+                    <Item key={index} isSelected={selectedIndex === index} onClick={() => setSelectedIndex(index)}>
                         {li}
                     </Item>
                 ))}
             </List>
             <div>
-                <Button> + New {page[location.pathname]} </Button>
+                <Create onClick={navigateTo}> + New {page[location.pathname]} </Create>
                 <Filter>
                     {showOptions().map((option, index) => (
                         <option key={index} value={option}>

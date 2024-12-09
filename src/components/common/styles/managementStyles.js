@@ -18,7 +18,7 @@ export const Item = styled.li`
     cursor: pointer;
     ${({ isSelected }) => (isSelected ? "border-bottom: 1px solid #135846; color: #135846" : "border-bottom: 1px solid #d4d4d4; color: #6e6e6e")};
 `
-export const Button = styled.button`
+export const Create = styled.button`
     color: #FFFFFF;
     background-color: #135846;
     font-weight: 500;

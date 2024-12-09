@@ -13,7 +13,6 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
     const { id } = useParams()
 
     const getName = () => {
-        console.log(location.pathname.split("/").join(""))
         if (location.pathname.split("/")[1] === "bookings" && location.pathname.split("/")[2] !== "create") {
             const booking = bookings.find(data => data.id === parseInt(id))
             if (booking) {

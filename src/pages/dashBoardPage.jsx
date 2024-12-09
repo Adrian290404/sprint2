@@ -1,7 +1,8 @@
-
+import { Background } from "../components/common/styles/layoutStyles"
+import { KpiComponent } from "../components/pages/dashboard/kpiComponent"
 
 export const DashBoardPage = () => {
-    return <>
-        <h1>DashBoardPage</h1>
-    </>
+    return <Background>
+        <KpiComponent />
+    </Background>
 }

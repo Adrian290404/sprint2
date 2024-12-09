@@ -25,7 +25,7 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
                 return room.room_name
             }
         }
-        else if (location.pathname.split("/")[1] === "concierge" && location.pathname.split("/")[2] !== "create") {
+        else if (location.pathname.split("/")[1] === "users" && location.pathname.split("/")[2] !== "create") {
             const employee = employees.find(data => data.id === parseInt(id))
             if (employee) {
                 return employee.name
@@ -62,14 +62,16 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
                 return "Bookings Create"
             case "bookingsdetails":
                 return "Bookings Details"                
-            case "concierge":
-                return "Concierge"
-            case "conciergecreate":
-                return "Concierge Create"
-            case "conciergedetails":
-                return "Concierge Details"
+            case "users":
+                return "Users"
+            case "userscreate":
+                return "Users Create"
+            case "usersdetails":
+                return "Users Details"
             case "profile":
                 return "Profile"
+            case "contact":
+                return "Contact"
             default:
                 return ""
         }

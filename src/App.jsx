@@ -3,15 +3,16 @@ import { LayoutComponent } from "./components/common/layoutComponent"
 import { LogInPage } from "./pages/logInPage"
 import { DashBoardPage } from "./pages/dashBoardPage"
 import { ProfilePage } from "./pages/profilePage"
+import { ContactPage } from "./pages/contactPage"
 import { RoomListPage } from "./pages/roomListPage"
 import { RoomCreatePage } from "./pages/roomCreatePage"
 import { RoomDetailsPage } from "./pages/roomDetailsPage"
 import { BookingsListPage } from "./pages/bookingsListPage"
 import { BookingsCreatePage } from "./pages/bookingsCreatePage"
 import { BookingsDetailsPage } from "./pages/bookingsDetailsPage"
-import { ConciergeListPage } from "./pages/conciergeListPage"
-import { ConciergeCreatePage } from "./pages/conciergeCreatePage"
-import { ConciergeDetailsPage } from "./pages/conciergeDetailsPage"
+import { UsersListPage } from "./pages/usersListPage"
+import { UsersCreatePage } from "./pages/usersCreatePage"
+import { UsersDetailsPage } from "./pages/usersDetailsPage"
 import { useState, useEffect } from "react"
 import { DashBoardCustomerReviewPage } from "./pages/dashBoardCustomerReviewPage"
 
@@ -63,12 +64,13 @@ function App() {
             </Route>
 
             <Route path="profile" element={<ProfilePage />} />
+            <Route path="contact" element={<ContactPage />} />
 
-            {/* CRUD Concierge (Users) */}
-            <Route path="concierge">
-              <Route index element={<ConciergeListPage />} /> {/* User List */}
-              <Route path="create" element={<ConciergeCreatePage />} /> {/* Create User */}
-              <Route path=":id" element={<ConciergeDetailsPage />} /> {/* User details */}
+            {/* CRUD Users (Users) */}
+            <Route path="users">
+              <Route index element={<UsersListPage />} /> {/* User List */}
+              <Route path="create" element={<UsersCreatePage />} /> {/* Create User */}
+              <Route path=":id" element={<UsersDetailsPage />} /> {/* User details */}
             </Route>
           </Route>
         )}

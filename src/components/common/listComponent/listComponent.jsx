@@ -6,7 +6,7 @@ import { reviews } from "../../../data/reviews"
 import { Table, Row, Th } from "./styles/listStyles"
 import { BookingsList } from "./bookingsList"
 import { RoomsList } from "./roomsList"
-import { ConciergeList } from "./conciergeList"
+import { UsersList } from "./usersList"
 import { ReviewsList } from "./reviewsList"
 
 export const ListComponent = () => {
@@ -24,10 +24,10 @@ export const ListComponent = () => {
       headers: ["Room Name", "Bed Type", "Room Floor", "Facilities", "Rate", "Status"],
       Component: RoomsList
     },
-    "/concierge": {
+    "/users": {
       data: employees,
       headers: ["Name", "Job Desk", "Schedule", "Contact", "Status"],
-      Component: ConciergeList
+      Component: UsersList
     },
     "/dashboard/customerReviews": {
       data: reviews,

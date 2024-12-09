@@ -1,5 +1,5 @@
 import { ListLayoutComponent } from "../components/common/listLayoutComponent"
 
-export const ConciergeListPage = () => {
+export const UsersListPage = () => {
     return <ListLayoutComponent />
 }

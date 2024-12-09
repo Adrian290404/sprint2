@@ -8,7 +8,7 @@ export const ManagementComponent = () => {
     const [selectedIndex, setSelectedIndex] = useState(0)
     const page = {
         "/bookings": "Booking",
-        "/concierge": "Employee",
+        "/users": "Employee",
         "/room": "Room" 
     }
 
@@ -16,7 +16,7 @@ export const ManagementComponent = () => {
         switch (location.pathname) {
             case "/bookings":
                 return ["All Guest", "Pending", "Booked", "Cancelled", "Refund"]
-            case "/concierge":
+            case "/users":
                 return ["All Employee", "Active Employee", "Inactive Employee"]
             case "/room" :
                  return ["All Rooms", "Active Employee", "Inactive Employee"]
@@ -31,7 +31,7 @@ export const ManagementComponent = () => {
         switch (location.pathname) {
             case "/bookings":
                 return ["Newest", "Guest", "Check in", "Check out"]
-            case "/concierge":
+            case "/users":
                 return ["Newest", "Alphabetic"]
             case "/room" :
                 return ["Newest", "Available", "Highest price", "Lowest price"]

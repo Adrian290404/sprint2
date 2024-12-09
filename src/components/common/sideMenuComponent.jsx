@@ -1,11 +1,12 @@
 import logo from "../../assets/logo.png"
 import userPhoto from "../../assets/userPhoto.png"
-import { MdOutlineDashboard } from "react-icons/md";
-import { GiHouseKeys } from "react-icons/gi";
-import { TbCalendarCheck } from "react-icons/tb";
-import { IoExtensionPuzzleOutline } from "react-icons/io5";
-import { Navbar, PageNavigation, Marker, Content, UserContainer, UserContent, UserImage, UserName, UserEmail, EditButton, Footer, FooterTitle } from "./styles/sideMenuStyles";
-import { useLocation, useNavigate } from "react-router-dom";
+import { MdOutlineDashboard } from "react-icons/md"
+import { GiHouseKeys } from "react-icons/gi"
+import { TbCalendarCheck } from "react-icons/tb"
+import { IoExtensionPuzzleOutline } from "react-icons/io5"
+import { IoIosContact } from "react-icons/io"
+import { Navbar, PageNavigation, Marker, Content, UserContainer, UserContent, UserImage, UserName, UserEmail, EditButton, Footer, FooterTitle } from "./styles/sideMenuStyles"
+import { useLocation, useNavigate } from "react-router-dom"
 
 export const SideMenuComponent = () => {
     const location = useLocation()
@@ -40,11 +41,18 @@ export const SideMenuComponent = () => {
                         <p>Bookings</p>
                     </Content>
                 </PageNavigation>
-                <PageNavigation onClick={() => changePageHandler("/concierge")}>
-                    <Marker active={location.pathname === "/concierge" || location.pathname.split("/")[1] === "concierge"}></Marker>
-                    <Content active={location.pathname === "/concierge" || location.pathname.split("/")[1] === "concierge"}>
+                <PageNavigation onClick={() => changePageHandler("/users")}>
+                    <Marker active={location.pathname === "/users" || location.pathname.split("/")[1] === "users"}></Marker>
+                    <Content active={location.pathname === "/users" || location.pathname.split("/")[1] === "users"}>
                         <IoExtensionPuzzleOutline size={30} color=""/>
-                        <p>Concierge</p>
+                        <p>Users</p>
+                    </Content>
+                </PageNavigation>
+                <PageNavigation onClick={() => changePageHandler("/contact")}>
+                    <Marker active={location.pathname === "/contact" || location.pathname.split("/")[1] === "contact"}></Marker>
+                    <Content active={location.pathname === "/contact" || location.pathname.split("/")[1] === "contact"}>
+                        <IoIosContact size={30} color=""/>
+                        <p>Contact</p>
                     </Content>
                 </PageNavigation>
                 <UserContainer>

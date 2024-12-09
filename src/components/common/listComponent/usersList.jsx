@@ -1,7 +1,7 @@
 import { Row, Td, Container, Image, InfoContainer, TextLight, ConciergeStatus } from "./styles/listStyles"
 import { FaPhoneAlt } from "react-icons/fa"
 
-export const ConciergeList = ({ data, handleNavigate }) => {
+export const UsersList = ({ data, handleNavigate }) => {
   const isActive = (schedule) => {
     const [startDay, endDay] = schedule.split(", ")
     const today = new Date().toLocaleString("en-US", { weekday: "long" })

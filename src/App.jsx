@@ -13,6 +13,7 @@ import { ConciergeListPage } from "./pages/conciergeListPage"
 import { ConciergeCreatePage } from "./pages/conciergeCreatePage"
 import { ConciergeDetailsPage } from "./pages/conciergeDetailsPage"
 import { useState, useEffect } from "react"
+import { DashBoardCustomerReviewPage } from "./pages/dashBoardCustomerReviewPage"
 
 function App() {
   const [isLogged, setIsLogged] = useState(false)
@@ -42,7 +43,10 @@ function App() {
         {/* Private Routes */}
         {isLogged && (
           <Route path="/" element={<LayoutComponent onLogout={logout} />}>
-            <Route path="/dashboard" element={<DashBoardPage />} />
+            <Route path="dashboard">
+              <Route index element={<DashBoardPage />} />
+              <Route path="customerReviews" element={<DashBoardCustomerReviewPage />} />
+            </Route>
 
             {/* CRUD Rooms */}
             <Route path="room">

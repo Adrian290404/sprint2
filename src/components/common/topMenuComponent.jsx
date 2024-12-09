@@ -31,6 +31,9 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
                 return employee.name
             }
         }
+        else if (location.pathname.split("/")[1] === "dashboard" && location.pathname.split("/")[2] === "customerReviews") {
+            return "Customer Review"
+        }
         return ""
     }
 
@@ -44,6 +47,8 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }) => {
 
         switch (pathString) {
             case "dashboard":
+                return "Dashboard"
+            case "dashboardcustomerReviews":
                 return "Dashboard"
             case "room":
                 return "Room"

@@ -20,8 +20,8 @@ export const SideMenuComponent = () => {
             <img src={logo} />
             <Navbar>
                 <PageNavigation onClick={() => changePageHandler("/dashboard")}>
-                    <Marker active={location.pathname === "/dashboard"}></Marker>
-                    <Content active={location.pathname === "/dashboard"}>
+                    <Marker active={location.pathname === "/dashboard" || location.pathname.split("/")[1] === "dashboard"}></Marker>
+                    <Content active={location.pathname === "/dashboard" || location.pathname.split("/")[1] === "dashboard"}>
                         <MdOutlineDashboard size={30} color=""/>
                         <p>DashBoard</p>
                     </Content>

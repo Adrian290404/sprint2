@@ -20,6 +20,8 @@ export const ManagementComponent = () => {
                 return ["All Employee", "Active Employee", "Inactive Employee"]
             case "/room" :
                  return ["All Rooms", "Active Employee", "Inactive Employee"]
+            case "/dashboard/customerReviews":
+                return ["All Customer Reviews", "Published", "Archived"]
             default:
                 return []
         }
@@ -33,6 +35,8 @@ export const ManagementComponent = () => {
                 return ["Newest", "Alphabetic"]
             case "/room" :
                 return ["Newest", "Available", "Highest price", "Lowest price"]
+            case "/dashboard/customerReviews":
+                return ["Newest", "Best Valoration", "Worst Valoration"]
             default:
                 return []
         }
@@ -52,7 +56,7 @@ export const ManagementComponent = () => {
                 ))}
             </List>
             <div>
-                <Create onClick={navigateTo}> + New {page[location.pathname]} </Create>
+                {location.pathname !== "/dashboard/customerReviews" && <Create onClick={navigateTo}> + New {page[location.pathname]} </Create>} 
                 <Filter>
                     {showOptions().map((option, index) => (
                         <option key={index} value={option}>

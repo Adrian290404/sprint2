@@ -2,10 +2,12 @@ import { useNavigate, useLocation } from "react-router-dom"
 import { bookings } from "../../../data/bookings"
 import { rooms } from "../../../data/rooms"
 import { employees } from "../../../data/employees"
+import { reviews } from "../../../data/reviews"
 import { Table, Row, Th } from "./styles/listStyles"
 import { BookingsList } from "./bookingsList"
 import { RoomsList } from "./roomsList"
 import { ConciergeList } from "./conciergeList"
+import { ReviewsList } from "./reviewsList"
 
 export const ListComponent = () => {
   const navigate = useNavigate()
@@ -26,6 +28,11 @@ export const ListComponent = () => {
       data: employees,
       headers: ["Name", "Job Desk", "Schedule", "Contact", "Status"],
       Component: ConciergeList
+    },
+    "/dashboard/customerReviews": {
+      data: reviews,
+      headers: ["Order ID", "Date", "Customer", "Comment", "Action"],
+      Component: ReviewsList
     }
   }
 

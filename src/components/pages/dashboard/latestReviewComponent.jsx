@@ -2,8 +2,13 @@ import { MdOutlineCheckCircle } from "react-icons/md";
 import { MdOutlineBlock } from "react-icons/md";
 import { FaArrowRightLong } from "react-icons/fa6"
 import { Container, Title, CardsContainer, Card, Text, BottomContainer, InfoContainer, Image, Name, Time, Button } from "./styles/latestReviewStyles"
+import { useNavigate } from "react-router-dom";
 
 export const LatestReviewComponent = () => {
+    const navigate = useNavigate()
+    const navigateToReviews = () => {
+        navigate("customerReviews")
+    }
     return <Container>
         <Title>Latest Review by Customers</Title>
         <CardsContainer>
@@ -68,7 +73,7 @@ export const LatestReviewComponent = () => {
                 </BottomContainer>
             </Card>
             <Button arrow>
-                <FaArrowRightLong size={30}/>
+                <FaArrowRightLong size={30} onClick={navigateToReviews} />
             </Button>
         </CardsContainer>
     </Container>

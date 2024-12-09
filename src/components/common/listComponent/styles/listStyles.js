@@ -129,3 +129,21 @@ export const ConciergeStatus = styled.p`
     background: transparent;
     color: ${(props) => (props.active) ? "#5AD07A" : "#E23428"};
 `
+
+// REVIEWS LIST
+export const Rating = styled.div`
+    color: #135846;
+    margin-bottom: 1em;
+`
+export const Action = styled.button`
+    display: inline;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    margin-right: 3em;
+    ${(props) => (props.publish && "color: #5AD07A")}
+    ${(props) => (props.archive && "color: #E23428")}
+`

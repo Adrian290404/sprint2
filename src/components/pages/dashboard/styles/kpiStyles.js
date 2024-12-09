@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
+    width: 100%;
     display: flex;
     gap: 1.5em;
 `
@@ -28,7 +29,7 @@ export const Card = styled.div`
             background-color: #E23428;
             color: #FFFFFF;
         }
-  }
+    }
 `
 export const CardNumber = styled.div`
     color: #393939;

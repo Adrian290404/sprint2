@@ -75,7 +75,7 @@ export const Button = styled.button`
             border-radius: 0.8em;
             position: absolute;
             top: 50%;
-            right: .8em;
+            right: -7.6em;
             transform: translateY(-50%);
         `
     }

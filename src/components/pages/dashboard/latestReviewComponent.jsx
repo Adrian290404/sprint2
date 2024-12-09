@@ -67,9 +67,9 @@ export const LatestReviewComponent = () => {
                     </div>
                 </BottomContainer>
             </Card>
+            <Button arrow>
+                <FaArrowRightLong size={30}/>
+            </Button>
         </CardsContainer>
-        <Button arrow>
-            <FaArrowRightLong size={30}/>
-        </Button>
     </Container>
 }

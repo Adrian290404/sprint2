@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { lighten } from "polished";
 
 export const Relative = styled.div`
     position: relative;
@@ -24,6 +25,11 @@ export const GoBack = styled.div`
     top: 1em;
     left: 1em;
     cursor: pointer;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.05);
+        transform: translateY(-2px);
+    }
 `
 export const Title = styled.h2`
     font-size: 1.5em;
@@ -54,4 +60,11 @@ export const Button = styled.button`
     border-radius: 1em;
     padding: 0.8em 0;
     cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    &:hover {
+        background-color: ${(props) => lighten(0.1, props.color)}; /* Aclara el color base */
+        transform: scale(1.05);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
 `

@@ -34,7 +34,7 @@ export const ProfileEditComponent = ({ onClose, color, type }) => {
                     type="text"
                     color={color}
                     placeholder={"New " + type}
-                    maxLength={50}
+                    maxLength={type === "name" ? 15 : 25}
                     value={newValue}
                     onChange={(e) => setNewValue(e.target.value)}
                 />

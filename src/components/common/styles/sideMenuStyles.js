@@ -48,14 +48,14 @@ export const UserImage = styled.img`
 `
 export const UserName = styled.h2`
     font-family: "Poppins", sans-serif;
-    font-size: 1rem;
+    font-size: .9rem;
     font-weight: 400;
     letter-spacing: 0px;
     color: #393939;
 `
 export const UserEmail = styled.h3`
     font-family: "Poppins", sans-serif;
-    font-size: 0.75rem;
+    font-size: .6rem;
     font-weight: 300;
     letter-spacing: 0px;
     color: #B2B2B2;
@@ -71,6 +71,13 @@ export const EditButton = styled.button`
     padding: .5em 3.5em;
     border-radius: .8em;
     cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        background-color: #135846;
+        color: #EBF1EF;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
 `
 export const Footer = styled.footer`
     color: #799283;

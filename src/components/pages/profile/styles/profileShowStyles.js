@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { lighten } from "polished";
 
 export const ProfileBackground = styled.div`
     width: 100%;
@@ -53,6 +54,13 @@ export const Icon = styled.div`
     color: #FFFFFF;
     padding: .2em;
     border-radius: .5em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    &:hover {
+        background-color: ${(props) => lighten(0.1, props.color)}; /* Aclara el color base */
+        transform: scale(1.05);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        transform: translateY(-2px);
+    }
 `
 export const Email = styled.h3`
     font-size: 1rem;

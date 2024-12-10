@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux"
 import logo from "../../assets/logo.png"
-import userPhoto from "../../assets/userPhoto.png"
+import userPhoto from "../../assets/userPhoto.jpg"
 import { MdOutlineDashboard } from "react-icons/md"
 import { GiHouseKeys } from "react-icons/gi"
 import { TbCalendarCheck } from "react-icons/tb"
@@ -60,8 +60,8 @@ export const SideMenuComponent = () => {
                 <UserContainer>
                     <UserImage src={userPhoto}/>
                     <UserContent>
-                        <UserName>{user?.name || "Guest User"}</UserName>
-                        <UserEmail>{user?.user || "guest@mail.com"}</UserEmail>
+                        <UserName>{user?.name || "User"}</UserName>
+                        <UserEmail>{user?.email || "user@gmail.com"}</UserEmail>
                         <EditButton onClick={() => changePageHandler("/profile")}>Edit</EditButton>
                     </UserContent>
                 </UserContainer>

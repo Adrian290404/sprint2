@@ -63,7 +63,7 @@ export const TopMenuComponent = ({ onToggleSidebar }) => {
             case "usersdetails":
                 return "Users Details"
             case "profile":
-                return "Profile"
+                return "Edit profile"
             case "contact":
                 return "Contact"
             default:

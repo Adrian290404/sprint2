@@ -18,9 +18,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { login, logout } from "./features/authSlice"
 
 function App() {
-  const isLogged = useSelector((state) => state.auth.isLogged) // Obtener estado de login desde Redux
+  const isLogged = useSelector((state) => state.auth.isLogged)
   const dispatch = useDispatch()
-  localStorage.removeItem("isLogged")
 
   return (
 
@@ -31,7 +30,7 @@ function App() {
             path="/"
             element={
               !isLogged ? (
-                <LogInPage onLogin={() => dispatch(login())} /> // Dispatch del login en Redux
+                <LogInPage onLogin={() => dispatch(login())} />
               ) : (
                 <Navigate to="/dashboard" />
               )

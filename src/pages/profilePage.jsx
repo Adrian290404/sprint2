@@ -1,5 +1,5 @@
-
+import { ProfileShowComponent } from "../components/pages/login/profileShowComponent"
 
 export const ProfilePage = () => {
-    return <h1>Profile Page</h1>
+    return <ProfileShowComponent />
 }

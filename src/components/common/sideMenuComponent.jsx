@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux"
 import logo from "../../assets/logo.png"
 import userPhoto from "../../assets/userPhoto.png"
 import { MdOutlineDashboard } from "react-icons/md"
@@ -11,6 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 export const SideMenuComponent = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    const { user } = useSelector((state) => state.auth)
 
     const changePageHandler = (destination) => {
         navigate(destination)
@@ -58,8 +60,8 @@ export const SideMenuComponent = () => {
                 <UserContainer>
                     <UserImage src={userPhoto}/>
                     <UserContent>
-                        <UserName>William Johanson</UserName>
-                        <UserEmail>williamjohn@mail.com</UserEmail>
+                        <UserName>{user?.name || "Guest User"}</UserName>
+                        <UserEmail>{user?.user || "guest@mail.com"}</UserEmail>
                         <EditButton onClick={() => changePageHandler("/profile")}>Edit</EditButton>
                     </UserContent>
                 </UserContainer>

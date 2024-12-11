@@ -42,7 +42,7 @@ export const InfoContainer = styled.div`
 export const Image = styled.img`
     border-radius: 1em;
     ${(props) => (props.type === "guest" && "width: 45px; height: 45px")};
-    ${(props) => (props.type === "room" && "width: 150px; height: auto")};
+    ${(props) => (props.type === "room" && "width: 150px; height: 77px")};
     ${(props) => (props.type === "employee" && "width: 88px; height: 88px")};
 `
 export const TextLight = styled.p`

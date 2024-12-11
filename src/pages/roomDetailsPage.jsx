@@ -1,5 +1,6 @@
+import { RoomDetailsComponent } from "../components/pages/rooms/roomDetailsComponent"
 
 
 export const RoomDetailsPage = () => {
-    return <h1>Room Details Page</h1>
+    return <RoomDetailsComponent />
 }

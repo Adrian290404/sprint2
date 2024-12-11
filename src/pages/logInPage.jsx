@@ -3,7 +3,7 @@ import loginBg2 from "../assets/loginBg2.jpg"
 import loginBg3 from "../assets/loginBg3.jpg"
 import loginBg4 from "../assets/loginBg4.jpg"
 import { useDispatch, useSelector } from 'react-redux'
-import { loginThunk } from '../features/authThunk'
+import { loginThunk } from '../features/login/authThunk'
 import { useState, useEffect } from 'react';
 import { BackgroundContainer, LogInContainer, Title, InputContainer, Input, Button, MarginRight } from "../components/pages/login/styles/loginStyles";
 import { FaLock, FaUnlock, FaUser } from "react-icons/fa";

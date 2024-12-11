@@ -8,7 +8,7 @@ import { bookings } from "../../data/bookings"
 import { rooms } from "../../data/rooms"
 import { employees } from "../../data/employees"
 import { useDispatch } from "react-redux"
-import { logout } from "../../features/authSlice"
+import { logout } from "../../features/login/authSlice"
 
 export const TopMenuComponent = ({ onToggleSidebar }) => {
     const location = useLocation()

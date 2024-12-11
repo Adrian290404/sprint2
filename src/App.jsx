@@ -15,7 +15,7 @@ import { UsersCreatePage } from "./pages/usersCreatePage"
 import { UsersDetailsPage } from "./pages/usersDetailsPage"
 import { DashBoardCustomerReviewPage } from "./pages/dashBoardCustomerReviewPage"
 import { useSelector, useDispatch } from "react-redux"
-import { login, logout } from "./features/authSlice"
+import { login, logout } from "./features/login/authSlice"
 
 function App() {
   const isLogged = useSelector((state) => state.auth.isLogged)

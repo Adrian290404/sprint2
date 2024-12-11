@@ -1,7 +1,7 @@
 import { Relative, Container, GoBack, Title, Input, Button } from "./styles/profileEditStyles"
 import { TiBackspaceOutline } from "react-icons/ti"
 import { useDispatch, useSelector } from "react-redux"
-import { updateUser } from "../../../features/authSlice"
+import { updateUser } from "../../../features/login/authSlice"
 import { useState } from "react"
 
 export const ProfileEditComponent = ({ onClose, color, type }) => {

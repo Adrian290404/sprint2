@@ -1,5 +1,5 @@
 import { login } from './authSlice'
-import { users } from "../data/users"
+import { users } from "../../data/users"
 
 export const loginThunk = (username, password) => async (dispatch) => {
     const user = users.find(user => user.user === username && user.password === password)

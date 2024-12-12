@@ -1,42 +1,31 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { rooms } from "../../data/rooms"
 
 export const fetchRooms = createAsyncThunk('rooms/fetchRooms', async () => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(rooms)
-        }, 200)
-    })
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+    return rooms
 })
-
 export const fetchRoom = createAsyncThunk('rooms/fetchRoom', async (id) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(rooms.find((room) => room.id === id))
-        }, 200)
-    })
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+    return rooms.find((room) => room.id === id) || null
 })
-
 export const createRoom = createAsyncThunk('rooms/createRoom', async (newRoom) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve({ id: Date.now(), ...newRoom })
-        }, 200)
-    })
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+    const roomWithId = { id: Date.now(), ...newRoom }
+    const updatedRooms = [...rooms, roomWithId]
+    localStorage.setItem("rooms", JSON.stringify(updatedRooms))
+    return roomWithId
 })
-
 export const updateRoom = createAsyncThunk('rooms/updateRoom', async (updatedRoom) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(updatedRoom)
-        }, 200)
-    });
-});
-
-export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (id) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve(id)
-        }, 200)
-    })
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || []
+    const updatedRooms = rooms.map((room) =>
+        room.id === updatedRoom.id ? updatedRoom : room
+    )
+    localStorage.setItem("rooms", JSON.stringify(updatedRooms))
+    return updatedRoom
 })
+export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (id) => {
+    const rooms = JSON.parse(localStorage.getItem("rooms")) || []
+    const updatedRooms = rooms.filter((room) => room.id !== id)
+    localStorage.setItem("rooms", JSON.stringify(updatedRooms))
+    return id
+});

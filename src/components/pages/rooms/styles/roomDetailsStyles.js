@@ -48,9 +48,11 @@ export const GoBack = styled.div`
     left: 1em;
     cursor: pointer;
     transition: transform 0.2s ease;
+    color: #9E9E9E;
     &:hover {
         transform: scale(1.05);
         transform: translateY(-2px);
+        color: #616161;
     }
 `
 export const Title = styled.h1`
@@ -91,4 +93,21 @@ export const Price = styled.p`
 export const Small = styled.span`
     font-size: .6rem;
     color: #222;
+`
+export const Options = styled.div`
+    display: flex;
+    position: absolute;
+    gap: .8em;
+    top: 1.5em;
+    right: 1em;
+`
+export const Icon = styled.div`
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    color: ${(props) => (props.delete ? "#E57373" : "#64B5F6")};
+    &:hover {
+        transform: scale(1.05);
+        transform: translateY(-2px);
+        color: ${(props) => (props.delete ? "#D32F2F" : "#1976D2")};
+    }
 `

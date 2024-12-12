@@ -7,6 +7,8 @@ export const RoomsList = ({ handleNavigate }) => {
     const dispatch = useDispatch()
     const rooms = useSelector((state) => state.rooms.rooms)
 
+    console.log(rooms)
+
     useEffect(() => {
         dispatch(fetchRooms())
     }, [dispatch])

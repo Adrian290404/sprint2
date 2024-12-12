@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchRoom } from '../../../features/rooms/roomsThunks'
+import { fetchRoom, deleteRoom } from '../../../features/rooms/roomsThunks'
 import { Container, Content, ImageContainer, Image, ImageInformation, TypeAndFloor, Details, Title, Info, Facilities, Price, Small, GoBack, Options, Icon } from './styles/roomDetailsStyles'
 import available from "../../../assets/available.png"
 import booked from "../../../assets/booked.png"
@@ -9,6 +9,7 @@ import { TiBackspaceOutline } from "react-icons/ti"
 import { CiEdit } from "react-icons/ci"
 import { MdDelete } from "react-icons/md"
 import { RoomDetailsFormComponent } from './roomDetailsFormComponent'
+import { RoomsModalQuestionComponent } from './roomsModalQuestionComponent'
 
 export const RoomDetailsComponent = () => {
     const { id } = useParams()
@@ -16,6 +17,7 @@ export const RoomDetailsComponent = () => {
     const room = useSelector((state) => state.rooms.room)
     const navigate = useNavigate()
     const [showInformation, setShowInformation] = useState(true)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         if (id) {
@@ -29,6 +31,20 @@ export const RoomDetailsComponent = () => {
 
     const editInfo = () => {
         setShowInformation(!showInformation)
+    }
+
+    const openModal = () => {
+        setShowModal(true)
+    }
+    
+    const closeModal = () => {
+        setShowModal(false)
+    }
+
+    const handleDelete = () => {
+        dispatch(deleteRoom(Number(id)));
+        closeModal();
+        navigate(-1);
     }
     
     if (!room) {
@@ -53,7 +69,7 @@ export const RoomDetailsComponent = () => {
                             <Icon>
                                 <CiEdit size={30} onClick={editInfo} />
                             </Icon>
-                            <Icon delete>
+                            <Icon delete onClick={openModal}>
                                 <MdDelete size={30} />
                             </Icon>
                         </Options>
@@ -77,11 +93,18 @@ export const RoomDetailsComponent = () => {
                             facilities={room.facilities}
                             price={room.rate}
                             available={room.avaiable}
+                            changePage={editInfo}
                         >
                         </RoomDetailsFormComponent>
                     )}
                 </Details>
             </Content>
+            <RoomsModalQuestionComponent
+                isOpen={showModal} 
+                onClose={closeModal} 
+                onConfirm={handleDelete} 
+                roomName={room.room_name}
+            />
         </Container>
     )
 }

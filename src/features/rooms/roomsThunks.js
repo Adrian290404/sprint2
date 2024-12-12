@@ -28,4 +28,4 @@ export const deleteRoom = createAsyncThunk('rooms/deleteRoom', async (id) => {
     const updatedRooms = rooms.filter((room) => room.id !== id)
     localStorage.setItem("rooms", JSON.stringify(updatedRooms))
     return id
-});
+})

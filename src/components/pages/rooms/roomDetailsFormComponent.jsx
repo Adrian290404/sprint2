@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { updateRoom } from '../../../features/rooms/roomsThunks';
 
-export const RoomDetailsFormComponent = ({ id, image, name, bedType, floor, facilities, price, available }) => {
+export const RoomDetailsFormComponent = ({ id, image, name, bedType, floor, facilities, price, available, changePage }) => {
     const [isAvailable, setIsAvailable] = useState(available)
     const [roomName, setRoomName] = useState(name)
     const [roomFacilities, setRoomFacilities] = useState(facilities)
@@ -113,7 +113,7 @@ export const RoomDetailsFormComponent = ({ id, image, name, bedType, floor, faci
                 </TwoFields>
                 <Buttons>
                     <Icon title="go back">
-                        <TiArrowBackOutline size={30} onClick={() => navigate(-1)} />
+                        <TiArrowBackOutline size={30} onClick={changePage} />
                     </Icon>
                     <Button type="submit">Save Changes</Button>
                 </Buttons>

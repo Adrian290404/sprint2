@@ -26,7 +26,7 @@ export const RoomDetailsComponent = () => {
     }, [dispatch, id])
 
     const goBack = () => {
-        navigate(-1)
+        navigate("/room")
     }
 
     const editInfo = () => {

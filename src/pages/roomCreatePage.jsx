@@ -1,5 +1,6 @@
+import { RoomCreateComponent } from "../components/pages/rooms/roomCreateComponent"
 
 
 export const RoomCreatePage = () => {
-    return <h1>RoomCreatePage</h1>
+    return <RoomCreateComponent />
 }

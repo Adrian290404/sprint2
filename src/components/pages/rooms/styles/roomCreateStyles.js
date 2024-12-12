@@ -5,6 +5,7 @@ export const Container = styled.div`
     height: 100%;
     background-color: #f9f9f9;
     font-family: "Poppins", sans-serif;
+    position: relative;
 `
 export const Content = styled.div`
     align-items: center;
@@ -16,6 +17,10 @@ export const Content = styled.div`
     background-color: #FFFFFF;
     box-shadow: 0px 16px 30px #00000014;
     border-radius: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 `
 export const Title = styled.h1`
     margin-bottom: 1em;
@@ -45,18 +50,18 @@ export const Default = styled.div`
     display: flex;
 `
 export const Label = styled.label`
-    font-size: 14px;
+    font-size: 0.875rem;
     color: #333;
 `;
 
 export const Input = styled.input`
-    padding: 10px;
-    font-size: 14px;
+    padding: .8em;
+    font-size: 0.875rem;
     border: 1px solid #ddd;
     border-radius: 4px;
 `
 export const Checkbox = styled.input`
-    margin-top: 10px;
+    margin-top: 1.5em;
     transform: scale(1.2);
 `
 export const Button = styled.button`
@@ -65,7 +70,7 @@ export const Button = styled.button`
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: .5em;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 2em;

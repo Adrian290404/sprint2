@@ -4,7 +4,7 @@ import { fetchRooms, fetchRoom, createRoom, updateRoom, deleteRoom } from './roo
 export const roomsSlice = createSlice({
     name: 'rooms',
     initialState: {
-        rooms: JSON.parse(localStorage.getItem("rooms")) || [], // Leer de localStorage
+        rooms: JSON.parse(localStorage.getItem("rooms")) || [],
         room: null,
     },
     reducers: {

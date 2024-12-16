@@ -2,20 +2,21 @@ import React, { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { fetchRooms } from "../../../features/rooms/roomsThunks"
 import { Row, Td, Container, Image, InfoContainer, TextLight, RoomPrice, RoomLittleText, RoomStatus } from "./styles/listStyles"
+import { paginateData } from "./functions/paginateData"
 
-export const RoomsList = ({ handleNavigate }) => {
+export const RoomsList = ({ currentPage, handleNavigate }) => {
     const dispatch = useDispatch()
     const rooms = useSelector((state) => state.rooms.rooms)
-
-    console.log(rooms)
 
     useEffect(() => {
         dispatch(fetchRooms())
     }, [dispatch])
 
+    const paginatedRooms = paginateData(rooms, 10)[currentPage - 1] || []
+
     return (
         <>
-            {rooms.map((room) => (
+            {paginatedRooms.map((room) => (
                 <Row key={room.id} type="body">
                     <Td>
                         <Container onClick={() => handleNavigate(room.id)}>

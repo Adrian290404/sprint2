@@ -19,7 +19,7 @@ export const ManagementComponent = () => {
             case "/users":
                 return ["All Employee", "Active Employee", "Inactive Employee"]
             case "/room" :
-                 return ["All Rooms", "Active Employee", "Inactive Employee"]
+                 return ["All Rooms", "Avaiable Rooms", "Booked Rooms"]
             case "/dashboard/customerReviews":
                 return ["All Customer Reviews", "Published", "Archived"]
             default:

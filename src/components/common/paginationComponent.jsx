@@ -1,40 +1,53 @@
-import { useState } from "react"
 import { Container, Button } from "./styles/paginationStyles"
+import { paginateData } from "./listComponent/functions/paginateData"
+import { useSelector } from "react-redux"
+import { useLocation } from "react-router-dom"
 
-export const PaginationComponent = () => {
-    const [buttonIndex, setButtonIndex] = useState(1)
+export const PaginationComponent = ({ currentPage, setCurrentPage }) => {
+    const location = useLocation()
 
-    const changeIndex = (index) => {
-        setButtonIndex(index)
+    const info = () => {
+        switch (location.pathname) {
+            case "/room":
+                const rooms = useSelector((state) => state.rooms.rooms)
+                return {
+                    "pages": paginateData(rooms, 10).length,
+                    "itemsOnPage": paginateData(rooms, 10)[currentPage - 1]?.length || 0,
+                    "totalItems": rooms.length,
+                    "typeOfData": "rooms"
+                }
+            default:
+                return { pages: 1, itemsOnPage: 0, totalItems: 0, typeOfData: "data" }
+        }
     }
 
-    const totalPages = 4
+    const pagesInfo = info()
+    const pages = pagesInfo.pages
+    const totalItems = pagesInfo.totalItems
+    const itemsOnPage = pagesInfo.itemsOnPage
+    const typeOfData = pagesInfo.typeOfData
+
+    const changeIndex = (index) => {
+        setCurrentPage(index)
+    }
 
     return (
         <Container>
-            <p>Showing 5 of 102 Data</p>
+            <p>Showing {itemsOnPage} of {totalItems} {typeOfData}</p>
             <div>
-                <Button controller onClick={() => changeIndex(buttonIndex === 1 ? totalPages : buttonIndex - 1)}>
+                <Button controller onClick={() => changeIndex(currentPage === 1 ? pages : currentPage - 1)}>
                     Prev
                 </Button>
-
-                {(() => {
-                    let buttons = []
-                    for (let index = 0; index < totalPages; index++) {
-                        buttons.push(
-                            <Button
-                                key={index}
-                                isSelected={buttonIndex === index + 1}
-                                onClick={() => changeIndex(index + 1)}
-                            >
-                                {index + 1}
-                            </Button>
-                        )
-                    }
-                    return buttons
-                })()}
-                
-                <Button controller onClick={() => changeIndex(buttonIndex === totalPages ? 1 : buttonIndex + 1)}>
+                {Array.from({ length: pages }, (_, index) => (
+                    <Button
+                        key={index}
+                        isSelected={currentPage === index + 1}
+                        onClick={() => changeIndex(index + 1)}
+                    >
+                        {index + 1}
+                    </Button>
+                ))}
+                <Button controller onClick={() => changeIndex(currentPage === pages ? 1 : currentPage + 1)}>
                     Next
                 </Button>
             </div>

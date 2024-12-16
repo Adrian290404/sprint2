@@ -32,4 +32,6 @@ export const Content = styled.main`
 export const Background = styled.div`
     background-color: #f8f8f8;
     padding: 2em;
+    width: 100%;
+    min-height: 100%;
 `

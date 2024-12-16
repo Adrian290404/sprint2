@@ -1,19 +1,31 @@
 import { Container, Button } from "./styles/paginationStyles"
 import { paginateData } from "./listComponent/functions/paginateData"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
+import { filterRooms } from "./listComponent/functions/filterRooms"
+import { setSelectedMenu, setSelectedOption } from "../../features/lists/filterSlice"
+import { setPage } from "../../features/lists/paginationSlice"
+import { useEffect } from "react"
 
-export const PaginationComponent = ({ currentPage, setCurrentPage }) => {
+export const PaginationComponent = ({ currentPage, setCurrentPage}) => {
     const location = useLocation()
+    const dispatch = useDispatch()
+    const { selectedMenu, selectedOption } = useSelector((state) => state.filter)
+
+    useEffect(() => {
+        dispatch(setPage(1))
+    }, [selectedMenu, selectedOption])
 
     const info = () => {
         switch (location.pathname) {
             case "/room":
                 const rooms = useSelector((state) => state.rooms.rooms)
+                const filteredRooms = filterRooms(rooms, selectedMenu, selectedOption)
+                console.log(filteredRooms)
                 return {
-                    "pages": paginateData(rooms, 10).length,
-                    "itemsOnPage": paginateData(rooms, 10)[currentPage - 1]?.length || 0,
-                    "totalItems": rooms.length,
+                    "pages": paginateData(filteredRooms, 10).length,
+                    "itemsOnPage": paginateData(filteredRooms, 10)[currentPage - 1]?.length || 0,
+                    "totalItems": filteredRooms.length,
                     "typeOfData": "rooms"
                 }
             default:

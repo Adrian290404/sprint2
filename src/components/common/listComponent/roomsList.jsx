@@ -3,16 +3,21 @@ import { useSelector, useDispatch } from "react-redux"
 import { fetchRooms } from "../../../features/rooms/roomsThunks"
 import { Row, Td, Container, Image, InfoContainer, TextLight, RoomPrice, RoomLittleText, RoomStatus } from "./styles/listStyles"
 import { paginateData } from "./functions/paginateData"
+import { filterRooms } from "./functions/filterRooms"
 
 export const RoomsList = ({ currentPage, handleNavigate }) => {
     const dispatch = useDispatch()
     const rooms = useSelector((state) => state.rooms.rooms)
+    const { selectedMenu, selectedOption } = useSelector((state) => state.filter)
+
+    const filteredRooms = filterRooms(rooms, selectedMenu, selectedOption)
+    const paginatedRooms = paginateData(filteredRooms, 10)[currentPage - 1] || []
 
     useEffect(() => {
-        dispatch(fetchRooms())
-    }, [dispatch])
-
-    const paginatedRooms = paginateData(rooms, 10)[currentPage - 1] || []
+        if (rooms.length === 0) {
+            dispatch(fetchRooms())
+        }
+    }, [dispatch, rooms.length])
 
     return (
         <>

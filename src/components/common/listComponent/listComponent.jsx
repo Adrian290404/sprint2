@@ -1,8 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom"
-import { bookings } from "../../../data/bookings"
-import { rooms } from "../../../data/rooms"
-import { employees } from "../../../data/employees"
-import { reviews } from "../../../data/reviews"
+import { useSelector } from "react-redux"
 import { Table, Row, Th } from "./styles/listStyles"
 import { BookingsList } from "./bookingsList"
 import { RoomsList } from "./roomsList"
@@ -13,9 +10,11 @@ export const ListComponent = ({ currentPage }) => {
     const navigate = useNavigate()
     const location = useLocation()
 
+    const rooms = useSelector((state) => state.rooms.rooms)
+
     const dataMapping = {
         "/bookings": {
-            data: bookings,
+            data: [],
             headers: ["Guest", "Order Date", "Check In", "Check Out", "Special Request", "Room Type", "Status"],
             Component: BookingsList
         },
@@ -25,12 +24,12 @@ export const ListComponent = ({ currentPage }) => {
             Component: RoomsList
         },
         "/users": {
-            data: employees,
+            data: [],
             headers: ["Name", "Job Desk", "Schedule", "Contact", "Status"],
             Component: UsersList
         },
         "/dashboard/customerReviews": {
-            data: reviews,
+            data: [],
             headers: ["Order ID", "Date", "Customer", "Comment", "Action"],
             Component: ReviewsList
         }

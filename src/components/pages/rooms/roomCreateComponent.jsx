@@ -1,6 +1,7 @@
 import { useRef } from 'react'
-import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Checkbox, Title } from './styles/roomCreateStyles'
+import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Checkbox, Title, GoBack } from './styles/roomCreateStyles'
 import { MdOutlineAutoAwesome } from "react-icons/md"
+import { TiBackspaceOutline } from "react-icons/ti"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { createRoom } from "../../../features/rooms/roomsThunks.js"
@@ -28,6 +29,10 @@ export const RoomCreateComponent = () => {
         }
     }
 
+    const goBack = () => {
+        navigate(-1)
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
     
@@ -50,6 +55,9 @@ export const RoomCreateComponent = () => {
     return (
         <Container>
             <Content>
+                <GoBack onClick={goBack}>
+                    <TiBackspaceOutline size={30}/>
+                </GoBack>
                 <Title>Create New Room</Title>
                 <Form onSubmit={handleSubmit}>
                     <Agrupate>

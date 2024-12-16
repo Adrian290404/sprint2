@@ -78,3 +78,16 @@ export const Button = styled.button`
       background-color: #45a049;
     }
 `
+export const GoBack = styled.div`
+    position: absolute;
+    top: 2.7em;
+    left: 2em;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    color:rgb(92, 92, 92);
+    &:hover {
+        transform: scale(1.05);
+        transform: translateY(-2px);
+        color:rgb(0, 0, 0);
+    }
+`

@@ -3,7 +3,7 @@ import { paginateData } from "./listComponent/functions/paginateData"
 import { useSelector, useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
 import { filterRooms } from "./listComponent/functions/filterRooms"
-import { setSelectedMenu, setSelectedOption } from "../../features/lists/filterSlice"
+import { filterUsers } from "./listComponent/functions/filterUsers"
 import { setPage } from "../../features/lists/paginationSlice"
 import { useEffect } from "react"
 
@@ -14,7 +14,7 @@ export const PaginationComponent = ({ currentPage, setCurrentPage}) => {
 
     useEffect(() => {
         dispatch(setPage(1))
-    }, [selectedMenu, selectedOption])
+    }, [selectedMenu, selectedOption, location.pathname])
 
     const info = () => {
         switch (location.pathname) {
@@ -27,6 +27,16 @@ export const PaginationComponent = ({ currentPage, setCurrentPage}) => {
                     "itemsOnPage": paginateData(filteredRooms, 10)[currentPage - 1]?.length || 0,
                     "totalItems": filteredRooms.length,
                     "typeOfData": "rooms"
+                }
+            case "/users":
+                const users = useSelector((state) => state.users.users)
+                const filteredUsers = filterUsers(users, selectedMenu, selectedOption)
+                console.log(filteredUsers)
+                return {
+                    "pages": paginateData(filteredUsers, 10).length,
+                    "itemsOnPage": paginateData(filteredUsers, 10)[currentPage - 1]?.length || 0,
+                    "totalItems": filteredUsers.length,
+                    "typeOfData": "users"
                 }
             default:
                 return { pages: 1, itemsOnPage: 0, totalItems: 0, typeOfData: "data" }

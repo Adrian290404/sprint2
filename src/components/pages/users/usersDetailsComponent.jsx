@@ -1,4 +1,4 @@
-import { Background, CardContainer, ProfileImage, CardContent, EmployeeName, InfoGroup, InfoText, Clock, Agrupate, GoBack, Options, Icon } from "./styles/userDetailsStyles"
+import { Container, CardContainer, ProfileImage, CardContent, EmployeeName, InfoGroup, InfoText, Clock, Agrupate, GoBack, Options, Icon } from "./styles/userDetailsStyles"
 import { useParams, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
@@ -55,7 +55,7 @@ export const UsersDetailsComponent = () => {
         return <p>Loading...</p>;
     }
 
-    return <Background>
+    return <Container>
         <CardContainer>
             <ProfileImage src={user.image} />
             <CardContent>
@@ -115,5 +115,5 @@ export const UsersDetailsComponent = () => {
             onConfirm={handleDelete} 
             roomName={user.name}
         />
-    </Background>
+    </Container>
 }

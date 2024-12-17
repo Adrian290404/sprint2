@@ -1,5 +1,5 @@
-
+import { UsersDetailsComponent } from "../components/pages/users/usersDetailsComponent"
 
 export const UsersDetailsPage = () => {
-    return <h1>Users Details Page</h1>
+    return <UsersDetailsComponent />
 }

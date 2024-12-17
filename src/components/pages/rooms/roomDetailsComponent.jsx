@@ -9,7 +9,7 @@ import { TiBackspaceOutline } from "react-icons/ti"
 import { CiEdit } from "react-icons/ci"
 import { MdDelete } from "react-icons/md"
 import { RoomDetailsFormComponent } from './roomDetailsFormComponent'
-import { RoomsModalQuestionComponent } from './roomsModalQuestionComponent'
+import { ModalQuestionComponent } from '../../common/modalQuestionComponent'
 
 export const RoomDetailsComponent = () => {
     const { id } = useParams()
@@ -26,7 +26,7 @@ export const RoomDetailsComponent = () => {
     }, [dispatch, id])
 
     const goBack = () => {
-        navigate("/room")
+        navigate(-1)
     }
 
     const editInfo = () => {
@@ -94,12 +94,11 @@ export const RoomDetailsComponent = () => {
                             price={room.rate}
                             available={room.avaiable}
                             changePage={editInfo}
-                        >
-                        </RoomDetailsFormComponent>
+                        />
                     )}
                 </Details>
             </Content>
-            <RoomsModalQuestionComponent
+            <ModalQuestionComponent
                 isOpen={showModal} 
                 onClose={closeModal} 
                 onConfirm={handleDelete} 

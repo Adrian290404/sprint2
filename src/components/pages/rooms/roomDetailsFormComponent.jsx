@@ -1,4 +1,4 @@
-import { FormContainer, FormField, TwoFields, Label, Input, CheckboxContainer, CheckboxLabel, Buttons, Icon, Button } from './styles/roomDetailsFormStyles'
+import { FormContainer, FormField, TwoFields, Label, Input, CheckboxContainer, CheckboxLabel, Buttons, Icon, Button } from '../../common/styles/detailsFormStyles'
 import { useState } from 'react'
 import { TiArrowBackOutline } from "react-icons/ti"
 import { useNavigate } from 'react-router-dom'

@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Checkbox, Title, GoBack } from '../../pages/rooms//styles/roomCreateStyles'
+import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Checkbox, Title, GoBack } from '../../common/styles/createStyles.js'
 import { MdOutlineAutoAwesome } from "react-icons/md"
 import { TiBackspaceOutline } from "react-icons/ti"
 import { useDispatch, useSelector } from 'react-redux'

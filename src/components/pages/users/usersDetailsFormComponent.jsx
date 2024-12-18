@@ -1,4 +1,4 @@
-import { FormContainer, FormField, TwoFields, Label, Input, CheckboxContainer, CheckboxLabel, Buttons, Icon, Button } from '../rooms/styles/roomDetailsFormStyles'
+import { FormContainer, FormField, Label, Input, Buttons, Icon, Button } from '../../common/styles/detailsFormStyles'
 import { useState } from 'react'
 import { TiArrowBackOutline } from "react-icons/ti"
 import { useNavigate } from 'react-router-dom'
@@ -58,7 +58,7 @@ export const UsersDetailsFormComponent = ({id, name, image, job, join, contact, 
                     />
                 </FormField>
                 <FormField>
-                    <Label>scheduled</Label>
+                    <Label>Scheduled</Label>
                     <Input
                         id="scheduled"
                         name="scheduled"

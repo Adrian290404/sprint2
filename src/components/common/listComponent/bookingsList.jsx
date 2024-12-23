@@ -2,10 +2,28 @@ import { Row, Td, Container, Image, InfoContainer, TextLight, GuestHour, GuestNo
 import { formatDate } from "./functions/formatDate"
 import { formatDateHalf1 } from "./functions/formatDateHalf1"
 import { formatDateHalf2 } from "./functions/formatDateHalf2"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { fetchBookings } from "../../../features/bookings/bookingsThunks"
+import { paginateData } from "./functions/paginateData"
+import { filterBookings } from "./functions/filterBookings"
 
-export const BookingsList = ({ data, handleNavigate }) => {
+export const BookingsList = ({ currentPage, handleNavigate }) => {
+    const dispatch = useDispatch()
+    const bookings = useSelector((state) => state.bookings.bookings)
+    const { selectedMenu, selectedOption } = useSelector((state) => state.filter)
+
+    const filteredBookings = filterBookings(bookings, selectedMenu, selectedOption)
+    const paginatedBookings = paginateData(filteredBookings, 10)[currentPage - 1] || []
+
+    useEffect(() => {
+        if (bookings.length === 0) {
+            dispatch(fetchBookings())
+        }
+    }, [dispatch, bookings.length])
+
     return (
-        data.map((booking) => (
+        paginatedBookings.map((booking) => (
             <Row key={booking.id} type="body">
                 <Td>
                     <Container onClick={() => handleNavigate(booking.id)}>

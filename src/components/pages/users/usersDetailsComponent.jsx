@@ -113,7 +113,8 @@ export const UsersDetailsComponent = () => {
             isOpen={showModal} 
             onClose={closeModal} 
             onConfirm={handleDelete} 
-            roomName={user.name}
+            name={user.name}
+            func="Delete"
         />
     </Container>
 }

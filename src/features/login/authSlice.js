@@ -22,6 +22,8 @@ export const authSlice = createSlice({
             localStorage.removeItem("user")
             localStorage.removeItem("rooms")
             localStorage.removeItem("employees")
+            localStorage.removeItem("bookings")
+            localStorage.removeItem("reviews")
             state.error = null
         },
         updateUser(state, action){

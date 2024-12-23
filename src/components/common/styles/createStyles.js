@@ -91,3 +91,46 @@ export const GoBack = styled.div`
         color:rgb(0, 0, 0);
     }
 `
+export const Select = styled.select`
+    padding: 0.8em;
+    font-size: 0.875rem;
+    border: 1px solid #ddd;
+    border-radius: 0.4em;
+    background-color: #fff;
+    color: #333;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+
+    ${({ $type }) => $type === "Refund" && `
+        color: #E23428;
+        background-color: #FFEDEC;
+    `}
+    ${({ $type }) => $type === "Booked" && `
+        color: #5AD07A;
+        background-color: #E8FFEE;
+    `}
+    ${({ $type }) => $type === "Pending" && `
+        color: #6D6D6D;
+        background-color: #E2E2E2;
+    `}
+    ${({ $type }) => $type === "Cancelled" && `
+        color: #BEBEBE;
+        background-color: #575757;
+    `}
+`
+export const Textarea = styled.textarea`
+    padding: 0.8em;
+    font-size: 0.875rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    width: 100%;
+    height: 8em;
+    outline: none;
+    resize: none;
+`
+export const Error = styled.p`
+    color: red;
+`

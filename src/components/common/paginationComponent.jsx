@@ -4,8 +4,11 @@ import { useSelector, useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
 import { filterRooms } from "./listComponent/functions/filterRooms"
 import { filterUsers } from "./listComponent/functions/filterUsers"
+import { filterBookings } from "./listComponent/functions/filterBookings"
+import { filterReviews } from "./listComponent/functions/filterReviews"
 import { setPage } from "../../features/lists/paginationSlice"
 import { useEffect } from "react"
+
 
 export const PaginationComponent = ({ currentPage, setCurrentPage}) => {
     const location = useLocation()
@@ -17,29 +20,39 @@ export const PaginationComponent = ({ currentPage, setCurrentPage}) => {
     }, [selectedMenu, selectedOption, location.pathname])
 
     const info = () => {
+        let data
+        let func
+        let dataName
         switch (location.pathname) {
             case "/room":
-                const rooms = useSelector((state) => state.rooms.rooms)
-                const filteredRooms = filterRooms(rooms, selectedMenu, selectedOption)
-                console.log(filteredRooms)
-                return {
-                    "pages": paginateData(filteredRooms, 10).length,
-                    "itemsOnPage": paginateData(filteredRooms, 10)[currentPage - 1]?.length || 0,
-                    "totalItems": filteredRooms.length,
-                    "typeOfData": "rooms"
-                }
+                data=useSelector((state) => state.rooms.rooms)
+                func = filterRooms
+                dataName = "rooms"
+                break
             case "/users":
-                const users = useSelector((state) => state.users.users)
-                const filteredUsers = filterUsers(users, selectedMenu, selectedOption)
-                console.log(filteredUsers)
-                return {
-                    "pages": paginateData(filteredUsers, 10).length,
-                    "itemsOnPage": paginateData(filteredUsers, 10)[currentPage - 1]?.length || 0,
-                    "totalItems": filteredUsers.length,
-                    "typeOfData": "users"
-                }
+                data=useSelector((state) => state.users.users)
+                func = filterUsers
+                dataName = "users"
+                break
+            case "/bookings":
+                data=useSelector((state) => state.bookings.bookings)
+                func = filterBookings
+                dataName = "bookings"
+                break
+            case "/dashboard/customerReviews":
+                data=useSelector((state) => state.reviews.reviews)
+                func = filterReviews
+                dataName = "reviews"
+                break
             default:
                 return { pages: 1, itemsOnPage: 0, totalItems: 0, typeOfData: "data" }
+        }
+        const filtered = func(data, selectedMenu, selectedOption)
+        return {
+            "pages": paginateData(filtered, 10).length,
+            "itemsOnPage": paginateData(filtered, 10)[currentPage - 1]?.length || 0,
+            "totalItems": filtered.length,
+            "typeOfData": dataName
         }
     }
 

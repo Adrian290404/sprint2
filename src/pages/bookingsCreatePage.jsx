@@ -1,5 +1,6 @@
+import { BookingsCreateComponent } from "../components/pages/bookings/bookingsCreateComponent"
 
 
 export const BookingsCreatePage = () => {
-    return <h1>Bookings Create Page</h1>
+    return <BookingsCreateComponent />
 }

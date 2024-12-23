@@ -4,28 +4,39 @@ import { IoLogOutOutline } from "react-icons/io5"
 import { Container, Left, Right, Title, SubTitleContainer, TitleContainer, Page } from "./styles/topMenuStyles"
 import { Hamburguer, CursorPointer } from "./styles/icons"
 import { useLocation, useParams } from "react-router-dom"
-import { bookings } from "../../data/bookings"
-import { rooms } from "../../data/rooms"
-import { employees } from "../../data/employees"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { fetchRoom } from "../../features/rooms/roomsThunks"
+import { fetchBooking } from "../../features/bookings/bookingsThunks"
+import { fetchUser } from "../../features/users/usersThunks"
 import { logout } from "../../features/login/authSlice"
+import { useEffect } from "react"
 
 export const TopMenuComponent = ({ onToggleSidebar }) => {
     const location = useLocation()
     const { id } = useParams()
     const dispatch = useDispatch()
 
+    const booking = useSelector((state) => state.bookings.booking)
+    const room = useSelector((state) => state.rooms.room)
+    const user = useSelector((state) => state.users.user)
+
+    useEffect(() => {
+        if (location.pathname.includes("/bookings") && id && location.pathname.split("/")[2] !== "create") {
+            dispatch(fetchBooking(Number(id)))
+        } 
+        else if (location.pathname.includes("/room") && id && location.pathname.split("/")[2] !== "create") {
+            dispatch(fetchRoom(Number(id))) 
+        }
+        else if (location.pathname.includes("/users") && id && location.pathname.split("/")[2] !== "create") {
+            dispatch(fetchUser(Number(id)))
+        }
+    }, [location.pathname, id, dispatch])
+
     const getName = () => {
-        if (location.pathname.split("/")[1] === "bookings" && location.pathname.split("/")[2] !== "create") {
-            const booking = bookings.find(data => data.id === parseInt(id))
-            if (booking) return booking.name
-        } else if (location.pathname.split("/")[1] === "room" && location.pathname.split("/")[2] !== "create") {
-            const room = rooms.find(data => data.id === parseInt(id))
-            if (room) return room.room_name
-        } else if (location.pathname.split("/")[1] === "users" && location.pathname.split("/")[2] !== "create") {
-            const employee = employees.find(data => data.id === parseInt(id))
-            if (employee) return employee.name
-        } else if (location.pathname.split("/")[1] === "dashboard" && location.pathname.split("/")[2] === "customerReviews") {
+        if (location.pathname.includes("/bookings") && location.pathname !== "/bookings" && location.pathname !== "/bookings/create" && booking) return booking.name
+        if (location.pathname.includes("/room") && location.pathname !== "/room" && location.pathname !== "/room/create"  && room) return room.room_name
+        if (location.pathname.includes("/users") && location.pathname !== "/users" && location.pathname !== "/users/create" && user) return user.name 
+        if (location.pathname.includes("/dashboard") && location.pathname.split("/")[2] === "customerReviews") {
             return "Customer Review"
         }
         return ""

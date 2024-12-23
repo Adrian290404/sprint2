@@ -102,7 +102,8 @@ export const RoomDetailsComponent = () => {
                 isOpen={showModal} 
                 onClose={closeModal} 
                 onConfirm={handleDelete} 
-                roomName={room.room_name}
+                name={room.room_name}
+                func="Delete"
             />
         </Container>
     )

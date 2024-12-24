@@ -1,5 +1,6 @@
+import { BookingsDetailsComponent } from "../components/pages/bookings/bookingsDetailsComponent"
 
 
 export const BookingsDetailsPage = () => {
-    return <h1>Bookings Details Page</h1>
+    return <BookingsDetailsComponent />
 }

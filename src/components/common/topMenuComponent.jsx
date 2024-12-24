@@ -33,7 +33,7 @@ export const TopMenuComponent = ({ onToggleSidebar }) => {
     }, [location.pathname, id, dispatch])
 
     const getName = () => {
-        if (location.pathname.includes("/bookings") && location.pathname !== "/bookings" && location.pathname !== "/bookings/create" && booking) return booking.name
+        if (location.pathname.includes("/bookings") && location.pathname !== "/bookings" && location.pathname !== "/bookings/create" && booking) return user.name
         if (location.pathname.includes("/room") && location.pathname !== "/room" && location.pathname !== "/room/create"  && room) return room.room_name
         if (location.pathname.includes("/users") && location.pathname !== "/users" && location.pathname !== "/users/create" && user) return user.name 
         if (location.pathname.includes("/dashboard") && location.pathname.split("/")[2] === "customerReviews") {

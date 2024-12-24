@@ -32,14 +32,13 @@ export const BookingsCreateComponent = () => {
         setStatus(e.target.value)
     }
 
-    const formatDate = () => {
-        const now = new Date()
-        const day = String(now.getDate()).padStart(2, '0')
-        const month = String(now.getMonth() + 1).padStart(2, '0')
-        const year = now.getFullYear()
-        const hours = String(now.getHours()).padStart(2, '0')
-        const minutes = String(now.getMinutes()).padStart(2, '0')
-        return `${month}/${day}/${year} ${hours}:${minutes}`
+    const formatDate = (date) => {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${month}/${day}/${year} ${hours}:${minutes}`;
     }
 
     const goBack = () => {
@@ -75,13 +74,12 @@ export const BookingsCreateComponent = () => {
         const room = rooms.find((r) => r.id === parseInt(selectedRoom))
 
         const newBooking = {
+            user_id: parseInt(selectedGuest),
+            room_id: parseInt(selectedRoom),
             id: newBookingId(),
-            name: user.name,
-            image: user.image,
-            order_date: formatDate(),
-            check_in: checkIn,
-            check_out: checkOut,
-            room_type: room.room_name,
+            order_date: formatDate(new Date()),
+            check_in: formatDate(new Date(checkIn)),
+            check_out: formatDate(new Date(checkOut)),
             special_request: specialRequest.trim() !== "",
             status: status
         }

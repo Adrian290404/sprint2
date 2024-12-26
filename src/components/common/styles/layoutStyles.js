@@ -18,6 +18,7 @@ export const Header = styled.header`
     background-color: white;
     height: 5.4em;
     position: fixed;
+    z-index: 1;
     top: 0;
     left: ${(props) => (props.isVisible ? "15.4em" : "0")};
     right: 0;

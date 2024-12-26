@@ -64,10 +64,42 @@ export const Button = styled.button`
     border-radius: .8em;
     cursor: pointer;
     transition: all 0.3s ease;
+    ${(props) => (props.bookings && "margin-top: 2em")};
     &:hover {
         background-color: #0056b3;
         color: #EBF1EF;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         transform: translateY(-2px);
     }
+`
+export const Select = styled.select`
+    padding: 0.8em;
+    font-size: 0.875rem;
+    border: 1px solid #ddd;
+    border-radius: 0.4em;
+    background-color: #fff;
+    color: #333;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+
+    ${({ $type }) => $type === "Refund" && `
+        color: #E23428;
+        background-color: #FFEDEC;
+    `}
+    ${({ $type }) => $type === "Booked" && `
+        color: #5AD07A;
+        background-color: #E8FFEE;
+    `}
+    ${({ $type }) => $type === "Pending" && `
+        color: #6D6D6D;
+        background-color: #E2E2E2;
+    `}
+    ${({ $type }) => $type === "Cancelled" && `
+        color: #BEBEBE;
+        background-color: #575757;
+    `}
+`
+export const Container = styled.div`
+    padding: 2em;
 `

@@ -4,7 +4,7 @@ export const Background = styled.div`
     width: 100%;
     height: 100%;
     background-color: #f8f8f8;
-    position: relative;
+    padding: 2em;
 `
 export const Container = styled.div`
     display: flex;
@@ -14,10 +14,7 @@ export const Container = styled.div`
     box-shadow: 0px 16px 30px #00000014;
     font-family: "Poppins", sans-serif;
     width: 95%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
 `
 export const LeftSection = styled.div`
     flex: 1;
@@ -33,7 +30,6 @@ export const ProfileImage = styled.img`
     width: 150px;
     height: 150px;
     border-radius: .5em;
-    cursor: pointer;
 `
 export const ProfileDetails = styled.div`
     display: flex;
@@ -128,20 +124,9 @@ export const Element = styled.li`
 `
 export const RightSection = styled.div`
     flex: 1;
-    background: #e0e0e0;
     border-radius: 0 .5em .5em 0;
     overflow: hidden;
     position: relative;
-`
-export const BookedBadge = styled.div`
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #008c45;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
 `
 export const RoomContainer = styled.div`
     width: 100%;
@@ -182,11 +167,16 @@ export const Options = styled.div`
 `
 export const Row = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: 1.5em;
     align-items: flex-end;
     justify-content: end;
     align-items: center;
+`
+export const GoBookings = styled.div`
+    position: absolute;
+    top: 2.3em;
+    left: 12.4em;
 `
 export const Action = styled.div`
     cursor: pointer;

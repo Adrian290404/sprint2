@@ -70,8 +70,6 @@ export const BookingsCreateComponent = () => {
         }
 
         const specialRequest = formData.get("notes")
-        const user = users.find((u) => u.id === parseInt(selectedGuest))
-        const room = rooms.find((r) => r.id === parseInt(selectedRoom))
 
         const newBooking = {
             user_id: parseInt(selectedGuest),

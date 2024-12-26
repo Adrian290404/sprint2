@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { fetchBooking } from "../../../features/bookings/bookingsThunks"
 import { fetchUser } from "../../../features/users/usersThunks"
 import { fetchRoom } from "../../../features/rooms/roomsThunks"
-import { Background, BookedBadge, Button, Container, FacilityList, ID, InfoRow, LeftSection, Name, ProfileDetails, ProfileImage, ProfileInfo, RightSection, RoomDetails, RoomImage, Icon, Contact, InfoContainer, InfoTitle, Info, Separator, Especificator, FacilitiesTitle, Element, RoomStatus, RoomContainer, Options, Row, Action } from "./styles/bookingDetailsStyles"
+import { Background, Button, Container, FacilityList, ID, InfoRow, LeftSection, Name, ProfileDetails, ProfileImage, ProfileInfo, RightSection, RoomDetails, RoomImage, Icon, Contact, InfoContainer, InfoTitle, Info, Separator, Especificator, FacilitiesTitle, Element, RoomStatus, RoomContainer, Options, Row, Action, GoBookings } from "./styles/bookingDetailsStyles"
 import { FaPhone } from "react-icons/fa6"
 import { TbMessageFilled } from "react-icons/tb"
 import { TiBackspaceOutline } from "react-icons/ti"
@@ -14,6 +14,7 @@ import { FaUserPen } from "react-icons/fa6"
 import { GiBed } from "react-icons/gi"
 import { ModalQuestionComponent } from "../../common/modalQuestionComponent"
 import { deleteBooking } from "../../../features/bookings/bookingsThunks"
+import { BookingDetailsFormComponent } from "./bookingDetailsFormComponent"
 
 export const BookingsDetailsComponent = () => {
     const { id } = useParams()
@@ -24,8 +25,8 @@ export const BookingsDetailsComponent = () => {
     const navigate = useNavigate()
     const [showInformation, setShowInformation] = useState(true)
     const [showModal, setShowModal] = useState(false)
-
     const [isLoading, setIsLoading] = useState(true)
+    const facilitiesArray = room?.facilities ? room.facilities.split(", ") : [];
 
     const formatDateCheckIn = (inputDateTime) => {
         const months = [
@@ -81,6 +82,10 @@ export const BookingsDetailsComponent = () => {
         setShowModal(false)
     }
 
+    const editInfo = () => {
+        setShowInformation(!showInformation)
+    }
+
     const handleDelete = () => {
         dispatch(deleteBooking(Number(id)));
         closeModal();
@@ -93,7 +98,6 @@ export const BookingsDetailsComponent = () => {
                 await dispatch(fetchBooking(Number(id)))
             }
         }
-
         loadData()
     }, [dispatch, id])
 
@@ -113,19 +117,19 @@ export const BookingsDetailsComponent = () => {
         <Background>
             <Container>
                 <LeftSection>
+                    <GoBookings>
+                        <Action type="back" onClick={() => navigate(-1)}>
+                            <TiBackspaceOutline size={30} />
+                        </Action>
+                    </GoBookings>
                     <Options>
                         <Row>
-                            <Action type="back" onClick={() => navigate(-1)}>
-                                <TiBackspaceOutline size={30}/>
-                            </Action>
-                            <Action type="edit">
+                            <Action type="edit" onClick={editInfo}>
                                 <CiEdit size={30} />
                             </Action>
                             <Action type="delete" onClick={openModal}>
                                 <MdDelete size={30} />
                             </Action>                        
-                        </Row>
-                        <Row>
                             <Action type="user" onClick={() => navigate(`/users/${booking.user_id}`)}>
                                 <FaUserPen size={30} />
                             </Action>
@@ -135,7 +139,7 @@ export const BookingsDetailsComponent = () => {
                         </Row>
                     </Options>
                     <ProfileInfo>
-                        <ProfileImage src={user.image}/>
+                        <ProfileImage src={user.image} />
                         <ProfileDetails>
                             <Name>{user.name}</Name>
                             <ID>ID {booking.id}</ID>
@@ -171,20 +175,31 @@ export const BookingsDetailsComponent = () => {
                     </RoomDetails>
                     <FacilitiesTitle>Facilities</FacilitiesTitle>
                     <FacilityList>
-                        <Element>3 Bed Space</Element>
-                        <Element>24 Hours Guard</Element>
-                        <Element>Free WiFi</Element>
-                        <Element>2 Bathroom</Element>
-                        <Element>Air Conditioner</Element>
-                        <Element>Television</Element>
+                        {facilitiesArray.map((facility, index) => (
+                            <Element key={index}>{facility}</Element>
+                        ))}
                     </FacilityList>
                 </LeftSection>
                 <RightSection>
-                    <BookedBadge>BOOKED</BookedBadge>
-                    <RoomContainer>
-                        <RoomImage src={room.image} />
-                        <RoomStatus type={booking.status}>{booking.status}</RoomStatus>
-                    </RoomContainer>
+                    {showInformation ? (
+                        <>
+                            <RoomContainer>
+                                <RoomImage src={room.image} />
+                                <RoomStatus type={booking.status}>{booking.status}</RoomStatus>
+                            </RoomContainer>
+                        </>
+                    ) : (
+                        <BookingDetailsFormComponent
+                            checkIn = {booking.check_in}
+                            checkOut = {booking.check_out}
+                            userId = {booking.user_id}
+                            roomId = {booking.room_id}
+                            id = {booking.id}
+                            orderDate = {booking.order_date}
+                            request = {booking.special_request}
+                            status = {booking.status}
+                        />
+                    )}
                 </RightSection>
             </Container>
             <ModalQuestionComponent

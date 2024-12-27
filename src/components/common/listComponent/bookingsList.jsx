@@ -84,9 +84,17 @@ export const BookingsList = ({ currentPage, handleNavigate }) => {
                     <GuestHour>{formatDateHalf2(booking.check_out)}</GuestHour>
                 </Td>
                 <Td>
-                    <GuestNotes active={booking.special_request} disabled={!booking.special_request}>
-                        View Notes
-                    </GuestNotes>
+                <GuestNotes
+                    active={booking.special_request !== ""}
+                    disabled={!booking.special_request}
+                    onClick={() => {
+                        if (booking.special_request) {
+                            alert(booking.special_request);
+                        }
+                    }}
+                >
+                    View Notes
+                </GuestNotes>
                 </Td>
                 <Td top>
                     {getRoomNameById(booking.room_id)}

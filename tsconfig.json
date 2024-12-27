@@ -10,7 +10,7 @@
     "include": [
         "src/**/*.ts",
         "test/**/*.ts"
-    ],
+, "src/features/users/usersThunks.js", "src/features/store.js", "src/features/users/usersSlice.js"    ],
     "exclude": [
         "node_modules"
     ]

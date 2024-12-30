@@ -18,7 +18,7 @@ export const filterBookings = (bookings, selectedMenu, selectedOption) => {
             filteredBookings.sort((a, b) => b.id - a.id)
             break
         case "Guest":
-            filteredBookings.sort((a, b) => a.name.localeCompare(b.name))
+            // filteredBookings.sort((a, b) => a.name.localeCompare(b.name)) ORDENAR ALFABETICAMENTE CUANDO YA ESTE CONECTADO A BBDD
             break
         case "Check in":
             filteredBookings.sort((a, b) => new Date(a.check_in) - new Date(b.check_in))

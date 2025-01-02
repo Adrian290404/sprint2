@@ -2,7 +2,7 @@ import { Container, Content, Form, Agrupate, Column, Label, Input, Button, Title
 import { TiBackspaceOutline } from "react-icons/ti"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createBooking } from "../../../features/bookings/bookingsThunks.js"
+import { createBooking } from "../../../features/bookings/bookingsThunks"
 import { useState } from 'react'
 
 export const BookingsCreateComponent = () => {

@@ -1,13 +1,4 @@
-type Booking = {
-    user_id: number;
-    room_id: number;
-    id: number;
-    order_date: string;
-    check_in: string;
-    check_out: string;
-    special_request: string;
-    status: "Refund" | "Pending" | "Cancelled" | "Booked";
-};
+import { Booking } from "../interfaces/booking";
 
 export const bookings: Booking[] = [
     {

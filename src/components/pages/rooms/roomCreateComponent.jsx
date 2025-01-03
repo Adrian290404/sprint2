@@ -4,7 +4,7 @@ import { MdOutlineAutoAwesome } from "react-icons/md"
 import { TiBackspaceOutline } from "react-icons/ti"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createRoom } from "../../../features/rooms/roomsThunks.js"
+import { createRoom } from "../../../features/rooms/roomsThunks"
 
 export const RoomCreateComponent = () => {
     const facilitiesInputRef = useRef(null)

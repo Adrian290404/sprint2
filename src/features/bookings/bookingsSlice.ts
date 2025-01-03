@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchBookings, fetchBooking, createBooking, updateBooking, deleteBooking } from './bookingsThunks';
-
-interface Booking {
-    id: number;
-    [key: string]: any;
-}
+import { Booking } from '../../interfaces/booking';
 
 interface BookingsState {
     bookings: Booking[];

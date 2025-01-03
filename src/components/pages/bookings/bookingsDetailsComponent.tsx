@@ -15,26 +15,40 @@ import { GiBed } from "react-icons/gi"
 import { ModalQuestionComponent } from "../../common/modalQuestionComponent"
 import { deleteBooking } from "../../../features/bookings/bookingsThunks"
 import { BookingDetailsFormComponent } from "./bookingDetailsFormComponent"
+import { AppDispatch } from "../../../features/store"
+import { Booking } from "../../../interfaces/booking"
 
-export const BookingsDetailsComponent = () => {
-    const { id } = useParams()
-    const dispatch = useDispatch();
-    const booking = useSelector((state) => state.bookings.booking)
-    const user = useSelector((state => state.users.user))
-    const room = useSelector((state => state.rooms.room))
+interface User {
+    image: string;
+    name: string;
+}
+
+interface Room {
+    room_name: string;
+    rate: number;
+    image: string;
+    facilities: string;
+}
+
+export const BookingsDetailsComponent: React.FC = () => {
+    const { id } = useParams<{ id: string }>()
+    const dispatch = useDispatch<AppDispatch>();
+    const booking = useSelector((state: any) => state.bookings.booking)
+    const user = useSelector((state: any) => state.users.user)
+    const room = useSelector((state: any) => state.rooms.room)
     const navigate = useNavigate()
-    const [showInformation, setShowInformation] = useState(true)
-    const [showModal, setShowModal] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+    const [showInformation, setShowInformation] = useState<boolean>(true)
+    const [showModal, setShowModal] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(true)
     const facilitiesArray = room?.facilities ? room.facilities.split(", ") : [];
 
-    const formatDateCheckIn = (inputDateTime) => {
+    const formatDateCheckIn = (inputDateTime: string) => {
         const months = [
           "January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December"
         ]
       
-        const getDaySuffix = (day) => {
+        const getDaySuffix = (day: number) => {
           if (day > 3 && day < 21) return "th"
           switch (day % 10) {
             case 1: return "st"
@@ -56,9 +70,9 @@ export const BookingsDetailsComponent = () => {
         return `${monthName} ${day}${daySuffix}, ${year} | ${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${amPm}`
     }
 
-    const formatDateCheckOut = (dateString) => {
+    const formatDateCheckOut = (dateString: string) => {
         const date = new Date(dateString);
-        const getDaySuffix = (day) => {
+        const getDaySuffix = (day: number) => {
             if (day > 3 && day < 21) return "th"
             switch (day % 10) {
                 case 1: return "st";
@@ -190,14 +204,14 @@ export const BookingsDetailsComponent = () => {
                         </>
                     ) : (
                         <BookingDetailsFormComponent
-                            checkIn = {booking.check_in}
-                            checkOut = {booking.check_out}
-                            userId = {booking.user_id}
-                            roomId = {booking.room_id}
-                            id = {booking.id}
-                            orderDate = {booking.order_date}
-                            request = {booking.special_request}
-                            status = {booking.status}
+                            check_in={booking.check_in}
+                            check_out={booking.check_out}
+                            user_id={booking.user_id}
+                            room_id={booking.room_id}
+                            id={booking.id}
+                            order_date={booking.order_date}
+                            special_request={booking.special_request}
+                            status={booking.status}
                         />
                     )}
                 </RightSection>
@@ -206,7 +220,7 @@ export const BookingsDetailsComponent = () => {
                 isOpen={showModal} 
                 onClose={closeModal} 
                 onConfirm={handleDelete} 
-                name={user.name + "'s Booking"}
+                name={`${user.name}'s Booking`}
                 func="Delete"
             />
         </Background>

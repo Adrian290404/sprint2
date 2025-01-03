@@ -4,7 +4,7 @@ import { MdOutlineAutoAwesome } from "react-icons/md"
 import { TiBackspaceOutline } from "react-icons/ti"
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createUser } from "../../../features/users/usersThunks.js"
+import { createUser } from "../../../features/users/usersThunks"
 
 export const UsersCreateComponent = () => {
     const imageInputRef = useRef(null)

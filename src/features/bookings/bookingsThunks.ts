@@ -1,15 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-interface Booking {
-    id: number;
-    name: string;
-    date: string;
-    status: string;
-}
+import { Booking } from '../../interfaces/booking';
 
 interface NewBooking {
-    name: string;
-    date: string;
+    user_id: number;
+    room_id: number;
+    order_date: string;
+    check_in: string;
+    check_out: string;
+    special_request: string;
     status: string;
 }
 
@@ -25,7 +23,7 @@ export const fetchBooking = createAsyncThunk<Booking | null, number>('bookings/f
 
 export const createBooking = createAsyncThunk<Booking, NewBooking>('bookings/createBooking', async (newBooking) => {
     const bookings: Booking[] = JSON.parse(localStorage.getItem('bookings') || '[]');
-    const bookingWithId: Booking = { id: Date.now(), ...newBooking };
+    const bookingWithId: Booking = { id: Date.now(), ...newBooking };  
     const updatedBookings = [...bookings, bookingWithId];
     localStorage.setItem('bookings', JSON.stringify(updatedBookings));
     return bookingWithId;
@@ -34,7 +32,7 @@ export const createBooking = createAsyncThunk<Booking, NewBooking>('bookings/cre
 export const updateBooking = createAsyncThunk<Booking, Booking>('bookings/updateBooking', async (updatedBooking) => {
     const bookings: Booking[] = JSON.parse(localStorage.getItem('bookings') || '[]');
     const updatedBookings = bookings.map((booking) =>
-        booking.id === updatedBooking.id ? updatedBooking : booking
+        booking.id === updatedBooking.id ? { ...booking, ...updatedBooking } : booking
     );
     localStorage.setItem('bookings', JSON.stringify(updatedBookings));
     return updatedBooking;

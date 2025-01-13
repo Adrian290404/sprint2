@@ -1,4 +1,12 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
+
+interface ButtonProps {
+    bookings?: boolean;
+};
+
+interface SelectProps {
+    $type?: "Refund" | "Booked" | "Pending" | "Cancelled";
+};
 
 export const FormContainer = styled.div`
     display: flex;
@@ -6,43 +14,43 @@ export const FormContainer = styled.div`
     width: 100%;
     padding: 0 1em;
     font-size: 0.875rem;
-`
+`;
 export const FormField = styled.div`
     margin-bottom: 1em;
-`
+`;
 export const TwoFields = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: end;
     margin-bottom: 1em;
-`
+`;
 export const Label = styled.label`
     color: #333;
     display: block;
     font-weight: 600;
-`
+`;
 export const Input = styled.input`
     width: 100%;
     padding: .6em;
     border: 1px solid #ccc;
     border-radius: .5em;
     outline: none;
-`
+`;
 export const CheckboxContainer = styled.div`
     display: flex;
     align-items: center;
     gap: .6em;
-`
+`;
 export const CheckboxLabel = styled.label`
     font-size: 14px;
     color: #333;
-`
+`;
 export const Buttons = styled.div`
     display: flex;
     justify-content: center;
     gap: 2em;
     align-items: center;
-`
+`;
 export const Icon = styled.div`
     cursor: pointer;
     transition: transform 0.2s ease;
@@ -52,8 +60,8 @@ export const Icon = styled.div`
         transform: translateY(-2px);
         color: #616161;
     }
-`
-export const Button = styled.button`
+`;
+export const Button = styled.button<ButtonProps>`
     padding: .5em .7em;
     background-color: #007bff;
     color: #FFFFFF;
@@ -64,15 +72,15 @@ export const Button = styled.button`
     border-radius: .8em;
     cursor: pointer;
     transition: all 0.3s ease;
-    ${(props) => (props.bookings && "margin-top: 2em")};
+    ${(props) => props.bookings && "margin-top: 2em"};
     &:hover {
         background-color: #0056b3;
         color: #EBF1EF;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         transform: translateY(-2px);
     }
-`
-export const Select = styled.select`
+`;
+export const Select = styled.select<SelectProps>`
     padding: 0.8em;
     font-size: 0.875rem;
     border: 1px solid #ddd;
@@ -83,23 +91,31 @@ export const Select = styled.select`
     cursor: pointer;
     outline: none;
 
-    ${({ $type }) => $type === "Refund" && `
+    ${({ $type }) =>
+        $type === "Refund" &&
+        `
         color: #E23428;
         background-color: #FFEDEC;
     `}
-    ${({ $type }) => $type === "Booked" && `
+    ${({ $type }) =>
+        $type === "Booked" &&
+        `
         color: #5AD07A;
         background-color: #E8FFEE;
     `}
-    ${({ $type }) => $type === "Pending" && `
+    ${({ $type }) =>
+        $type === "Pending" &&
+        `
         color: #6D6D6D;
         background-color: #E2E2E2;
     `}
-    ${({ $type }) => $type === "Cancelled" && `
+    ${({ $type }) =>
+        $type === "Cancelled" &&
+        `
         color: #BEBEBE;
         background-color: #575757;
     `}
-`
+`;
 export const Container = styled.div`
     padding: 2em;
-`
+`;

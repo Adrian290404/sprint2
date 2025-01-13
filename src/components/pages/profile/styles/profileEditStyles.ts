@@ -1,11 +1,23 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import { lighten } from "polished";
+
+interface TitleProps {
+    color: string;
+};
+
+interface InputProps {
+    color: string;
+};
+
+interface ButtonProps {
+    color: string;
+};
 
 export const Relative = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-`
+`;
 export const Container = styled.div`
     position: absolute;
     top: 45%;
@@ -19,7 +31,7 @@ export const Container = styled.div`
     font-family: "Poppins", sans-serif;
     text-align: center;
     padding: .8em 2em 1.5em 2em;
-`
+`;
 export const GoBack = styled.div`
     position: absolute;
     top: 1em;
@@ -30,16 +42,16 @@ export const GoBack = styled.div`
         transform: scale(1.05);
         transform: translateY(-2px);
     }
-`
-export const Title = styled.h2`
+`;
+export const Title = styled.h2<TitleProps>`
     font-size: 1.5em;
     font-weight: 500;
     margin-bottom: 1em;
     display: inline;
     color: ${(props) => props.color};
     border-bottom: 1px solid ${(props) => props.color};
-`
-export const Input = styled.input`
+`;
+export const Input = styled.input<InputProps>`
     display: block;
     width: 80%;
     height: 2em;
@@ -50,8 +62,8 @@ export const Input = styled.input`
     font-family: "Poppins", sans-serif;
     padding: 0 1em;
     text-align: center;
-`
-export const Button = styled.button`
+`;
+export const Button = styled.button<ButtonProps>`
     width: 50%;
     font-family: "Poppins", sans-serif;
     background-color: ${(props) => props.color};
@@ -62,9 +74,9 @@ export const Button = styled.button`
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
     &:hover {
-        background-color: ${(props) => lighten(0.1, props.color)}; /* Aclara el color base */
+        background-color: ${(props) => lighten(0.1, props.color)};
         transform: scale(1.05);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
         transform: translateY(-2px);
     }
-`
+`;

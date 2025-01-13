@@ -1,11 +1,23 @@
-import styled from "styled-components"
+import styled from "styled-components";
+
+interface IconProps {
+    delete?: boolean;
+};
+
+interface InfoGroupProps {
+    center?: boolean;
+};
+
+interface ClockProps {
+    active: boolean;
+};
 
 export const Container = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
     background-color: #f8f8f8;
-`
+`;
 export const CardContainer = styled.div`
     position: absolute;
     top: 50%;
@@ -15,55 +27,52 @@ export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background:#FFFFFF;
+    background: #FFFFFF;
     box-shadow: 0px 16px 30px #00000014;
     border-radius: 1em;
     width: 90%;
     max-width: 35em;
-`
+`;
 export const ProfileImage = styled.img`
     width: 150px;
     height: 150px;
     border-radius: .5em;
-`
+`;
 export const CardContent = styled.div`
     padding: 1em;
     width: 90%;
     position: relative;
-`
+`;
 export const EmployeeName = styled.h2`
-    
     font-size: 1.5rem;
     color: #333333;
     margin-bottom: .5em;
     text-decoration: underline;
-    text-align:center;
-`
+    text-align: center;
+`;
 export const Agrupate = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
-`
-export const InfoGroup = styled.div`
+`;
+export const InfoGroup = styled.div<InfoGroupProps>`
     display: flex;
     margin-bottom: 1em;
     align-items: center;
     justify-content: start;
     gap: .5em;
-    ${(props) => (props.center) && (
-        "justify-content:center; text-align: center; margin: 2.5em 0 1em 0;"
-    )};
-`
+    ${(props) => props.center && "justify-content: center; text-align: center; margin: 2.5em 0 1em 0;"}
+`;
 export const InfoText = styled.span`
     color: #777777;
     font-size: 1rem;
-`
-export const Clock = styled.div`
-    color: ${(props) => (props.active ? "green" : "red" )};
+`;
+export const Clock = styled.div<ClockProps>`
+    color: ${(props) => (props.active ? "green" : "red")};
     margin-top: .2em;
-`
+`;
 export const GoBack = styled.div`
     position: absolute;
     top: 1em;
@@ -76,15 +85,15 @@ export const GoBack = styled.div`
         transform: translateY(-2px);
         color: #616161;
     }
-`
+`;
 export const Options = styled.div`
     display: flex;
     position: absolute;
     gap: .8em;
     top: 1em;
     right: 6%;
-`
-export const Icon = styled.div`
+`;
+export const Icon = styled.div<IconProps>`
     cursor: pointer;
     transition: transform 0.2s ease;
     color: ${(props) => (props.delete ? "#E57373" : "#64B5F6")};
@@ -93,4 +102,4 @@ export const Icon = styled.div`
         transform: translateY(-2px);
         color: ${(props) => (props.delete ? "#D32F2F" : "#1976D2")};
     }
-`
+`;

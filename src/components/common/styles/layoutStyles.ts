@@ -1,11 +1,23 @@
 import styled from "styled-components";
 
+interface SidebarProps {
+    isVisible: boolean;
+};
+
+interface HeaderProps {
+    isVisible: boolean;
+};
+
+interface ContentProps {
+    isSidebarVisible: boolean;
+};
+
 export const Layout = styled.div`
     display: flex;
     height: 100vh;
     width: 100%;
-`
-export const Sidebar = styled.aside`
+`;
+export const Sidebar = styled.aside<SidebarProps>`
     background-color: white;
     position: fixed;
     top: 0;
@@ -13,8 +25,8 @@ export const Sidebar = styled.aside`
     bottom: 0;
     width: 15.4em;
     transition: left 0.3s ease;
-`
-export const Header = styled.header`
+`;
+export const Header = styled.header<HeaderProps>`
     background-color: white;
     height: 5.4em;
     position: fixed;
@@ -24,7 +36,7 @@ export const Header = styled.header`
     right: 0;
     transition: left 0.3s ease;
 `;
-export const Content = styled.main`
+export const Content = styled.main<ContentProps>`
     margin-left: ${(props) => (props.isSidebarVisible ? "15.4em" : "0")};
     margin-top: 5.4em;
     flex-grow: 1;
@@ -35,4 +47,4 @@ export const Background = styled.div`
     padding: 2em;
     width: 100%;
     min-height: 100%;
-`
+`;

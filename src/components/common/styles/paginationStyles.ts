@@ -1,4 +1,9 @@
-import styled from "styled-components"
+import styled from "styled-components";
+
+interface ButtonProps {
+    controller?: boolean;
+    isSelected?: boolean;
+};
 
 export const Container = styled.div`
     display: flex;
@@ -9,13 +14,13 @@ export const Container = styled.div`
     color: #393939;
     align-items: center;
     margin-top: 2em;
-`
-export const Button = styled.button`
+`;
+export const Button = styled.button<ButtonProps>`
     padding: ${(props) => (props.controller ? "1em 2em" : "1em 1.2em")};
     margin: 0.2em;
-    border: ${(props) => (props.controller ? "1px solid #135846" : "none")};;
+    border: ${(props) => (props.controller ? "1px solid #135846" : "none")};
     border-radius: 1em;
     background: ${(props) => (props.isSelected ? "#135846" : "#FFFFFF")};
-    color: ${(props) => (props.controller ? "#135846" : ((props.isSelected ? "#FFFFFF" : "#393939")))} ;
+    color: ${(props) => (props.controller ? "#135846" : (props.isSelected ? "#FFFFFF" : "#393939"))};
     cursor: pointer;
-`
+`;

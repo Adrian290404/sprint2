@@ -4,7 +4,7 @@ import { TbLogin2 } from "react-icons/tb"
 import { TbLogin } from "react-icons/tb"
 import { Container, Card, IconContainer, CardNumber, CardText } from "./styles/kpiStyles"
 
-export const KpiComponent = () => {
+export const KpiComponent: React.FC = () => {
     return <Container>
         <Card>
             <IconContainer>
@@ -43,4 +43,4 @@ export const KpiComponent = () => {
             </div>
         </Card>
     </Container>
-}
+};

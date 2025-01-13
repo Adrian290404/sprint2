@@ -3,7 +3,6 @@ interface Booking {
     status: string;
     check_in: string;
     check_out: string;
-    // Campos necesarios
 }
 
 export const filterBookings = (
@@ -12,7 +11,6 @@ export const filterBookings = (
     selectedOption: string
 ): Booking[] => {
     let filteredBookings = [...bookings];
-
     if (selectedMenu === "Pending") {
         filteredBookings = filteredBookings.filter(booking => booking.status === "Pending");
     } 
@@ -25,7 +23,6 @@ export const filterBookings = (
     else if (selectedMenu === "Refund") {
         filteredBookings = filteredBookings.filter(booking => booking.status === "Refund");
     } 
-
     switch (selectedOption) {
         case "Newest":
             filteredBookings.sort((a, b) => b.id - a.id);
@@ -42,6 +39,5 @@ export const filterBookings = (
         default:
             break;
     }
-
     return filteredBookings;
 };

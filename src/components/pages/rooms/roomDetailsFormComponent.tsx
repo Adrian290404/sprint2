@@ -2,40 +2,53 @@ import { FormContainer, FormField, TwoFields, Label, Input, CheckboxContainer, C
 import { useState } from 'react'
 import { TiArrowBackOutline } from "react-icons/ti"
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
-import { updateRoom } from '../../../features/rooms/roomsThunks';
+import { useDispatch } from 'react-redux'
+import { updateRoom } from '../../../features/rooms/roomsThunks'
+import { AppDispatch } from '../../../features/store'
 
-export const RoomDetailsFormComponent = ({ id, image, name, bedType, floor, facilities, price, available, changePage }) => {
-    const [isAvailable, setIsAvailable] = useState(available)
-    const [roomName, setRoomName] = useState(name)
-    const [roomFacilities, setRoomFacilities] = useState(facilities)
-    const [roomBedType, setRoomBedType] = useState(bedType)
-    const [roomFloor, setRoomFloor] = useState(floor)
-    const [roomPrice, setRoomPrice] = useState(price)
+interface RoomDetailsFormProps {
+    id: number
+    image: string
+    name: string
+    bedType: string
+    floor: string
+    facilities: string
+    price: number
+    available: boolean
+    changePage: () => void
+}
 
-    const dispatch = useDispatch()
+export const RoomDetailsFormComponent = ({id, image, name, bedType, floor, facilities, price, available, changePage}: RoomDetailsFormProps) => {
+    const [isAvailable, setIsAvailable] = useState<boolean>(available)
+    const [roomName, setRoomName] = useState<string>(name)
+    const [roomFacilities, setRoomFacilities] = useState<string>(facilities)
+    const [roomBedType, setRoomBedType] = useState<string>(bedType)
+    const [roomFloor, setRoomFloor] = useState<string>(floor)
+    const [roomPrice, setRoomPrice] = useState<number>(price)
+
+    const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate()
 
-    const handleCheckboxChange = () => {
+    const handleCheckboxChange = (): void => {
         setIsAvailable(!isAvailable)
-    };
-
-    const handleChange = (e, setter, emptyValue) => {
-        const value = e.target.value
-        setter(value.trim() === "" ? emptyValue : value)
     }
 
-    const handleSubmit = (e) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<any>>, emptyValue: string | number): void => {
+        const value = e.target.value
+        setter(value.trim() === "" ? emptyValue : (typeof emptyValue === "number" ? Number(value) : value))
+    }    
+
+    const handleSubmit = (e: React.FormEvent): void => {
         e.preventDefault()
         const updatedRoom = {
-            id: id,
-            "room_name": roomName,
-            "bed_type": roomBedType,
-            "room_floor": roomFloor,
-            "facilities": roomFacilities,
-            "rate": Number(roomPrice),
-            "avaiable": isAvailable,
-            image: image,
+            id,
+            room_name: roomName,
+            bed_type: roomBedType,
+            room_floor: roomFloor,
+            facilities: roomFacilities,
+            rate: roomPrice,
+            avaiable: isAvailable,
+            image
         }
         dispatch(updateRoom(updatedRoom)).then(() => {
             navigate(0)
@@ -95,7 +108,7 @@ export const RoomDetailsFormComponent = ({ id, image, name, bedType, floor, faci
                             name="price"
                             type="number"
                             onChange={(e) => handleChange(e, setRoomPrice, price)}
-                            placeholder={price}
+                            placeholder={String(price)}
                         />
                     </div>
                     <div>
@@ -120,4 +133,4 @@ export const RoomDetailsFormComponent = ({ id, image, name, bedType, floor, faci
             </form>
         </FormContainer>
     )
-}
+};

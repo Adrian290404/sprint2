@@ -138,7 +138,7 @@ export const BookingDetailsFormComponent: FC<Booking> = ({ check_in: ci, check_o
                         </div>
                         <div>
                             <Label>Status</Label>
-                            <Select $type={state} value={state} onChange={handleChangeStatus}>
+                            <Select className={state} value={state} onChange={handleChangeStatus} >
                                 <option value="Pending">Pending</option>
                                 <option value="Booked">Booked</option>
                                 <option value="Cancelled">Cancelled</option>

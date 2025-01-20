@@ -10,47 +10,50 @@ import { CiEdit } from "react-icons/ci"
 import { MdDelete } from "react-icons/md"
 import { RoomDetailsFormComponent } from './roomDetailsFormComponent'
 import { ModalQuestionComponent } from '../../common/modalQuestionComponent'
+import { AppDispatch } from '../../../features/store'
 
 export const RoomDetailsComponent = () => {
-    const { id } = useParams()
-    const dispatch = useDispatch();
-    const room = useSelector((state) => state.rooms.room)
-    const navigate = useNavigate()
-    const [showInformation, setShowInformation] = useState(true)
-    const [showModal, setShowModal] = useState(false)
+    const { id } = useParams<{ id: string }>();
+    const dispatch = useDispatch<AppDispatch>();
+    const room = useSelector((state: any) => state.rooms.room);
+    const navigate = useNavigate();
+    const [showInformation, setShowInformation] = useState<boolean>(true);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     useEffect(() => {
         if (id) {
             dispatch(fetchRoom(Number(id)))
         }
-    }, [dispatch, id])
+    }, [dispatch, id]);
 
-    const goBack = () => {
+    const goBack = (): void => {
         navigate(-1)
-    }
+    };
 
-    const editInfo = () => {
+    const editInfo = (): void => {
         setShowInformation(!showInformation)
-    }
+    };
 
-    const openModal = () => {
+    const openModal = (): void => {
         setShowModal(true)
-    }
+    };
     
-    const closeModal = () => {
+    const closeModal = (): void => {
         setShowModal(false)
-    }
+    };
 
-    const handleDelete = () => {
-        dispatch(deleteRoom(Number(id)));
-        closeModal();
-        navigate(-1);
-    }
-    
+    const handleDelete = (): void => {
+        if (id) {
+            dispatch(deleteRoom(Number(id)))
+            closeModal()
+            navigate(-1)
+        }
+    };
+
     if (!room) {
-        return <p>Loading...</p>;
-    }
-    
+        return <p>Loading...</p>
+    };
+
     return (
         <Container>
             <Content>
@@ -62,26 +65,26 @@ export const RoomDetailsComponent = () => {
                 <Details>
                     {showInformation ? (
                         <>
-                        <GoBack>
-                            <TiBackspaceOutline size={30} onClick={goBack} />
-                        </GoBack>
-                        <Options>
-                            <Icon>
-                                <CiEdit size={30} onClick={editInfo} />
-                            </Icon>
-                            <Icon delete onClick={openModal}>
-                                <MdDelete size={30} />
-                            </Icon>
-                        </Options>
-                        <Title>{room.room_name}</Title>
-                        <TypeAndFloor>
-                            <p><Info>Bed Type. </Info>{room.bed_type}</p>
-                            <p><Info>Floor. </Info>{room.room_floor}</p>
-                        </TypeAndFloor>
-                        <Facilities>
-                            <p><Info>Facilities.</Info></p> 
-                            <p>{room.facilities}</p>
-                        </Facilities>
+                            <GoBack>
+                                <TiBackspaceOutline size={30} onClick={goBack} />
+                            </GoBack>
+                            <Options>
+                                <Icon>
+                                    <CiEdit size={30} onClick={editInfo} />
+                                </Icon>
+                                <Icon delete onClick={openModal}>
+                                    <MdDelete size={30} />
+                                </Icon>
+                            </Options>
+                            <Title>{room.room_name}</Title>
+                            <TypeAndFloor>
+                                <p><Info>Bed Type. </Info>{room.bed_type}</p>
+                                <p><Info>Floor. </Info>{room.room_floor}</p>
+                            </TypeAndFloor>
+                            <Facilities>
+                                <p><Info>Facilities.</Info></p> 
+                                <p>{room.facilities}</p>
+                            </Facilities>
                         </>
                     ) : (
                         <RoomDetailsFormComponent 
@@ -107,4 +110,4 @@ export const RoomDetailsComponent = () => {
             />
         </Container>
     )
-}
+};

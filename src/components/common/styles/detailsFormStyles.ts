@@ -4,10 +4,6 @@ interface ButtonProps {
     bookings?: boolean;
 };
 
-interface SelectProps {
-    $type?: "Refund" | "Booked" | "Pending" | "Cancelled";
-};
-
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -80,7 +76,7 @@ export const Button = styled.button<ButtonProps>`
         transform: translateY(-2px);
     }
 `;
-export const Select = styled.select<SelectProps>`
+export const Select = styled.select`
     padding: 0.8em;
     font-size: 0.875rem;
     border: 1px solid #ddd;
@@ -91,30 +87,22 @@ export const Select = styled.select<SelectProps>`
     cursor: pointer;
     outline: none;
 
-    ${({ $type }) =>
-        $type === "Refund" &&
-        `
+    &.Refund {
         color: #E23428;
         background-color: #FFEDEC;
-    `}
-    ${({ $type }) =>
-        $type === "Booked" &&
-        `
+    }
+    &.Booked {
         color: #5AD07A;
         background-color: #E8FFEE;
-    `}
-    ${({ $type }) =>
-        $type === "Pending" &&
-        `
+    }
+    &.Pending {
         color: #6D6D6D;
         background-color: #E2E2E2;
-    `}
-    ${({ $type }) =>
-        $type === "Cancelled" &&
-        `
+    }
+    &.Cancelled {
         color: #BEBEBE;
         background-color: #575757;
-    `}
+    }
 `;
 export const Container = styled.div`
     padding: 2em;

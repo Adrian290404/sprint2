@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchRooms, fetchRoom, createRoom, updateRoom, deleteRoom } from './roomsThunks';
-
-interface Room {
-    id: number;
-    [key: string]: any; 
-}
+import { Room } from '../../interfaces/room';
 
 interface RoomsState {
     rooms: Room[];
@@ -12,8 +8,8 @@ interface RoomsState {
 }
 
 const initialState: RoomsState = {
-    rooms: JSON.parse(localStorage.getItem("rooms") || "[]"),
-    room: null
+    rooms: JSON.parse(localStorage.getItem('rooms') || '[]'),
+    room: null,
 };
 
 export const roomsSlice = createSlice({
@@ -21,36 +17,35 @@ export const roomsSlice = createSlice({
     initialState,
     reducers: {
         saveRoomsToLocalStorage(state) {
-            localStorage.setItem("rooms", JSON.stringify(state.rooms));
-        }
+            localStorage.setItem('rooms', JSON.stringify(state.rooms));
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchRooms.fulfilled, (state, action: PayloadAction<Room[]>) => {
                 state.rooms = action.payload;
-                localStorage.setItem("rooms", JSON.stringify(state.rooms));
+                localStorage.setItem('rooms', JSON.stringify(state.rooms));
             })
             .addCase(fetchRoom.fulfilled, (state, action: PayloadAction<Room | null>) => {
-                state.room = action.payload;
+                const rooms = JSON.parse(localStorage.getItem("rooms") || "[]");
+                state.room = rooms.find((room: Room) => room.id === action.payload?.id) || null;
             })
             .addCase(createRoom.fulfilled, (state, action: PayloadAction<Room>) => {
                 state.rooms.push(action.payload);
-                localStorage.setItem("rooms", JSON.stringify(state.rooms));
+                localStorage.setItem('rooms', JSON.stringify(state.rooms));
             })
             .addCase(updateRoom.fulfilled, (state, action: PayloadAction<Room>) => {
                 const index = state.rooms.findIndex((room) => room.id === action.payload.id);
                 if (index !== -1) {
                     state.rooms[index] = action.payload;
-                    localStorage.setItem("rooms", JSON.stringify(state.rooms));
+                    localStorage.setItem('rooms', JSON.stringify(state.rooms));
                 }
             })
             .addCase(deleteRoom.fulfilled, (state, action: PayloadAction<number>) => {
                 state.rooms = state.rooms.filter((room) => room.id !== action.payload);
-                localStorage.setItem("rooms", JSON.stringify(state.rooms));
+                localStorage.setItem('rooms', JSON.stringify(state.rooms));
             });
-    }
+    },
 });
 
 export const { saveRoomsToLocalStorage } = roomsSlice.actions;
-
-export default roomsSlice.reducer;

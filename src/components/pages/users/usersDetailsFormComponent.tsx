@@ -1,38 +1,54 @@
-import { FormContainer, FormField, Label, Input, Buttons, Icon, Button } from '../../common/styles/detailsFormStyles'
-import { useState } from 'react'
-import { TiArrowBackOutline } from "react-icons/ti"
-import { useNavigate } from 'react-router-dom'
+import { FormContainer, FormField, Label, Input, Buttons, Icon, Button } from '../../common/styles/detailsFormStyles';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { TiArrowBackOutline } from "react-icons/ti";
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../features/users/usersThunks';
+import { AppDispatch } from '../../../features/store';
 
-export const UsersDetailsFormComponent = ({id, name, image, job, join, contact, schedule, changePage}) => {
-    const [jobDesk, setJobDesk] = useState(job)
-    const [userContact, setUserContact] = useState(contact)
-    const [userScheduled, setUserScheduled] = useState(schedule)
+interface UsersDetailsFormComponentProps {
+    id: number;
+    name: string;
+    image: string;
+    job: string;
+    join: string;
+    contact: string;
+    schedule: string;
+    changePage: () => void;
+}
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+export const UsersDetailsFormComponent: React.FC<UsersDetailsFormComponentProps> = ({ id, name, image, job, join, contact, schedule, changePage }) => {
+    const [jobDesk, setJobDesk] = useState<string>(job);
+    const [userContact, setUserContact] = useState<string>(contact);
+    const [userScheduled, setUserScheduled] = useState<string>(schedule);
 
-    const handleChange = (e, setter, emptyValue) => {
-        const value = e.target.value
-        setter(value.trim() === "" ? emptyValue : value)
-    }
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleChange = (
+        e: ChangeEvent<HTMLInputElement>,
+        setter: React.Dispatch<React.SetStateAction<string>>,
+        emptyValue: string
+    ) => {
+        const value = e.target.value;
+        setter(value.trim() === "" ? emptyValue : value);
+    };
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         const updatedUser = {
-            id: id,
-            name: name,
-            image: image,
-            join: join,
-            "job_desk": jobDesk,
-            "schedule": userScheduled,
-            "contact": userContact,
-        }
+            id,
+            name,
+            image,
+            join,
+            job_desk: jobDesk,
+            schedule: userScheduled,
+            contact: userContact,
+        };
         dispatch(updateUser(updatedUser)).then(() => {
-            navigate(0)
-        })
-    }
+            navigate(0);
+        });
+    };
 
     return (
         <FormContainer>
@@ -63,7 +79,7 @@ export const UsersDetailsFormComponent = ({id, name, image, job, join, contact, 
                         id="scheduled"
                         name="scheduled"
                         type="text"
-                        pattern="^(?:\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b)?$"
+                        pattern="^(?:\\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\\b)?$"
                         onChange={(e) => handleChange(e, setUserScheduled, schedule)}
                         placeholder={schedule}
                     />
@@ -76,5 +92,5 @@ export const UsersDetailsFormComponent = ({id, name, image, job, join, contact, 
                 </Buttons>
             </form>
         </FormContainer>
-    )
-}
+    );
+};

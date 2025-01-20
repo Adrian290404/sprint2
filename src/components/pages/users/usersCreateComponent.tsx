@@ -1,72 +1,74 @@
-import { useRef } from 'react'
-import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Title, GoBack } from '../../common/styles/createStyles'
-import { MdOutlineAutoAwesome } from "react-icons/md"
-import { TiBackspaceOutline } from "react-icons/ti"
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { createUser } from "../../../features/users/usersThunks"
+import { useRef, FormEvent } from 'react';
+import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Title, GoBack } from '../../common/styles/createStyles';
+import { MdOutlineAutoAwesome } from "react-icons/md";
+import { TiBackspaceOutline } from "react-icons/ti";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { createUser } from '../../../features/users/usersThunks';
+import { RootState, AppDispatch } from '../../../features/store';
+import { Employee } from '../../../interfaces/employee'; 
 
 export const UsersCreateComponent = () => {
-    const imageInputRef = useRef(null)
-    const dispatch = useDispatch()
-    const users = useSelector((state) => state.users.users)
-    const navigate = useNavigate()
+    const imageInputRef = useRef<HTMLInputElement | null>(null);
+    const dispatch = useDispatch<AppDispatch>();
+    const users = useSelector((state: RootState) => state.users.users); 
+    const navigate = useNavigate();
 
-    const newUserId = () => {
-        let minId = 1
+    const newUserId = (): number => {
+        let minId = 1;
         for (let i = 0; i < users.length; i++) {
             if (users[i].id === minId) {
-                minId = users[i].id + 1
+                minId = users[i].id + 1;
             }
         }
-        return minId
-    }
-    
-    const handleSetDefaultValue = (inputRef, value) => {
-        if (inputRef && inputRef.current) {
-            inputRef.current.value = value
+        return minId;
+    };
+
+    const handleSetDefaultValue = (inputRef: React.RefObject<HTMLInputElement>, value: string): void => {
+        if (inputRef.current) {
+            inputRef.current.value = value;
         }
-    }
+    };
 
-    const formatDate = () => {
-        const now = new Date()
+    const formatDate = (): string => {
+        const now = new Date();
 
-        const day = String(now.getDate()).padStart(2, '0')
-        const month = String(now.getMonth() + 1).padStart(2, '0')
-        const year = now.getFullYear()
-        const hours = String(now.getHours()).padStart(2, '0')
-        const minutes = String(now.getMinutes()).padStart(2, '0')
+        const day = String(now.getDate()).padStart(2, '0');
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const year = now.getFullYear();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
 
-        return `${day}/${month}/${year} ${hours}:${minutes}`
-    }
+        return `${day}/${month}/${year} ${hours}:${minutes}`;
+    };
 
-    const goBack = () => {
-        navigate(-1)
-    }
+    const goBack = (): void => {
+        navigate(-1);
+    };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
         e.preventDefault();
-    
-        const formData = new FormData(e.target)
-        const newUser = {
+
+        const formData = new FormData(e.currentTarget);
+        const newUser: Employee = {
             id: newUserId(),
-            name: formData.get('name'),
-            image: formData.get('image'),
+            name: formData.get('name') as string,
+            image: formData.get('image') as string,
             join: formatDate(),
-            job_desk: formData.get('job_desk'),
-            schedule: formData.get('schedule'),
-            contact: formData.get('contact')
-        }
-    
-        dispatch(createUser(newUser))
-        navigate(`/users/${newUserId()}`)
+            job_desk: formData.get('job_desk') as string,
+            schedule: formData.get('schedule') as string,
+            contact: formData.get('contact') as string,
+        };
+
+        dispatch(createUser(newUser));
+        navigate(`/users/${newUserId()}`);
     };
 
     return (
         <Container>
             <Content>
                 <GoBack onClick={goBack}>
-                    <TiBackspaceOutline size={30}/>
+                    <TiBackspaceOutline size={30} />
                 </GoBack>
                 <Title>Create New User</Title>
                 <Form onSubmit={handleSubmit}>
@@ -90,14 +92,14 @@ export const UsersCreateComponent = () => {
                             />
                         </Column>
                     </Agrupate>
-                    
+
                     <Label>Name</Label>
                     <Input
                         type="text"
                         name="name"
                         required
                     />
-                    
+
                     <Label>Job Desk</Label>
                     <Input
                         type="text"
@@ -109,7 +111,7 @@ export const UsersCreateComponent = () => {
                     <Input
                         type="text"
                         name="schedule"
-                        pattern="^(?:\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b)?$"
+                        pattern="^(?:\\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\\b)?$"
                         required
                     />
 
@@ -140,5 +142,5 @@ export const UsersCreateComponent = () => {
                 </Form>
             </Content>
         </Container>
-    )
-}
+    );
+};

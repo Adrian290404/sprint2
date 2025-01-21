@@ -1,16 +1,11 @@
 import { activeEmployee } from "./activeEmployee";
-
-interface User {
-    id: number;
-    name: string;
-    schedule: boolean;
-}
+import { Employee } from "../../../../interfaces/employee";
 
 export const filterUsers = (
-    users: User[],
+    users: Employee[],
     selectedMenu: string,
     selectedOption: string
-): User[] => {
+): Employee[] => {
     let filteredUsers = [...users];
     if (selectedMenu === "Active Employee") {
         filteredUsers = filteredUsers.filter(user => activeEmployee(user.schedule));

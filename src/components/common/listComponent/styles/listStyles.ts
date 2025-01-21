@@ -102,14 +102,22 @@ export const GuestStatus = styled.button<GuestStatusProps>`
     font-size: 1rem;
     border-radius: 1em;
     border: none;
-    ${(props) =>
-        props.type === "Refund" && "color: #E23428; background-color: #FFEDEC;"}
-    ${(props) =>
-        props.type === "Booked" && "color: #5AD07A; background-color: #E8FFEE;"}
-    ${(props) =>
-        props.type === "Pending" && "color: #6D6D6D; background-color: #E2E2E2;"}
-    ${(props) =>
-        props.type === "Cancelled" && "color: #BEBEBE; background-color: #575757;"}
+    &.Refund{
+        color: #E23428; 
+        background-color: #FFEDEC;
+    }
+    &.Booked{
+        color: #5AD07A; 
+        background-color: #E8FFEE;
+    }
+    &.Pending{
+        color: #6D6D6D; 
+        background-color: #E2E2E2;
+    }
+    &.Cancelled{
+        color: #BEBEBE; 
+        background-color: #575757;
+    }
 `;
 
 // ROOMS LIST

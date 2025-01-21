@@ -11,21 +11,12 @@ import { paginateData } from "./functions/paginateData";
 import { filterBookings } from "./functions/filterBookings";
 import { AppDispatch } from "../../../features/store";
 import { Booking } from "../../../interfaces/booking";
+import { Room } from "../../../interfaces/room";
+import { Employee } from "../../../interfaces/employee";
 
 interface BookingsListProps {
     currentPage: number;
     handleNavigate: (id: number) => void;
-}
-
-interface User {
-    id: number;
-    name: string;
-    image: string;
-}
-
-interface Room {
-    id: number;
-    room_name: string;
 }
 
 export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleNavigate }) => {
@@ -59,15 +50,15 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
         10
     )[currentPage - 1] || [];
 
-    const getImageById = (id: number): string | null => {
-        if (users.length === 0) return null;
-        const user = users.find((user: User) => user.id === id);
+    const getImageById = (id: number): string | undefined => {
+        if (users.length === 0) return undefined;
+        const user = users.find((user: Employee) => user.id === id);
         return user ? user.image : null;
     };
 
     const getUserNameById = (id: number): string | null => {
         if (users.length === 0) return null;
-        const user = users.find((user: User) => user.id === id);
+        const user = users.find((user: Employee) => user.id === id);
         return user ? user.name : null;
     };
 
@@ -118,7 +109,7 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
                     </Td>
                     <Td top>{getRoomNameById(booking.room_id)}</Td>
                     <Td>
-                        <GuestStatus type={booking.status}>{booking.status}</GuestStatus>
+                        <GuestStatus className={booking.status}>{booking.status}</GuestStatus>
                     </Td>
                 </Row>
             ))}

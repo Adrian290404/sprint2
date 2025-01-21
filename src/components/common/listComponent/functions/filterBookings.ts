@@ -1,9 +1,4 @@
-interface Booking {
-    id: number;
-    status: string;
-    check_in: string;
-    check_out: string;
-}
+import { Booking } from "../../../../interfaces/booking";
 
 export const filterBookings = (
     bookings: Booking[], 

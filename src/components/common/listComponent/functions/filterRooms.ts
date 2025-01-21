@@ -1,8 +1,4 @@
-interface Room {
-    id: number;
-    avaiable: boolean;
-    rate: number;
-}
+import { Room } from "../../../../interfaces/room";
 
 export const filterRooms = (
     rooms: Room[],

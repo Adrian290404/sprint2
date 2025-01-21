@@ -1,5 +1,5 @@
 import { ListLayoutComponent } from "../components/common/listLayoutComponent"
 
-export const UsersListPage = () => {
+export const UsersListPage: React.FC = () => {
     return <ListLayoutComponent />
 }

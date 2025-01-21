@@ -1,5 +1,5 @@
 import { ListLayoutComponent } from "../components/common/listLayoutComponent"
 
-export const RoomListPage = () => {
+export const RoomListPage: React.FC = () => {
     return <ListLayoutComponent />
 }

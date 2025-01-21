@@ -31,7 +31,7 @@ function App() {
                     path="/"
                     element={
                         !isLogged ? (
-                            <LogInPage onLogin={(username, password) => dispatch(loginThunk(username, password))} /> // Usamos loginThunk aquí
+                            <LogInPage onLogin={(username, password) => dispatch(loginThunk(username, password))} />
                         ) : (
                             <Navigate to="/dashboard" />
                         )

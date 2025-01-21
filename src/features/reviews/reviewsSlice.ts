@@ -1,10 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchReviews, updateReview } from './reviewsThunks';
-
-interface Review {
-    order_id: number;
-    [key: string]: any; 
-}
+import { Review } from '../../interfaces/review';
 
 interface ReviewsState {
     reviews: Review[];
@@ -41,5 +37,3 @@ export const reviewsSlice = createSlice({
 });
 
 export const { saveReviewsToLocalStorage } = reviewsSlice.actions;
-
-export default reviewsSlice.reducer;

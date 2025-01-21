@@ -1,8 +1,5 @@
 import styled from "styled-components";
 
-interface RowProps {
-    type?: "body" | "header";
-};
 interface TdProps {
     top?: boolean;
 };
@@ -36,10 +33,12 @@ export const Table = styled.table`
     background-color: #ffffff;
     border-radius: 0.7em;
 `;
-export const Row = styled.tr<RowProps>`
+export const Row = styled.tr`
     text-align: left;
     border: none;
-    border-top: ${(props) => (props.type === "body" ? "2px solid #f8f8f8" : "none")};
+    &.body{
+        border-top: 2px solid #f8f8f8;
+    }
 `;
 export const Th = styled.th`
     padding: 1em;

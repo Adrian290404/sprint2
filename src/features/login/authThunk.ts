@@ -6,14 +6,14 @@ import { bookings } from "../../data/bookings";
 import { reviews } from "../../data/reviews";
 import { AppDispatch } from '../store';
 
+interface AuthUser {
+    name: string;
+    email: string;
+}
+
 interface LoginUser {
     user: string;
     password: string;
-    name: string;
-}
-
-interface UserData {
-    email: string;
     name: string;
 }
 
@@ -21,8 +21,8 @@ export const loginThunk = (username: string, password: string) => async (dispatc
     const user = users.find((user: LoginUser) => user.user === username && user.password === password);
 
     if (user) {
-        const userData: UserData = { email: user.user, name: user.name };
-        dispatch(login(userData));
+        const userData: AuthUser = { name: user.name, email: user.user }; 
+        dispatch(login(userData)); 
 
         if (!localStorage.getItem("rooms")) {
             localStorage.setItem("rooms", JSON.stringify(rooms));
@@ -36,8 +36,7 @@ export const loginThunk = (username: string, password: string) => async (dispatc
         if (!localStorage.getItem("reviews")) {
             localStorage.setItem("reviews", JSON.stringify(reviews));
         }
-    } 
-    else {
+    } else {
         console.error("Invalid credentials!");
     }
 };

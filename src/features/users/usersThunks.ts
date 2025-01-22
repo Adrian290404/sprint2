@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Employee } from '../../interfaces/employee';
+import { apiRequest } from '../apiRequest';
 
 interface NewEmployee {
     name: string;
@@ -10,36 +11,52 @@ interface NewEmployee {
     contact: string;
 }
 
-export const fetchUsers = createAsyncThunk<Employee[]>('users/fetchUsers', async () => {
-    const users: Employee[] = JSON.parse(localStorage.getItem('employees') || '[]');
-    return users;
+export const fetchUsers = createAsyncThunk<Employee[]>('users/fetchUsers', async (_, { rejectWithValue }) => {
+    try {
+        return await apiRequest<Employee[]>('http://localhost:3000/api/protected/employees', 'GET');
+    } 
+    catch (error: any) {
+        return rejectWithValue(error.message);
+    }
 });
 
-export const fetchUser = createAsyncThunk<Employee | null, number>('users/fetchUser', async (id) => {
-    const users: Employee[] = JSON.parse(localStorage.getItem('employees') || '[]');
-    return users.find((user) => user.id === id) || null;
+export const fetchUser = createAsyncThunk<Employee, number>('users/fetchUser', async (id, { rejectWithValue }) => {
+    try {
+        return await apiRequest<Employee>(`http://localhost:3000/api/protected/employees/${id}`, 'GET');
+    } 
+    catch (error: any) {
+        return rejectWithValue(error.message);
+    }
 });
 
-export const createUser = createAsyncThunk<Employee, NewEmployee>('users/createUser', async (newUser) => {
-    const users: Employee[] = JSON.parse(localStorage.getItem('employees') || '[]');
-    const userWithId: Employee = { id: Date.now(), ...newUser };  
-    const updatedUsers = [...users, userWithId];
-    localStorage.setItem('employees', JSON.stringify(updatedUsers));
-    return userWithId;
+export const createUser = createAsyncThunk<Employee, NewEmployee>('users/createUser', async (newUser, { rejectWithValue }) => {
+    try {
+        return await apiRequest<Employee>('http://localhost:3000/api/protected/employees', 'POST', newUser);
+    } 
+    catch (error: any) {
+        return rejectWithValue(error.message);
+    }
 });
 
-export const updateUser = createAsyncThunk<Employee, Employee>('users/updateUser', async (updatedUser) => {
-    const users: Employee[] = JSON.parse(localStorage.getItem('employees') || '[]');
-    const updatedUsers = users.map((user) =>
-        user.id === updatedUser.id ? { ...user, ...updatedUser } : user
-    );
-    localStorage.setItem('employees', JSON.stringify(updatedUsers));
-    return updatedUser;
+export const updateUser = createAsyncThunk<Employee, Employee>('users/updateUser', async (updatedUser, { rejectWithValue }) => {
+    try {
+        return await apiRequest<Employee>(
+            `http://localhost:3000/api/protected/employees/${updatedUser.id}`,
+            'PUT',
+            updatedUser
+        );
+    } 
+    catch (error: any) {
+        return rejectWithValue(error.message);
+    }
 });
 
-export const deleteUser = createAsyncThunk<number, number>('users/deleteUser', async (id) => {
-    const users = JSON.parse(localStorage.getItem("employees") || "[]") as Employee[];
-    const updatedUsers = users.filter((user) => user.id !== id);
-    localStorage.setItem("employees", JSON.stringify(updatedUsers));
-    return id;
+export const deleteUser = createAsyncThunk<number, number>('users/deleteUser', async (id, { rejectWithValue }) => {
+    try {
+        await apiRequest<void>(`http://localhost:3000/api/protected/employees/${id}`, 'DELETE');
+        return id;
+    } 
+    catch (error: any) {
+        return rejectWithValue(error.message);
+    }
 });

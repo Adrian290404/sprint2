@@ -111,7 +111,7 @@ export const UsersCreateComponent = () => {
                     <Input
                         type="text"
                         name="schedule"
-                        pattern="^(?:\\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\\b)?$"
+                        pattern="^(?:(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday))?$"
                         required
                     />
 

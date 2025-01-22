@@ -79,7 +79,7 @@ export const UsersDetailsFormComponent: React.FC<UsersDetailsFormComponentProps>
                         id="scheduled"
                         name="scheduled"
                         type="text"
-                        pattern="^(?:\\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\\b)?$"
+                        pattern="^(?:(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday))?$"
                         onChange={(e) => handleChange(e, setUserScheduled, schedule)}
                         placeholder={schedule}
                     />

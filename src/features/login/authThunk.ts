@@ -1,6 +1,4 @@
 import { login } from './authSlice';
-import { rooms } from "../../data/rooms";
-import { employees } from "../../data/employees";
 import { bookings } from "../../data/bookings";
 import { reviews } from "../../data/reviews";
 import { AppDispatch } from '../store';
@@ -10,11 +8,6 @@ interface AuthUser {
     email: string;
 }
 
-interface LoginUser {
-    user: string;
-    password: string;
-    name: string;
-}
 
 export const loginThunk = (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
@@ -41,15 +34,6 @@ export const loginThunk = (email: string, password: string) => async (dispatch: 
 
         dispatch(login(userData));
 
-        if (!localStorage.getItem("rooms")) {
-            localStorage.setItem("rooms", JSON.stringify(rooms));
-        }
-        if (!localStorage.getItem("employees")) {
-            localStorage.setItem("employees", JSON.stringify(employees));
-        }
-        if (!localStorage.getItem("bookings")) {
-            localStorage.setItem("bookings", JSON.stringify(bookings));
-        }
         if (!localStorage.getItem("reviews")) {
             localStorage.setItem("reviews", JSON.stringify(reviews));
         }

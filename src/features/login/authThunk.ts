@@ -1,5 +1,4 @@
 import { login } from './authSlice';
-import { users } from "../../data/users";
 import { rooms } from "../../data/rooms";
 import { employees } from "../../data/employees";
 import { bookings } from "../../data/bookings";
@@ -17,12 +16,30 @@ interface LoginUser {
     name: string;
 }
 
-export const loginThunk = (username: string, password: string) => async (dispatch: AppDispatch) => {
-    const user = users.find((user: LoginUser) => user.user === username && user.password === password);
+export const loginThunk = (email: string, password: string) => async (dispatch: AppDispatch) => {
+    try {
+        const response = await fetch('http://localhost:3000/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password }),
+        });
 
-    if (user) {
-        const userData: AuthUser = { name: user.name, email: user.user }; 
-        dispatch(login(userData)); 
+        if (!response.ok) {
+            throw new Error('Error in login');
+        }
+
+        const data = await response.json();
+
+        const userData: AuthUser = {
+            name: data.name,
+            email: data.email,
+        };
+
+        localStorage.setItem('authToken', data.token);
+
+        dispatch(login(userData));
 
         if (!localStorage.getItem("rooms")) {
             localStorage.setItem("rooms", JSON.stringify(rooms));
@@ -36,7 +53,8 @@ export const loginThunk = (username: string, password: string) => async (dispatc
         if (!localStorage.getItem("reviews")) {
             localStorage.setItem("reviews", JSON.stringify(reviews));
         }
-    } else {
-        console.error("Invalid credentials!");
+    } 
+    catch (error) {
+        console.error('Error:', error);
     }
 };

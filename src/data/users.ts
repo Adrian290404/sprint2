@@ -1,23 +1,23 @@
-interface User {
-    user: string;
-    password: string;
-    name: string;
-}
+// interface User {
+//     email: string;
+//     password: string;
+//     username: string;
+// }
   
-export const users: User[] = [
-    {
-        user: "user@gmail.com",
-        password: "1234",
-        name: "user",
-    },
-    {
-        user: "adrian@gmail.com",
-        password: "adrian2004",
-        name: "adrian",
-    },
-    {
-        user: "admin@gmail.com",
-        password: "admin123",
-        name: "admin",
-    },
-];
+// export const users: User[] = [
+//     {
+//         email: "user@gmail.com",
+//         password: "1234",
+//         username: "user",
+//     },
+//     {
+//         email: "adrian@gmail.com",
+//         password: "adrian2004",
+//         username: "adrian",
+//     },
+//     {
+//         email: "admin@gmail.com",
+//         password: "admin123",
+//         username: "admin",
+//     },
+// ];

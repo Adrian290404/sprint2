@@ -4,14 +4,14 @@ import { Room } from '../../interfaces/room';
 
 interface RoomsState {
     rooms: Room[];
-    room: Room | null;
+    room: Room | undefined;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: RoomsState = {
     rooms: [],
-    room: null,
+    room: undefined,
     loading: false,
     error: null,
 };

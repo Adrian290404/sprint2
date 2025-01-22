@@ -1,4 +1,4 @@
-import { Container, CardContainer, ProfileImage, CardContent, EmployeeName, InfoGroup, InfoText, Clock, Agrupate, GoBack, Options, Icon } from "./styles/userDetailsStyles"
+import { Container, CardContainer, ProfileImage, CardContent, EmployeeName, InfoGroup, InfoText, Clock, Agrupate, GoBack, Options, Icon } from "./styles/userDetailsStyles";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -18,10 +18,14 @@ export const UsersDetailsComponent: React.FC = () => {
     const navigate = useNavigate();
     const [showInformation, setShowInformation] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
         if (id) {
-            dispatch(fetchUser(Number(id)));
+            setIsLoading(true);
+            dispatch(fetchUser(Number(id))).finally(() => {
+                setIsLoading(false); 
+            });
         }
     }, [dispatch, id]);
 
@@ -36,7 +40,7 @@ export const UsersDetailsComponent: React.FC = () => {
     const openModal = (): void => {
         setShowModal(true);
     };
-    
+
     const closeModal = (): void => {
         setShowModal(false);
     };
@@ -49,8 +53,12 @@ export const UsersDetailsComponent: React.FC = () => {
         }
     };
 
+    if (isLoading) {
+        return <p>Loading...</p>; 
+    }
+
     if (!user) {
-        return <p>Loading...</p>;
+        return <p>User not found.</p>; 
     }
 
     return (

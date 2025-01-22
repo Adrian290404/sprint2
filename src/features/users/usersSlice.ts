@@ -4,14 +4,14 @@ import { Employee } from '../../interfaces/employee';
 
 interface UsersState {
     users: Employee[];
-    user: Employee | null;
+    user: Employee | undefined;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: UsersState = {
     users: [],
-    user: null,
+    user: undefined,
     loading: false,
     error: null,
 };

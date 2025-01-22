@@ -1,5 +1,4 @@
 import { login } from './authSlice';
-import { bookings } from "../../data/bookings";
 import { reviews } from "../../data/reviews";
 import { AppDispatch } from '../store';
 

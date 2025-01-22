@@ -17,42 +17,44 @@ export const RoomDetailsComponent = () => {
     const dispatch = useDispatch<AppDispatch>();
     const room = useSelector((state: any) => state.rooms.room);
     const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(true);
     const [showInformation, setShowInformation] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
 
     useEffect(() => {
         if (id) {
-            dispatch(fetchRoom(Number(id)))
+            setLoading(true);
+            dispatch(fetchRoom(Number(id))).finally(() => setLoading(false));
         }
     }, [dispatch, id]);
 
     const goBack = (): void => {
-        navigate(-1)
+        navigate(-1);
     };
 
     const editInfo = (): void => {
-        setShowInformation(!showInformation)
+        setShowInformation(!showInformation);
     };
 
     const openModal = (): void => {
-        setShowModal(true)
+        setShowModal(true);
     };
-    
+
     const closeModal = (): void => {
-        setShowModal(false)
+        setShowModal(false);
     };
 
     const handleDelete = (): void => {
         if (id) {
-            dispatch(deleteRoom(Number(id)))
-            closeModal()
-            navigate(-1)
+            dispatch(deleteRoom(Number(id)));
+            closeModal();
+            navigate(-1);
         }
     };
 
-    if (!room) {
-        return <p>Loading...</p>
-    };
+    if (loading) {
+        return <p>Loading...</p>;
+    }
 
     return (
         <Container>
@@ -60,7 +62,10 @@ export const RoomDetailsComponent = () => {
                 <ImageContainer>
                     <Image src={room.image} alt={room.room_name} />
                     <ImageInformation src={room.avaiable ? available : booked} />
-                    <Price>${room.rate}<Small>/night</Small></Price>
+                    <Price>
+                        ${room.rate}
+                        <Small>/night</Small>
+                    </Price>
                 </ImageContainer>
                 <Details>
                     {showInformation ? (
@@ -78,19 +83,27 @@ export const RoomDetailsComponent = () => {
                             </Options>
                             <Title>{room.room_name}</Title>
                             <TypeAndFloor>
-                                <p><Info>Bed Type. </Info>{room.bed_type}</p>
-                                <p><Info>Floor. </Info>{room.room_floor}</p>
+                                <p>
+                                    <Info>Bed Type. </Info>
+                                    {room.bed_type}
+                                </p>
+                                <p>
+                                    <Info>Floor. </Info>
+                                    {room.room_floor}
+                                </p>
                             </TypeAndFloor>
                             <Facilities>
-                                <p><Info>Facilities.</Info></p> 
+                                <p>
+                                    <Info>Facilities.</Info>
+                                </p>
                                 <p>{room.facilities}</p>
                             </Facilities>
                         </>
                     ) : (
-                        <RoomDetailsFormComponent 
+                        <RoomDetailsFormComponent
                             id={room.id}
                             image={room.image}
-                            name={room.room_name} 
+                            name={room.room_name}
                             bedType={room.bed_type}
                             floor={room.room_floor}
                             facilities={room.facilities}
@@ -102,12 +115,12 @@ export const RoomDetailsComponent = () => {
                 </Details>
             </Content>
             <ModalQuestionComponent
-                isOpen={showModal} 
-                onClose={closeModal} 
-                onConfirm={handleDelete} 
+                isOpen={showModal}
+                onClose={closeModal}
+                onConfirm={handleDelete}
                 name={room.room_name}
                 func="Delete"
             />
         </Container>
-    )
+    );
 };

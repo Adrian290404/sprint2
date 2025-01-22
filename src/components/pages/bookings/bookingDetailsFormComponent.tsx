@@ -9,11 +9,16 @@ import { Booking } from "../../../interfaces/booking";
 export const BookingDetailsFormComponent: FC<Booking> = ({ check_in: ci, check_out: co, user_id: userId, room_id: roomId, id, order_date: orderDate, special_request: request, status }) => {
     
     const convertToDatetimeLocal = (dateString: string): string => {
-        const [datePart, timePart] = dateString.split(" ");
-        const [month, day, year] = datePart.split("/");
-        const [hours, minutes] = timePart.split(":");
-        return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
-    };
+        const date = new Date(dateString);
+    
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() es 0-indexado
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+    
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    };    
 
     const [checkIn, setCheckIn] = useState<string>(convertToDatetimeLocal(ci));
     const [checkOut, setCheckOut] = useState<string>(convertToDatetimeLocal(co));

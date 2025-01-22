@@ -1,130 +1,127 @@
-import { useParams, useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect, useState } from "react"
-import { fetchBooking } from "../../../features/bookings/bookingsThunks"
-import { fetchUser } from "../../../features/users/usersThunks"
-import { fetchRoom } from "../../../features/rooms/roomsThunks"
-import { Background, Button, Container, FacilityList, ID, InfoRow, LeftSection, Name, ProfileDetails, ProfileImage, ProfileInfo, RightSection, RoomDetails, RoomImage, Icon, Contact, InfoContainer, InfoTitle, Info, Separator, Especificator, FacilitiesTitle, Element, RoomStatus, RoomContainer, Options, Row, Action, GoBookings } from "./styles/bookingDetailsStyles"
-import { FaPhone } from "react-icons/fa6"
-import { TbMessageFilled } from "react-icons/tb"
-import { TiBackspaceOutline } from "react-icons/ti"
-import { CiEdit } from "react-icons/ci"
-import { MdDelete } from "react-icons/md"
-import { FaUserPen } from "react-icons/fa6"
-import { GiBed } from "react-icons/gi"
-import { ModalQuestionComponent } from "../../common/modalQuestionComponent"
-import { deleteBooking } from "../../../features/bookings/bookingsThunks"
-import { BookingDetailsFormComponent } from "./bookingDetailsFormComponent"
-import { AppDispatch } from "../../../features/store"
-import { Booking } from "../../../interfaces/booking"
-
-interface User {
-    image: string;
-    name: string;
-}
-
-interface Room {
-    room_name: string;
-    rate: number;
-    image: string;
-    facilities: string;
-}
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { fetchBooking } from "../../../features/bookings/bookingsThunks";
+import { fetchUser } from "../../../features/users/usersThunks";
+import { fetchRoom } from "../../../features/rooms/roomsThunks";
+import { Background, Button, Container, FacilityList, ID, InfoRow, LeftSection, Name, ProfileDetails, ProfileImage, ProfileInfo, RightSection, RoomDetails, RoomImage, Icon, Contact, InfoContainer, InfoTitle, Info, Separator, Especificator, FacilitiesTitle, Element, RoomStatus, RoomContainer, Options, Row, Action, GoBookings } from "./styles/bookingDetailsStyles";
+import { FaPhone } from "react-icons/fa6";
+import { TbMessageFilled } from "react-icons/tb";
+import { TiBackspaceOutline } from "react-icons/ti";
+import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
+import { FaUserPen } from "react-icons/fa6";
+import { GiBed } from "react-icons/gi";
+import { ModalQuestionComponent } from "../../common/modalQuestionComponent";
+import { deleteBooking } from "../../../features/bookings/bookingsThunks";
+import { BookingDetailsFormComponent } from "./bookingDetailsFormComponent";
+import { AppDispatch } from "../../../features/store";
 
 export const BookingsDetailsComponent: React.FC = () => {
-    const { id } = useParams<{ id: string }>()
+    const { id } = useParams<{ id: string }>();
     const dispatch = useDispatch<AppDispatch>();
-    const booking = useSelector((state: any) => state.bookings.booking)
-    const user = useSelector((state: any) => state.users.user)
-    const room = useSelector((state: any) => state.rooms.room)
-    const navigate = useNavigate()
-    const [showInformation, setShowInformation] = useState<boolean>(true)
-    const [showModal, setShowModal] = useState<boolean>(false)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const booking = useSelector((state: any) => state.bookings.booking);
+    const user = useSelector((state: any) => state.users.user);
+    const room = useSelector((state: any) => state.rooms.room);
+    const navigate = useNavigate();
+    const [showInformation, setShowInformation] = useState<boolean>(true);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const facilitiesArray = room?.facilities ? room.facilities.split(", ") : [];
 
     const formatDateCheckIn = (inputDateTime: string) => {
         const months = [
-          "January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"
-        ]
-      
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+    
         const getDaySuffix = (day: number) => {
-          if (day > 3 && day < 21) return "th"
-          switch (day % 10) {
-            case 1: return "st"
-            case 2: return "nd"
-            case 3: return "rd"
-            default: return "th"
-          }
-        }
-      
-        const [date, time] = inputDateTime.split(" ")
-        const [month, day, year] = date.split("/").map(Number)
-        const [hours, minutes] = time.split(":").map(Number)
-      
-        const amPm = hours >= 12 ? "PM" : "AM"
-        const formattedHours = hours % 12 || 12
-        const monthName = months[month - 1]
-        const daySuffix = getDaySuffix(day)
-      
-        return `${monthName} ${day}${daySuffix}, ${year} | ${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${amPm}`
-    }
-
-    const formatDateCheckOut = (dateString: string) => {
-        const date = new Date(dateString);
-        const getDaySuffix = (day: number) => {
-            if (day > 3 && day < 21) return "th"
+            if (day > 3 && day < 21) return "th";
             switch (day % 10) {
                 case 1: return "st";
                 case 2: return "nd";
                 case 3: return "rd";
                 default: return "th";
             }
-        }
-        const day = date.getDate()
-        const daySuffix = getDaySuffix(day)
-        const month = date.toLocaleString("en-US", { month: "long" })
-        const year = date.getFullYear()
-        return `${month} ${day}${daySuffix}, ${year}`
-    }
+        };
+    
+        const date = new Date(inputDateTime);
+    
+        const year = date.getFullYear();
+        const month = months[date.getMonth()];
+        const day = date.getDate();
+        const hours = date.getHours();
+        const minutes = date.getMinutes();
+    
+        const amPm = hours >= 12 ? "PM" : "AM";
+        const formattedHours = hours % 12 || 12; 
+        const daySuffix = getDaySuffix(day);
+    
+        return `${month} ${day}${daySuffix}, ${year} | ${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${amPm}`;
+    };
+
+    const formatDateCheckOut = (dateString: string) => {
+        const date = new Date(dateString);
+        const getDaySuffix = (day: number) => {
+            if (day > 3 && day < 21) return "th";
+            switch (day % 10) {
+                case 1: return "st";
+                case 2: return "nd";
+                case 3: return "rd";
+                default: return "th";
+            }
+        };
+        const day = date.getDate();
+        const daySuffix = getDaySuffix(day);
+        const month = date.toLocaleString("en-US", { month: "long" });
+        const year = date.getFullYear();
+        return `${month} ${day}${daySuffix}, ${year}`;
+    };
 
     const openModal = () => {
-        setShowModal(true)
-    }
-    
+        setShowModal(true);
+    };
+
     const closeModal = () => {
-        setShowModal(false)
-    }
+        setShowModal(false);
+    };
 
     const editInfo = () => {
-        setShowInformation(!showInformation)
-    }
+        setShowInformation(!showInformation);
+    };
 
     const handleDelete = () => {
         dispatch(deleteBooking(Number(id)));
         closeModal();
         navigate(-1);
-    }
+    };
 
     useEffect(() => {
         const loadData = async () => {
             if (id) {
-                await dispatch(fetchBooking(Number(id)))
+                try {
+                    const bookingResult = await dispatch(fetchBooking(Number(id))).unwrap();
+
+                    if (bookingResult?.user_id && bookingResult?.room_id) {
+                        await Promise.all([
+                            dispatch(fetchUser(Number(bookingResult.user_id))),
+                            dispatch(fetchRoom(Number(bookingResult.room_id))),
+                        ]);
+                    }
+                } 
+                catch (error) {
+                    console.error("Error fetching data:", error);
+                } 
+                finally {
+                    setIsLoading(false);
+                }
             }
-        }
-        loadData()
-    }, [dispatch, id])
+        };
+        loadData();
+    }, [dispatch, id]);
 
-    useEffect(() => {
-        if (booking?.user_id && booking?.room_id) {
-            dispatch(fetchUser(Number(booking.user_id)))
-            dispatch(fetchRoom(Number(booking.room_id)))
-            setIsLoading(false)
-        }
-    }, [dispatch, booking])
-
-    if (isLoading) {
-        return <p>Loading...</p>
+    if (isLoading || !booking || !user || !room) {
+        return <p>Loading...</p>;
     }
 
     return (

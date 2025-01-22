@@ -1,7 +1,7 @@
 export async function apiRequest<T>( url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE', body?: any ): Promise<T> {
     const headers = {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('authToken')}`, // Ajusta según tu autenticación
+        Authorization: `Bearer ${localStorage.getItem('authToken')}`,
     };
 
     const options: RequestInit = {

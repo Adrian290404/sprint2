@@ -46,44 +46,40 @@ export const BookingsCreateComponent: React.FC = () => {
     };
 
     const formatDate = (date: Date): string => {
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${month}/${day}/${year} ${hours}:${minutes}`;
+        return date.toISOString();
     };
+    
 
     const goBack = (): void => {
         navigate(-1);
     };
 
-    const handleSubmit = (e: FormEvent): void => {
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
         setError("");
-
+    
         if (selectedGuest === "default" || selectedRoom === "default") {
             setError("Please select a valid Guest and Room.");
             return;
         }
-
+    
         const formData = new FormData(e.target as HTMLFormElement);
         const checkIn = new Date(formData.get("checkIn") as string);
         const checkOut = new Date(formData.get("checkOut") as string);
         const currentDate = new Date();
-
+    
         if (checkIn < currentDate) {
             setError("Check-In date cannot be in the past.");
             return;
         }
-
+    
         if (checkOut <= checkIn) {
             setError("Check-Out date must be after Check-In date.");
             return;
         }
-
-        const specialRequest = formData.get("notes") as string;
-
+    
+        const specialRequest = (formData.get("notes") as string) || "";
+    
         const newBooking: Booking = {
             user_id: parseInt(selectedGuest),
             room_id: parseInt(selectedRoom),
@@ -94,9 +90,15 @@ export const BookingsCreateComponent: React.FC = () => {
             special_request: specialRequest,
             status: status
         };
-
-        dispatch(createBooking(newBooking));
-        navigate(`/bookings/${newBookingId()}`);
+    
+        try {
+            await dispatch(createBooking(newBooking));  
+            navigate(`/bookings/${newBooking.id}`);
+        } 
+        catch (error) {
+            setError("Error creating booking. Please try again later.");
+            console.error("Error creating booking:", error);
+        }
     };
 
     return (

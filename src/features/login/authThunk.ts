@@ -10,7 +10,7 @@ interface AuthUser {
 
 export const loginThunk = (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
-        const response = await fetch('http://localhost:3000/api/auth/login', {
+        const response = await fetch('https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

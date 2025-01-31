@@ -14,7 +14,7 @@ interface NewRoom {
 
 export const fetchRooms = createAsyncThunk<Room[]>('rooms/fetchRooms', async (_, { rejectWithValue }) => {
     try {
-        return await apiRequest<Room[]>('http://localhost:3000/api/protected/rooms', 'GET');
+        return await apiRequest<Room[]>('https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/rooms', 'GET');
     } 
     catch (error: any) {
         return rejectWithValue(error.message);
@@ -23,7 +23,7 @@ export const fetchRooms = createAsyncThunk<Room[]>('rooms/fetchRooms', async (_,
 
 export const fetchRoom = createAsyncThunk<Room, number>('rooms/fetchRoom', async (id, { rejectWithValue }) => {
     try {
-        return await apiRequest<Room>(`http://localhost:3000/api/protected/rooms/${id}`, 'GET');
+        return await apiRequest<Room>(`https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/rooms/${id}`, 'GET');
     } 
     catch (error: any) {
         return rejectWithValue(error.message);
@@ -32,7 +32,7 @@ export const fetchRoom = createAsyncThunk<Room, number>('rooms/fetchRoom', async
 
 export const createRoom = createAsyncThunk<Room, NewRoom>('rooms/createRoom', async (newRoom, { rejectWithValue }) => {
     try {
-        return await apiRequest<Room>('http://localhost:3000/api/protected/rooms', 'POST', newRoom);
+        return await apiRequest<Room>('https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/rooms', 'POST', newRoom);
     } 
     catch (error: any) {
         return rejectWithValue(error.message);
@@ -42,7 +42,7 @@ export const createRoom = createAsyncThunk<Room, NewRoom>('rooms/createRoom', as
 export const updateRoom = createAsyncThunk<Room, Room>('rooms/updateRoom', async (updatedRoom, { rejectWithValue }) => {
     try {
         return await apiRequest<Room>(
-            `http://localhost:3000/api/protected/rooms/${updatedRoom.id}`,
+            `https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/rooms/${updatedRoom.id}`,
             'PUT',
             updatedRoom
         );
@@ -54,7 +54,7 @@ export const updateRoom = createAsyncThunk<Room, Room>('rooms/updateRoom', async
 
 export const deleteRoom = createAsyncThunk<number, number>('rooms/deleteRoom', async (id, { rejectWithValue }) => {
     try {
-        await apiRequest<void>(`http://localhost:3000/api/protected/rooms/${id}`, 'DELETE');
+        await apiRequest<void>(`https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/rooms/${id}`, 'DELETE');
         return id;
     } 
     catch (error: any) {

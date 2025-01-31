@@ -14,7 +14,7 @@ interface NewBooking {
 
 export const fetchBookings = createAsyncThunk<Booking[]>('bookings/fetchBookings', async (_, { rejectWithValue }) => {
     try {
-        return await apiRequest<Booking[]>('http://localhost:3000/api/protected/bookings', 'GET');
+        return await apiRequest<Booking[]>('https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/bookings', 'GET');
     } 
     catch (error: any) {
         return rejectWithValue(error.message);
@@ -23,7 +23,7 @@ export const fetchBookings = createAsyncThunk<Booking[]>('bookings/fetchBookings
 
 export const fetchBooking = createAsyncThunk<Booking, number>('bookings/fetchBooking', async (id, { rejectWithValue }) => {
     try {
-        return await apiRequest<Booking>(`http://localhost:3000/api/protected/bookings/${id}`, 'GET');
+        return await apiRequest<Booking>(`https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/bookings/${id}`, 'GET');
     } 
     catch (error: any) {
         return rejectWithValue(error.message);
@@ -32,7 +32,7 @@ export const fetchBooking = createAsyncThunk<Booking, number>('bookings/fetchBoo
 
 export const createBooking = createAsyncThunk<Booking, NewBooking>('bookings/createBooking', async (newBooking, { rejectWithValue }) => {
     try {
-        return await apiRequest<Booking>('http://localhost:3000/api/protected/bookings', 'POST', newBooking);
+        return await apiRequest<Booking>('https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/bookings', 'POST', newBooking);
     } 
     catch (error: any) {
         return rejectWithValue(error.message);
@@ -42,7 +42,7 @@ export const createBooking = createAsyncThunk<Booking, NewBooking>('bookings/cre
 export const updateBooking = createAsyncThunk<Booking, Booking>('bookings/updateBooking', async (updatedBooking, { rejectWithValue }) => {
     try {
         return await apiRequest<Booking>(
-            `http://localhost:3000/api/protected/bookings/${updatedBooking.id}`,
+            `https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/bookings/${updatedBooking.id}`,
             'PUT',
             updatedBooking
         );
@@ -54,7 +54,7 @@ export const updateBooking = createAsyncThunk<Booking, Booking>('bookings/update
 
 export const deleteBooking = createAsyncThunk<number, number>('bookings/deleteBooking', async (id, { rejectWithValue }) => {
     try {
-        await apiRequest<void>(`http://localhost:3000/api/protected/bookings/${id}`, 'DELETE');
+        await apiRequest<void>(`https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/protected/bookings/${id}`, 'DELETE');
         return id;
     } 
     catch (error: any) {

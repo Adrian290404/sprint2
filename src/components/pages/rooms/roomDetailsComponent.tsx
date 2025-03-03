@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchRoom, deleteRoom } from '../../../features/rooms/roomsThunks'
+import { fetchRoom, fetchRooms, deleteRoom } from '../../../features/rooms/roomsThunks'
 import { Container, Content, ImageContainer, Image, ImageInformation, TypeAndFloor, Details, Title, Info, Facilities, Price, Small, GoBack, Options, Icon } from './styles/roomDetailsStyles'
 import available from "../../../assets/available.png"
 import booked from "../../../assets/booked.png"
@@ -44,26 +44,30 @@ export const RoomDetailsComponent = () => {
         setShowModal(false);
     };
 
-    const handleDelete = (): void => {
+    const handleDelete = async (): Promise<void> => {
         if (id) {
-            dispatch(deleteRoom(Number(id)));
+            await dispatch(deleteRoom(Number(id)));
             closeModal();
+            await dispatch(fetchRooms());
             navigate(-1);
         }
     };
+    
 
     if (loading) {
         return <p>Loading...</p>;
     }
 
+    const currentRoom = Array.isArray(room) ? room[0] : room;
+
     return (
         <Container>
             <Content>
                 <ImageContainer>
-                    <Image src={room.image} alt={room.room_name} />
-                    <ImageInformation src={room.avaiable ? available : booked} />
+                    <Image src={currentRoom.image} alt={currentRoom.room_name} />
+                    <ImageInformation src={currentRoom.avaiable ? available : booked} />
                     <Price>
-                        ${room.rate}
+                        ${currentRoom.rate}
                         <Small>/night</Small>
                     </Price>
                 </ImageContainer>
@@ -81,34 +85,34 @@ export const RoomDetailsComponent = () => {
                                     <MdDelete size={30} />
                                 </Icon>
                             </Options>
-                            <Title>{room.room_name}</Title>
+                            <Title>{currentRoom.room_name}</Title>
                             <TypeAndFloor>
                                 <p>
                                     <Info>Bed Type. </Info>
-                                    {room.bed_type}
+                                    {currentRoom.bed_type}
                                 </p>
                                 <p>
                                     <Info>Floor. </Info>
-                                    {room.room_floor}
+                                    {currentRoom.room_floor}
                                 </p>
                             </TypeAndFloor>
                             <Facilities>
                                 <p>
                                     <Info>Facilities.</Info>
                                 </p>
-                                <p>{room.facilities}</p>
+                                <p>{currentRoom.facilities}</p>
                             </Facilities>
                         </>
                     ) : (
                         <RoomDetailsFormComponent
-                            id={room.id}
-                            image={room.image}
-                            name={room.room_name}
-                            bedType={room.bed_type}
-                            floor={room.room_floor}
-                            facilities={room.facilities}
-                            price={room.rate}
-                            available={room.avaiable}
+                            id={currentRoom.id}
+                            image={currentRoom.image}
+                            name={currentRoom.room_name}
+                            bedType={currentRoom.bed_type}
+                            floor={currentRoom.room_floor}
+                            facilities={currentRoom.facilities}
+                            price={currentRoom.rate}
+                            available={currentRoom.avaiable}
                             changePage={editInfo}
                         />
                     )}
@@ -118,7 +122,7 @@ export const RoomDetailsComponent = () => {
                 isOpen={showModal}
                 onClose={closeModal}
                 onConfirm={handleDelete}
-                name={room.room_name}
+                name={currentRoom.room_name}
                 func="Delete"
             />
         </Container>

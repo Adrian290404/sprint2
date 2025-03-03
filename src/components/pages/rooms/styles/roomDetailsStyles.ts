@@ -62,6 +62,8 @@ export const GoBack = styled.div`
 export const Title = styled.h1`
     font-size: 2rem;
     color: #222;
+    width: 80%;
+    margin: 0 auto;
     text-align: center;
     text-decoration: underline;
 `;

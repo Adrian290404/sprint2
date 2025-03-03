@@ -2,32 +2,21 @@ import { useRef, FormEvent } from 'react'
 import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Checkbox, Title, GoBack } from '../../common/styles/createStyles'
 import { MdOutlineAutoAwesome } from "react-icons/md"
 import { TiBackspaceOutline } from "react-icons/ti"
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { createRoom } from "../../../features/rooms/roomsThunks"
-import { AppDispatch, RootState } from '../../../features/store'
+import { AppDispatch } from '../../../features/store'
 import { Room } from '../../../interfaces/room'
 
 export const RoomCreateComponent = () => {
     const facilitiesInputRef = useRef<HTMLInputElement | null>(null);
     const imageInputRef = useRef<HTMLInputElement | null>(null);
     const dispatch = useDispatch<AppDispatch>();
-    const rooms = useSelector((state: RootState) => state.rooms.rooms);
     const navigate = useNavigate();
 
-    const newRoomId = (): number => {
-        let minId = 1
-        for (let i = 0; i < rooms.length; i++) {
-            if (rooms[i].id === minId) {
-                minId = rooms[i].id + 1
-            }
-        }
-        return minId
-    };
-    
     const handleSetDefaultValue = (inputRef: React.RefObject<HTMLInputElement>, value: string): void => {
         if (inputRef && inputRef.current) {
-            inputRef.current.value = value
+            inputRef.current.value = value;
         }
     };
 
@@ -39,8 +28,8 @@ export const RoomCreateComponent = () => {
         e.preventDefault();
     
         const formData = new FormData(e.target as HTMLFormElement)
-        const newRoom: Room = {
-            id: newRoomId(),
+       
+        const newRoom: Omit<Room, 'id'> = {
             room_name: formData.get('room_name') as string,
             bed_type: formData.get('bed_type') as string,
             room_floor: formData.get('room_floor') as string,
@@ -50,8 +39,15 @@ export const RoomCreateComponent = () => {
             image: formData.get('image') as string,
         }
     
-        dispatch(createRoom(newRoom))
-        navigate(`/room/${newRoomId()}`)
+       
+        dispatch(createRoom(newRoom)).then((action: any) => {
+            if (action.payload) {
+                navigate(`/room/${action.payload.id}`);
+            } 
+            else {
+                navigate(`/rooms`);
+            }
+        });
     };
 
     return (
@@ -69,7 +65,7 @@ export const RoomCreateComponent = () => {
                                 type="text"
                                 name="id"
                                 disabled
-                                value={newRoomId()}
+                                value="Auto-generated"
                             />
                         </div>
                         <div>

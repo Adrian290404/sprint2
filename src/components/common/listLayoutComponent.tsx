@@ -15,23 +15,23 @@ interface State {
 }
 
 export const ListLayoutComponent = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const currentPage = useSelector((state: State) => state.pagination.currentPage);
-  const location = useLocation();
+    const dispatch = useDispatch<AppDispatch>();
+    const currentPage = useSelector((state: State) => state.pagination.currentPage);
+    const location = useLocation();
 
-  useEffect(() => {
-    dispatch(setPage(1));
-  }, [location.pathname, dispatch]);
+    useEffect(() => {
+        dispatch(setPage(1));
+    }, [location.pathname, dispatch]);
 
-  const handlePageChange = (newPage: number) => {
-    dispatch(setPage(newPage));
-  };
+    const handlePageChange = (newPage: number) => {
+        dispatch(setPage(newPage));
+    };
 
-  return (
-    <Background>
-      <ManagementComponent />
-      <ListComponent currentPage={currentPage} />
-      <PaginationComponent currentPage={currentPage} setCurrentPage={handlePageChange} />
-    </Background>
-  );
+    return (
+        <Background>
+            <ManagementComponent />
+            <ListComponent currentPage={currentPage} />
+            <PaginationComponent currentPage={currentPage} setCurrentPage={handlePageChange} />
+        </Background>
+    );
 };

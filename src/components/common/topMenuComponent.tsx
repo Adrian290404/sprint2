@@ -40,10 +40,10 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
 
     const getName = (): string => {
         if (user) {
-            if (location.pathname.includes("/bookings") && location.pathname !== "/bookings" && location.pathname !== "/bookings/create" && booking) return user.name;
+            if (location.pathname.includes("/bookings") && location.pathname !== "/bookings" && location.pathname !== "/bookings/create" && booking) return user[0].name;
         }
-        if (location.pathname.includes("/room") && location.pathname !== "/room" && location.pathname !== "/room/create" && room) return room.room_name;
-        if (location.pathname.includes("/users") && location.pathname !== "/users" && location.pathname !== "/users/create" && user) return user.name;
+        if (location.pathname.includes("/room") && location.pathname !== "/room" && location.pathname !== "/room/create" && room) return room[0].room_name;
+        if (location.pathname.includes("/users") && location.pathname !== "/users" && location.pathname !== "/users/create" && user) return user[0].name;
         if (location.pathname.includes("/dashboard") && location.pathname.split("/")[2] === "customerReviews") {
             return "Customer Review";
         }

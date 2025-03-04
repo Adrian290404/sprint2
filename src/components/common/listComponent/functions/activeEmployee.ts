@@ -9,7 +9,8 @@ export const activeEmployee = (str: string): boolean => {
 
     if (startIndex <= endIndex) {
         return todayIndex >= startIndex && todayIndex <= endIndex;
-    } else {
+    } 
+    else {
         return todayIndex >= startIndex || todayIndex <= endIndex;
     }
 };

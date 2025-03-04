@@ -5,7 +5,7 @@ import { apiRequest } from '../apiRequest';
 interface NewEmployee {
     name: string;
     image: string;
-    join: string;
+    join_date: string;
     job_desk: string;
     schedule: string;
     contact: string;

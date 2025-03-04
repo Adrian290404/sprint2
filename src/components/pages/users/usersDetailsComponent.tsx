@@ -2,7 +2,7 @@ import { Container, CardContainer, ProfileImage, CardContent, EmployeeName, Info
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { fetchUser, deleteUser } from "../../../features/users/usersThunks";
+import { fetchUser, deleteUser, fetchUsers } from "../../../features/users/usersThunks";
 import { MdOutlineCalendarToday, MdOutlineSchedule, MdOutlineLocalPhone, MdDelete } from "react-icons/md";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { CiEdit } from "react-icons/ci";
@@ -45,10 +45,11 @@ export const UsersDetailsComponent: React.FC = () => {
         setShowModal(false);
     };
 
-    const handleDelete = (): void => {
+    const handleDelete = async (): Promise<void> => {
         if (id) {
-            dispatch(deleteUser(Number(id)));
+            await dispatch(deleteUser(Number(id)));
             closeModal();
+            await dispatch(fetchUsers());
             navigate(-1);
         }
     };
@@ -61,12 +62,14 @@ export const UsersDetailsComponent: React.FC = () => {
         return <p>User not found.</p>; 
     }
 
+    const currentUser = Array.isArray(user) ? user[0] : user;
+
     return (
         <Container>
             <CardContainer>
-                <ProfileImage src={user.image} alt={`${user.name}'s profile`} />
+                <ProfileImage src={currentUser.image} alt={`${currentUser.name}'s profile`} />
                 <CardContent>
-                    <EmployeeName>{user.name}</EmployeeName>
+                    <EmployeeName>{currentUser.name}</EmployeeName>
                     {showInformation ? (
                         <>
                             <GoBack>
@@ -81,36 +84,36 @@ export const UsersDetailsComponent: React.FC = () => {
                                 </Icon>
                             </Options>
                             <InfoGroup center>
-                                <InfoText>{user.job_desk}</InfoText>
+                                <InfoText>{currentUser.job_desk}</InfoText>
                             </InfoGroup>
                             <Agrupate>
                                 <InfoGroup>
                                     <MdOutlineCalendarToday size={25} />
-                                    <InfoText>{user.join}</InfoText>
+                                    <InfoText>{currentUser.join}</InfoText>
                                 </InfoGroup>
                                 <InfoGroup>
                                     <MdOutlineLocalPhone size={25} />
-                                    <InfoText>{user.contact}</InfoText>
+                                    <InfoText>{currentUser.contact}</InfoText>
                                 </InfoGroup>
                                 <InfoGroup>
-                                    <Clock active={activeEmployee(user.schedule)}>
+                                    <Clock active={activeEmployee(currentUser.schedule)}>
                                         <MdOutlineSchedule size={25} />
                                     </Clock>
                                     <InfoText>
-                                        {user.schedule.replace(/, /g, " - ")}
+                                        {currentUser.schedule.replace(/, /g, " - ")}
                                     </InfoText>
                                 </InfoGroup>
                             </Agrupate>
                         </>
                     ) : (
                         <UsersDetailsFormComponent
-                            id={user.id}
-                            name={user.name}
-                            image={user.image}
-                            job={user.job_desk}
-                            join={user.join}
-                            contact={user.contact}
-                            schedule={user.schedule}
+                            id={currentUser.id}
+                            name={currentUser.name}
+                            image={currentUser.image}
+                            job={currentUser.job_desk}
+                            join={currentUser.join}
+                            contact={currentUser.contact}
+                            schedule={currentUser.schedule}
                             changePage={editInfo}
                         />
                     )}
@@ -120,7 +123,7 @@ export const UsersDetailsComponent: React.FC = () => {
                 isOpen={showModal}
                 onClose={closeModal}
                 onConfirm={handleDelete}
-                name={user.name}
+                name={currentUser.name}
                 func="Delete"
             />
         </Container>

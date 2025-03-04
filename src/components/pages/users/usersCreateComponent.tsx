@@ -4,25 +4,16 @@ import { MdOutlineAutoAwesome } from "react-icons/md";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createUser } from '../../../features/users/usersThunks';
+import { createUser, fetchUser, fetchUsers } from '../../../features/users/usersThunks';
 import { RootState, AppDispatch } from '../../../features/store';
 import { Employee } from '../../../interfaces/employee'; 
+import { format } from 'date-fns';
 
 export const UsersCreateComponent = () => {
     const imageInputRef = useRef<HTMLInputElement | null>(null);
     const dispatch = useDispatch<AppDispatch>();
     const users = useSelector((state: RootState) => state.users.users); 
     const navigate = useNavigate();
-
-    const newUserId = (): number => {
-        let minId = 1;
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].id === minId) {
-                minId = users[i].id + 1;
-            }
-        }
-        return minId;
-    };
 
     const handleSetDefaultValue = (inputRef: React.RefObject<HTMLInputElement>, value: string): void => {
         if (inputRef.current) {
@@ -46,22 +37,29 @@ export const UsersCreateComponent = () => {
         navigate(-1);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
 
-        const formData = new FormData(e.currentTarget);
-        const newUser: Employee = {
-            id: newUserId(),
+        const formData = new FormData(e.target as HTMLFormElement);
+        const newUser: Omit<Employee, 'id'> = {
             name: formData.get('name') as string,
             image: formData.get('image') as string,
-            join: formatDate(),
+            join_date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
             job_desk: formData.get('job_desk') as string,
             schedule: formData.get('schedule') as string,
             contact: formData.get('contact') as string,
         };
 
-        dispatch(createUser(newUser));
-        navigate(`/users/${newUserId()}`);
+        const action = await dispatch(createUser(newUser));
+        const userCreated = action.payload as Employee;
+        if (userCreated && userCreated.id) {
+            await dispatch(fetchUser(Number(userCreated.id)));
+            await dispatch(fetchUsers());
+            navigate(`/users/${userCreated.id}`);
+        } 
+        else {
+            navigate(`/users`);
+        }
     };
 
     return (
@@ -79,7 +77,7 @@ export const UsersCreateComponent = () => {
                                 type="text"
                                 name="id"
                                 disabled
-                                value={newUserId()}
+                                value="Auto-generated"
                             />
                         </Column>
                         <Column>

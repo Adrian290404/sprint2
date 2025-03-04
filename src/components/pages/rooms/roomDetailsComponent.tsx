@@ -58,6 +58,10 @@ export const RoomDetailsComponent = () => {
         return <p>Loading...</p>;
     }
 
+    if (!room) {
+        return <p>Room not found.</p>; 
+    }
+
     const currentRoom = Array.isArray(room) ? room[0] : room;
 
     return (

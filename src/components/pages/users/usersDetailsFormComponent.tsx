@@ -40,7 +40,7 @@ export const UsersDetailsFormComponent: React.FC<UsersDetailsFormComponentProps>
             id,
             name,
             image,
-            join,
+            join_date: join,
             job_desk: jobDesk,
             schedule: userScheduled,
             contact: userContact,

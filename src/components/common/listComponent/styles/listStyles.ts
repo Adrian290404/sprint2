@@ -9,6 +9,9 @@ interface ImageProps {
 interface TextLightProps {
     type?: "room" | "employee";
 };
+interface RowProps {
+    $type?: string;
+}
 interface GuestNotesProps {
     active?: boolean;
 };
@@ -33,13 +36,12 @@ export const Table = styled.table`
     background-color: #ffffff;
     border-radius: 0.7em;
 `;
-export const Row = styled.tr`
+export const Row = styled.tr<RowProps>`
     text-align: left;
     border: none;
-    &.body{
-        border-top: 2px solid #f8f8f8;
-    }
+    ${(props) => props.$type === "body" && "border-top: 2px solid #f8f8f8"};
 `;
+
 export const Th = styled.th`
     padding: 1em;
     color: #393939;

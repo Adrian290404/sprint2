@@ -4,7 +4,7 @@ import { MdOutlineAutoAwesome } from "react-icons/md"
 import { TiBackspaceOutline } from "react-icons/ti"
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { createRoom } from "../../../features/rooms/roomsThunks"
+import { createRoom, fetchRoom, fetchRooms } from "../../../features/rooms/roomsThunks"
 import { AppDispatch } from '../../../features/store'
 import { Room } from '../../../interfaces/room'
 
@@ -24,11 +24,11 @@ export const RoomCreateComponent = () => {
         navigate(-1)
     };
 
-    const handleSubmit = (e: FormEvent): void => {
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
     
-        const formData = new FormData(e.target as HTMLFormElement)
-       
+        const formData = new FormData(e.target as HTMLFormElement);
+    
         const newRoom: Omit<Room, 'id'> = {
             room_name: formData.get('room_name') as string,
             bed_type: formData.get('bed_type') as string,
@@ -37,17 +37,18 @@ export const RoomCreateComponent = () => {
             rate: parseFloat(formData.get('rate') as string),
             avaiable: formData.get('available') === 'on',
             image: formData.get('image') as string,
-        }
+        };
     
-       
-        dispatch(createRoom(newRoom)).then((action: any) => {
-            if (action.payload) {
-                navigate(`/room/${action.payload.id}`);
-            } 
-            else {
-                navigate(`/rooms`);
-            }
-        });
+        const action = await dispatch(createRoom(newRoom));
+        const roomCreated = action.payload as Room;
+        if (roomCreated && roomCreated.id) {
+            await dispatch(fetchRoom(Number(roomCreated.id)));
+            await dispatch(fetchRooms());
+            navigate(`/room/${roomCreated.id}`);
+        } 
+        else {
+            navigate(`/room`);
+        }
     };
 
     return (

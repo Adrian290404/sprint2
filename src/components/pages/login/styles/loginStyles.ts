@@ -66,3 +66,10 @@ export const MarginRight = styled.div`
     cursor: pointer;
     margin-right: 1em;
 `;
+export const Credentials = styled.p`
+    color: black;
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    margin-top: .8em;
+    text-align: center;
+`

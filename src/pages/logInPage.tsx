@@ -4,7 +4,7 @@ import loginBg3 from "../assets/loginBg3.jpg";
 import loginBg4 from "../assets/loginBg4.jpg";
 import { useSelector } from 'react-redux';
 import { useState, useEffect, FormEvent } from 'react';
-import { BackgroundContainer, LogInContainer, Title, InputContainer, Input, Button, MarginRight } from "../components/pages/login/styles/loginStyles";
+import { BackgroundContainer, LogInContainer, Title, InputContainer, Input, Button, MarginRight, Credentials } from "../components/pages/login/styles/loginStyles";
 import { FaLock, FaUnlock, FaUser } from "react-icons/fa";
 
 
@@ -84,6 +84,8 @@ export const LogInPage: React.FC<LogInPageProps> = ({ onLogin }) => {
                         {error && <div>{error}</div>}
                     <Button type="submit">Login</Button>
                 </form>
+                <Credentials>user@gmail.com</Credentials>
+                <Credentials>12345</Credentials>
             </LogInContainer>
         </BackgroundContainer>
     );

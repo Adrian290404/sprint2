@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+interface RowProps {
+    $type?: string;
+}
 interface TdProps {
     top?: boolean;
 };
@@ -33,7 +36,7 @@ export const Table = styled.table`
     background-color: #ffffff;
     border-radius: 0.7em;
 `;
-export const Row = styled.tr`
+export const Row = styled.tr<RowProps>`
     text-align: left;
     border: none;
     &.body{

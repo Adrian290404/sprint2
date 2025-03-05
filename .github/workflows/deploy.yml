@@ -1,0 +1,33 @@
+name: Despliegue de Aplicación React a S3
+
+on:
+  push:
+    branches:
+      - apiConectionSQL
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm install
+
+      - run: npm run build
+
+      - run: ls -l build
+
+      - uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}          
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}      
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
+          AWS_REGION: ${{ secrets.AWS_REGION }}                     
+          SOURCE_DIR: './build'                                     

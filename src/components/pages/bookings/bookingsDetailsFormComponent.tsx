@@ -1,5 +1,7 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchRooms } from "../../../features/rooms/roomsThunks";
+import { fetchUsers } from "../../../features/users/usersThunks";
 import { useNavigate } from "react-router-dom";
 import { updateBooking } from "../../../features/bookings/bookingsThunks";
 import { Container, Button, Buttons, FormContainer, Icon, Input, Label, Select, TwoFields } from "../../common/styles/detailsFormStyles";
@@ -69,9 +71,9 @@ export const BookingDetailsFormComponent: FC<Booking> = ({ check_in: ci, check_o
         }
     
         const updatedBooking = {
-            user_id: selectedGuest,
-            room_id: selectedRoom,
-            id: id,
+            user_id: Number(selectedGuest),
+            room_id: Number(selectedRoom),
+            id: Number(id),
             order_date: orderDate,
             check_in: formatDate(new Date(formData.get("checkIn") as string)),
             check_out: formatDate(new Date(formData.get("checkOut") as string)),
@@ -79,11 +81,16 @@ export const BookingDetailsFormComponent: FC<Booking> = ({ check_in: ci, check_o
             status: state
         };
         
-        dispatch(updateBooking(updatedBooking)).then(() => {
-            navigate("/bookings");
+        dispatch(updateBooking(updatedBooking)).then((response) => {
+            console.log(updatedBooking);
         });
+        
     };
-    
+
+    useEffect(() => {
+        dispatch(fetchUsers());
+        dispatch(fetchRooms());
+    }, [dispatch]);
 
     return (
         <Container>

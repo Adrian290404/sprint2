@@ -14,7 +14,7 @@ import { FaUserPen } from "react-icons/fa6";
 import { GiBed } from "react-icons/gi";
 import { ModalQuestionComponent } from "../../common/modalQuestionComponent";
 import { deleteBooking } from "../../../features/bookings/bookingsThunks";
-import { BookingDetailsFormComponent } from "./bookingDetailsFormComponent";
+import { BookingDetailsFormComponent } from "./bookingsDetailsFormComponent";
 import { AppDispatch } from "../../../features/store";
 
 export const BookingsDetailsComponent: React.FC = () => {
@@ -27,7 +27,6 @@ export const BookingsDetailsComponent: React.FC = () => {
     const [showInformation, setShowInformation] = useState<boolean>(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const facilitiesArray = room?.facilities ? room.facilities.split(", ") : [];
 
     const formatDateCheckIn = (inputDateTime: string) => {
         const months = [
@@ -101,11 +100,10 @@ export const BookingsDetailsComponent: React.FC = () => {
             if (id) {
                 try {
                     const bookingResult = await dispatch(fetchBooking(Number(id))).unwrap();
-
-                    if (bookingResult?.user_id && bookingResult?.room_id) {
+                    if (bookingResult[0].user_id && bookingResult[0].room_id) {
                         await Promise.all([
-                            dispatch(fetchUser(Number(bookingResult.user_id))),
-                            dispatch(fetchRoom(Number(bookingResult.room_id))),
+                            dispatch(fetchUser(Number(bookingResult[0].user_id))),
+                            dispatch(fetchRoom(Number(bookingResult[0].room_id))),
                         ]);
                     }
                 } 
@@ -123,6 +121,15 @@ export const BookingsDetailsComponent: React.FC = () => {
     if (isLoading || !booking || !user || !room) {
         return <p>Loading...</p>;
     }
+
+    if (!booking) {
+        return <p>Booking not found.</p>; 
+    }
+
+    const currentRoom = Array.isArray(room) ? room[0] : room;
+    const currentUser = Array.isArray(user) ? user[0] : user;
+    const currentBooking = Array.isArray(booking) ? booking[0] : booking;
+    const facilitiesArray = currentRoom?.facilities ? currentRoom.facilities.split(", ") : [];
 
     return (
         <Background>
@@ -150,10 +157,10 @@ export const BookingsDetailsComponent: React.FC = () => {
                         </Row>
                     </Options>
                     <ProfileInfo>
-                        <ProfileImage src={user.image} />
+                        <ProfileImage src={currentUser.image} />
                         <ProfileDetails>
-                            <Name>{user.name}</Name>
-                            <ID>ID {booking.id}</ID>
+                            <Name>{currentUser.name}</Name>
+                            <ID>ID {currentBooking.id}</ID>
                             <Contact>
                                 <Icon><FaPhone size={20} /></Icon>
                                 <Button><TbMessageFilled size={25} />Send Message</Button>
@@ -163,22 +170,22 @@ export const BookingsDetailsComponent: React.FC = () => {
                     <InfoRow>
                         <InfoContainer>
                             <InfoTitle>Check In</InfoTitle> 
-                            <Info>{formatDateCheckIn(booking.check_in)}</Info>
+                            <Info>{formatDateCheckIn(currentBooking.check_in)}</Info>
                         </InfoContainer>
                         <InfoContainer>
                             <InfoTitle>Check Out</InfoTitle> 
-                            <Info>{formatDateCheckOut(booking.check_out)}</Info>
+                            <Info>{formatDateCheckOut(currentBooking.check_out)}</Info>
                         </InfoContainer>
                     </InfoRow>
                     <Separator />
                     <InfoRow>
                         <InfoContainer>
                             <InfoTitle>Room Info</InfoTitle>
-                            <Info room>{room.room_name}</Info>
+                            <Info room>{currentRoom.room_name}</Info>
                         </InfoContainer>
                         <InfoContainer>
                             <InfoTitle>Price</InfoTitle> 
-                            <Info room>${room.rate} <Especificator>/night</Especificator></Info>
+                            <Info room>${currentRoom.rate} <Especificator>/night</Especificator></Info>
                         </InfoContainer>
                     </InfoRow>
                     <RoomDetails>
@@ -195,20 +202,20 @@ export const BookingsDetailsComponent: React.FC = () => {
                     {showInformation ? (
                         <>
                             <RoomContainer>
-                                <RoomImage src={room.image} />
-                                <RoomStatus type={booking.status}>{booking.status}</RoomStatus>
+                                <RoomImage src={currentRoom.image} />
+                                <RoomStatus type={currentBooking.status}>{currentBooking.status}</RoomStatus>
                             </RoomContainer>
                         </>
                     ) : (
                         <BookingDetailsFormComponent
-                            check_in={booking.check_in}
-                            check_out={booking.check_out}
-                            user_id={booking.user_id}
-                            room_id={booking.room_id}
-                            id={booking.id}
-                            order_date={booking.order_date}
-                            special_request={booking.special_request}
-                            status={booking.status}
+                            check_in={currentBooking.check_in}
+                            check_out={currentBooking.check_out}
+                            user_id={currentBooking.user_id}
+                            room_id={currentBooking.room_id}
+                            id={currentBooking.id}
+                            order_date={currentBooking.order_date}
+                            special_request={currentBooking.special_request}
+                            status={currentBooking.status}
                         />
                     )}
                 </RightSection>
@@ -217,7 +224,7 @@ export const BookingsDetailsComponent: React.FC = () => {
                 isOpen={showModal} 
                 onClose={closeModal} 
                 onConfirm={handleDelete} 
-                name={`${user.name}'s Booking`}
+                name={`${currentUser.name}'s Booking`}
                 func="Delete"
             />
         </Background>

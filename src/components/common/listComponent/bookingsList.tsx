@@ -75,7 +75,7 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
     return (
         <>
             {paginatedBookings.map((booking: Booking) => (
-                <Row key={booking.id} type="body">
+                <Row key={booking.id} $type="body">
                     <Td>
                         <Container onClick={() => handleNavigate(booking.id)}>
                             <Image type="guest" src={getImageById(booking.user_id)} />

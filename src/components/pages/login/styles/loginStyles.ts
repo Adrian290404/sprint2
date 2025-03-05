@@ -70,6 +70,5 @@ export const Credentials = styled.p`
     color: black;
     font-family: "Archivo", sans-serif;
     font-weight: 700;
-    margin-top: .8em;
-    text-align: center;
+    margin: .8em auto 0 auto;
 `

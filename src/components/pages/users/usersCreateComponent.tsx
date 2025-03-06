@@ -15,13 +15,13 @@ export const UsersCreateComponent = () => {
     const navigate = useNavigate();
 
     const newUserId = (): number => {
-        let minId = 1;
-        for (let i = 0; i < users.length; i++) {
-            if (users[i].id === minId) {
-                minId = users[i].id + 1;
+        const Ids = users.map(user => user.id).sort((a, b) => a - b);
+        for (let i = 1; i <= Ids.length; i++) {
+            if (!Ids.includes(i)) {
+                return i;
             }
         }
-        return minId;
+        return Ids.length + 1;
     };
 
     const handleSetDefaultValue = (inputRef: React.RefObject<HTMLInputElement>, value: string): void => {

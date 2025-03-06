@@ -32,13 +32,13 @@ export const BookingsCreateComponent: React.FC = () => {
     const navigate = useNavigate();
 
     const newBookingId = (): number => {
-        let minId = 1;
-        for (let i = 0; i < bookings.length; i++) {
-            if (bookings[i].id === minId) {
-                minId = bookings[i].id + 1;
+        const Ids = bookings.map(booking => booking.id).sort((a, b) => a - b);
+        for (let i = 1; i <= Ids.length; i++) {
+            if (!Ids.includes(i)) {
+                return i;
             }
         }
-        return minId;
+        return Ids.length + 1;
     };
 
     const handleChangeStatus = (e: ChangeEvent<HTMLSelectElement>): void => {

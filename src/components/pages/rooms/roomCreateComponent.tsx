@@ -16,14 +16,15 @@ export const RoomCreateComponent = () => {
     const navigate = useNavigate();
 
     const newRoomId = (): number => {
-        let minId = 1
-        for (let i = 0; i < rooms.length; i++) {
-            if (rooms[i].id === minId) {
-                minId = rooms[i].id + 1
+        const Ids = rooms.map(room => room.id).sort((a, b) => a - b);
+        for (let i = 1; i <= Ids.length; i++) {
+            if (!Ids.includes(i)) {
+                return i;
             }
         }
-        return minId
+        return Ids.length + 1;
     };
+    
     
     const handleSetDefaultValue = (inputRef: React.RefObject<HTMLInputElement>, value: string): void => {
         if (inputRef && inputRef.current) {

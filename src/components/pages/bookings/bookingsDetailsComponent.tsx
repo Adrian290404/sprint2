@@ -14,7 +14,7 @@ import { FaUserPen } from "react-icons/fa6";
 import { GiBed } from "react-icons/gi";
 import { ModalQuestionComponent } from "../../common/modalQuestionComponent";
 import { deleteBooking } from "../../../features/bookings/bookingsThunks";
-import { BookingDetailsFormComponent } from "./bookingDetailsFormComponent";
+import { BookingDetailsFormComponent } from "./bookingsDetailsFormComponent";
 import { AppDispatch } from "../../../features/store";
 
 export const BookingsDetailsComponent: React.FC = () => {

@@ -27,7 +27,7 @@ jobs:
       - name: Sincronizar archivos con S3
         uses: jakejarvis/s3-sync-action@master
         with:
-          args: --delete --acl public-read
+          args: --delete
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

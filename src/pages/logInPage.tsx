@@ -4,10 +4,12 @@ import loginBg3 from "../assets/loginBg3.jpg";
 import loginBg4 from "../assets/loginBg4.jpg";
 import { useSelector } from "react-redux";
 import { useState, useEffect, FormEvent } from "react";
-import { BackgroundContainer, LogInContainer, Title, InputContainer, Input, Button, MarginRight, Credentials, } from "../components/pages/login/styles/loginStyles";
+import { BackgroundContainer, LogInContainer, Title, InputContainer, Input, Button, MarginRight, Credentials, CredentialsData, cursorPointer } from "../components/pages/login/styles/loginStyles";
 import { FaLock, FaUnlock, FaUser } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdOutlineAutoAwesome } from "react-icons/md";
+import { CursorPointer } from "../components/common/styles/icons";
 
 interface RootState {
     auth: {
@@ -54,6 +56,12 @@ export const LogInPage: React.FC<LogInPageProps> = ({ onLogin }) => {
         onLogin(username, password);
     };
 
+    const setCredentials = (username: string, password: string) => {
+        setUsername(username);
+        setPassword(password);
+        toast.info("Credentials copied successfully!")
+    }
+
     return (
         <BackgroundContainer image={currentImage}>
             <LogInContainer>
@@ -85,8 +93,20 @@ export const LogInPage: React.FC<LogInPageProps> = ({ onLogin }) => {
                 </InputContainer>
                 <Button type="submit">Login</Button>
                 </form>
-                <Credentials>user@gmail.com</Credentials>
-                <Credentials>12345</Credentials>
+                <Credentials>
+                    <div>
+                        <CredentialsData>user@gmail.com</CredentialsData>
+                        <CredentialsData>12345</CredentialsData>
+                    </div>
+                    <CursorPointer>
+                        <MdOutlineAutoAwesome
+                            size={30}   
+                            onClick={() => setCredentials("user@gmail.com", "12345")}
+                        >
+                        </MdOutlineAutoAwesome>
+                    </CursorPointer>
+                </Credentials>
+
             </LogInContainer>
             <ToastContainer
                 position="top-center"

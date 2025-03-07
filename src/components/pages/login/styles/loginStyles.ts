@@ -66,10 +66,19 @@ export const MarginRight = styled.div`
     cursor: pointer;
     margin-right: 1em;
 `;
-export const Credentials = styled.p`
+export const Credentials = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    margin-top: .8em;
+`;
+export const CredentialsData = styled.p`
     color: black;
     font-family: "Archivo", sans-serif;
     font-weight: 700;
-    margin-top: .8em;
     text-align: center;
-`
+`;
+export const cursorPointer = styled.div`
+    cursor: pointer;
+`;

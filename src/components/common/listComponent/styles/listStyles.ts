@@ -66,12 +66,15 @@ export const Container = styled.div`
 `;
 export const InfoContainer = styled.div`
     margin-left: 1em;
+    width: 50%;
 `;
 export const Image = styled.img<ImageProps>`
     border-radius: 1em;
     ${(props) => props.type === "guest" && "width: 45px; height: 45px"};
     ${(props) => props.type === "room" && "width: 150px; height: 77px"};
     ${(props) => props.type === "employee" && "width: 88px; height: 88px"};
+    object-fit: cover;
+    box-sizing: border-box;
 `;
 export const TextLight = styled.p<TextLightProps>`
     color: #799283;

@@ -1,7 +1,7 @@
 import { CgMail } from "react-icons/cg";
 import { CiBellOn } from "react-icons/ci";
 import { IoLogOutOutline } from "react-icons/io5";
-import { Container, Left, Right, Title, SubTitleContainer, TitleContainer, Page } from "./styles/topMenuStyles";
+import { Container, Left, Right, Title, SubTitleContainer, TitleContainer, Page, Notification } from "./styles/topMenuStyles";
 import { Hamburguer, CursorPointer } from "./styles/icons";
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -109,9 +109,11 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
             <Right>
                 <CursorPointer>
                     <CgMail size={30} />
+                    <Notification>5</Notification>
                 </CursorPointer>
                 <CursorPointer>
                     <CiBellOn size={30} />
+                    <Notification>5</Notification>
                 </CursorPointer>
                 <CursorPointer onClick={handleLogout}>
                     <IoLogOutOutline size={30} />

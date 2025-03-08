@@ -8,4 +8,5 @@ export const Hamburguer = styled(HiOutlineMenuAlt2)`
 `
 export const CursorPointer = styled.div`
     cursor: pointer;
+    position: relative;
 `

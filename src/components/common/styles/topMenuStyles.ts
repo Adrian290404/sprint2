@@ -39,3 +39,14 @@ export const SubTitleContainer = styled.div<SubTitleContainerProps>`
 export const Page = styled.p`
     color: #135846;
 `;
+export const Notification = styled.p`
+    background-color: red;
+    position: absolute;
+    top: -.3em;
+    right: -.6em;
+    border-radius: 50%;
+    padding: .1em .4em 0 .4em;
+    color: white;
+    font-size: .8rem;
+    font-family: "Poppins", sans-serif;
+`;

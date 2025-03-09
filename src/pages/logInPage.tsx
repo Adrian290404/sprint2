@@ -98,7 +98,7 @@ export const LogInPage: React.FC<LogInPageProps> = ({ onLogin }) => {
                         <CredentialsData>user@gmail.com</CredentialsData>
                         <CredentialsData>12345</CredentialsData>
                     </div>
-                    <CursorPointer>
+                    <CursorPointer type="normal">
                         <MdOutlineAutoAwesome
                             size={30}   
                             onClick={() => setCredentials("user@gmail.com", "12345")}

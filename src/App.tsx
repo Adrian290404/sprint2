@@ -14,6 +14,7 @@ import { UsersListPage } from "./pages/usersListPage";
 import { UsersCreatePage } from "./pages/usersCreatePage";
 import { UsersDetailsPage } from "./pages/usersDetailsPage";
 import { DashBoardCustomerReviewPage } from "./pages/dashBoardCustomerReviewPage";
+import { RecordPage } from "./pages/recordPage";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/login/authSlice";
 import { RootState, AppDispatch } from "./features/store";
@@ -69,6 +70,9 @@ function App() {
                             <Route path="create" element={<UsersCreatePage />} />
                             <Route path=":id" element={<UsersDetailsPage />} />
                         </Route>
+
+                        {/* Record */}
+                        <Route path="record" element={<RecordPage />}></Route>
                     </Route>
                 )}
 

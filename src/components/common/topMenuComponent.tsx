@@ -1,9 +1,9 @@
 import { CgMail } from "react-icons/cg";
-import { CiBellOn } from "react-icons/ci";
-import { IoLogOutOutline } from "react-icons/io5";
+import { BiBell } from "react-icons/bi";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 import { Container, Left, Right, Title, SubTitleContainer, TitleContainer, Page, Notification } from "./styles/topMenuStyles";
 import { Hamburguer, CursorPointer } from "./styles/icons";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRoom } from "../../features/rooms/roomsThunks";
 import { fetchBooking } from "../../features/bookings/bookingsThunks";
@@ -21,6 +21,7 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
     const location = useLocation();
     const { id } = useParams<{ id: string }>();
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     const booking = useSelector((state: any) => state.bookings.booking);
     const room = useSelector((state: any) => state.rooms.room);
@@ -85,6 +86,8 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
                 return "Edit profile";
             case "contact":
                 return "Contact";
+            case "record":
+                return "Record";
             default:
                 return "";
         }
@@ -92,6 +95,14 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
 
     const handleLogout = () => {
         dispatch(logout());
+    };
+
+    const goToRecord = () => {
+        navigate("/record");
+    };
+
+    const goToContacts = () => {
+        navigate("/contact");
     };
 
     return (
@@ -107,16 +118,16 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
                     </TitleContainer>
             </Left>
             <Right>
-                <CursorPointer>
+                <CursorPointer onClick={goToContacts} type="normal">
                     <CgMail size={30} />
                     <Notification>5</Notification>
                 </CursorPointer>
-                <CursorPointer>
-                    <CiBellOn size={30} />
+                <CursorPointer onClick={goToRecord} type="normal">
+                    <BiBell size={30} />
                     <Notification>5</Notification>
                 </CursorPointer>
-                <CursorPointer onClick={handleLogout}>
-                    <IoLogOutOutline size={30} />
+                <CursorPointer onClick={handleLogout} type="exit">
+                    <RiLogoutCircleRLine size={30} />
                 </CursorPointer>
             </Right>
         </Container>

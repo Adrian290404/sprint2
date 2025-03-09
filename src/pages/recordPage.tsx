@@ -1,3 +1,5 @@
+import { RecordComponent } from "../components/pages/record/recordComponent"
+
 export const RecordPage = () => {
-    return <h1>Contact Page</h1>
+    return <RecordComponent />
 }

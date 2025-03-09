@@ -4,8 +4,9 @@ import userPhoto from "../../assets/userPhoto.jpg";
 import { MdOutlineDashboard } from "react-icons/md";
 import { GiHouseKeys } from "react-icons/gi";
 import { TbCalendarCheck } from "react-icons/tb";
-import { IoExtensionPuzzleOutline } from "react-icons/io5";
-import { IoIosContact } from "react-icons/io";
+import { IoPeopleCircleSharp } from "react-icons/io5";
+import { TbMessageChatbotFilled } from "react-icons/tb";
+import { TiDocumentText } from "react-icons/ti";
 import { Navbar, PageNavigation, Marker, Content, UserContainer, UserContent, UserImage, UserName, UserEmail, EditButton, Footer, FooterTitle } from "./styles/sideMenuStyles";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RootState } from "../../features/store";
@@ -39,7 +40,7 @@ export const SideMenuComponent: React.FC = () => {
                     <Marker active={location.pathname === "/room" || location.pathname.split("/")[1] === "room"}></Marker>
                     <Content active={location.pathname === "/room" || location.pathname.split("/")[1] === "room"}>
                         <GiHouseKeys size={30} color="" />
-                        <p>Room</p>
+                        <p>Rooms</p>
                     </Content>
                 </PageNavigation>
                 <PageNavigation onClick={() => changePageHandler("/bookings")}>
@@ -52,15 +53,22 @@ export const SideMenuComponent: React.FC = () => {
                 <PageNavigation onClick={() => changePageHandler("/users")}>
                     <Marker active={location.pathname === "/users" || location.pathname.split("/")[1] === "users"}></Marker>
                     <Content active={location.pathname === "/users" || location.pathname.split("/")[1] === "users"}>
-                        <IoExtensionPuzzleOutline size={30} color="" />
-                        <p>Users</p>
+                        <IoPeopleCircleSharp size={30} color="" />
+                        <p>Employees</p>
                     </Content>
                 </PageNavigation>
                 <PageNavigation onClick={() => changePageHandler("/contact")}>
                     <Marker active={location.pathname === "/contact" || location.pathname.split("/")[1] === "contact"}></Marker>
                     <Content active={location.pathname === "/contact" || location.pathname.split("/")[1] === "contact"}>
-                        <IoIosContact size={30} color="" />
+                        <TbMessageChatbotFilled size={30} color="" />
                         <p>Contact</p>
+                    </Content>
+                </PageNavigation>
+                <PageNavigation onClick={() => changePageHandler("/record")}>
+                    <Marker active={location.pathname === "/record" || location.pathname.split("/")[1] === "record"}></Marker>
+                    <Content active={location.pathname === "/record" || location.pathname.split("/")[1] === "record"}>
+                        <TiDocumentText size={30} color="" />
+                        <p>Record</p>
                     </Content>
                 </PageNavigation>
                 <UserContainer>

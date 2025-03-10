@@ -1,5 +1,8 @@
-import { RecordComponent } from "../components/pages/record/recordComponent"
+import { Background } from "../components/common/styles/layoutStyles"
+import { RecordListComponent } from "../components/pages/record/recordListComponent"
 
 export const RecordPage = () => {
-    return <RecordComponent />
+    return <Background>
+        <RecordListComponent />
+    </Background> 
 }

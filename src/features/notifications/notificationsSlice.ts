@@ -1,42 +1,53 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchNotifications, fetchCountNoRead, markAllAsRead } from './notificationsThunks';
 import { Notification } from '../../interfaces/notification';
+import { NotificationsResponse } from './notificationsThunks';
 
 interface NotificationsState {
     notifications: Notification[];
+    currentPage: number;
+    totalNotifications: number;
+    totalPages: number;
     countNoRead: number;
     loading: boolean;
     error: string | null;
 }
-
+  
 const initialState: NotificationsState = {
     notifications: [],
+    currentPage: 0,
+    totalNotifications: 0,
+    totalPages: 0,
     countNoRead: 0,
     loading: false,
     error: null,
 };
-
+  
 export const notificationsSlice = createSlice({
     name: 'notifications',
     initialState,
-    reducers: {},
+    reducers: {
+    },
     extraReducers: (builder) => {
         builder
-        // Fetch all notifications
+        // fetchNotifications
         .addCase(fetchNotifications.pending, (state) => {
             state.loading = true;
             state.error = null;
         })
-        .addCase(fetchNotifications.fulfilled, (state, action: PayloadAction<Notification[]>) => {
-            state.notifications = action.payload;
+        .addCase(fetchNotifications.fulfilled, (state, action: PayloadAction<NotificationsResponse>) => {
+            state.notifications = action.payload.notifications;
+            state.currentPage = action.payload.currentPage;
+            state.totalNotifications = action.payload.totalNotifications;
+            state.totalPages = action.payload.totalPages;
             state.loading = false;
         })
         .addCase(fetchNotifications.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload as string;
         })
-
-        // Fetch no read notifications
+  
+        // fetchCountNoRead
         .addCase(fetchCountNoRead.pending, (state) => {
             state.loading = true;
             state.error = null;
@@ -49,8 +60,8 @@ export const notificationsSlice = createSlice({
             state.loading = false;
             state.error = action.payload as string;
         })
-
-        // Mark all pending notifications
+  
+        // markAllAsRead
         .addCase(markAllAsRead.pending, (state) => {
             state.loading = true;
             state.error = null;

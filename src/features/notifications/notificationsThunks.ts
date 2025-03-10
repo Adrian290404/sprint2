@@ -4,9 +4,16 @@ import { Notification } from '../../interfaces/notification';
 
 const url = import.meta.env.VITE_API_URL + '/protected/notifications';
 
-export const fetchNotifications = createAsyncThunk<Notification[]>('notifications/fetchNotifications', async (_, { rejectWithValue }) => {
+export interface NotificationsResponse {
+    currentPage: number;
+    notifications: Notification[];
+    totalNotifications: number;
+    totalPages: number;
+}
+
+export const fetchNotifications = createAsyncThunk<NotificationsResponse>('notifications/fetchNotifications', async (_, { rejectWithValue }) => {
     try {
-        return await apiRequest<Notification[]>(url, 'GET');
+        return await apiRequest<NotificationsResponse>(url, 'GET');
     } 
     catch (error: any) {
         return rejectWithValue(error.message);

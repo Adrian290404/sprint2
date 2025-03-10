@@ -2,10 +2,18 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../features/store";
 import { fetchNotifications, markAllAsRead } from "../../../features/notifications/notificationsThunks";
-import { StyledTable, StyledThead, StyledTr, StyledTh, StyledTd, StyledButton, Read } from "./styles/recordComponentStyles";
+import { StyledTable, StyledThead, StyledTr, StyledTh, StyledTd, StyledButton, Read, TextAndIcons } from "./styles/recordComponentStyles";
 import { Notification } from "../../../interfaces/notification";
 import { filterNotifications } from "./functions/filterNotifications";
 import { paginateData } from "./functions/paginateData";
+import { GiHouseKeys } from "react-icons/gi";
+import { TbCalendarCheck } from "react-icons/tb";
+import { IoPeopleCircleSharp } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
+import { MdCreateNewFolder } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
+import { FaRegEye } from "react-icons/fa6";
+import { CgRedo } from "react-icons/cg";
 
 interface ListComponentProps {
     currentPage: number;
@@ -36,6 +44,11 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
         };
     }, [dispatch]);
     
+    const firstUpperCase = (word: string) => {
+        return word.charAt(0).toUpperCase() + word.slice(1)
+    }
+
+    const singular = (str: string) => str.slice(0, -1)
 
     if (loading) {
         return <p>Loading...</p>;
@@ -67,13 +80,46 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
                             >
                                 <StyledTd>
                                     <Read show={notification.read}></Read>
-                                    {notification.type}
+                                    <TextAndIcons>
+                                        {notification.type === "delete" ? (
+                                            <MdDelete size="20" />
+                                        ) : notification.type === "create" ? (
+                                            <MdCreateNewFolder size="20" />
+                                        ) : (
+                                            <MdEdit size="20" />
+                                        )}
+                                        {firstUpperCase(notification.type)}
+                                    </TextAndIcons>
                                 </StyledTd>
-                                <StyledTd>{notification.collection}</StyledTd>
+                                <StyledTd>
+                                    <TextAndIcons>
+                                        {notification.collection === "bookings" ? (
+                                            <TbCalendarCheck size="20" />
+                                        ) : notification.collection === "rooms" ? (
+                                            <GiHouseKeys size="20" />
+                                        ) : (
+                                            <IoPeopleCircleSharp size="20" />
+                                        )}
+                                        {firstUpperCase(notification.collection)}
+                                    </TextAndIcons>
+                                </StyledTd>
                                 <StyledTd>{notification.details.message}</StyledTd>
                                 <StyledTd>{new Date(notification.timestamp).toLocaleString()}</StyledTd>
                                 <StyledTd>
-                                    <StyledButton>Button</StyledButton>
+                                    {((notification.collection === "bookings" && notification.type !== "delete") || 
+                                    (notification.type !== "delete" && notification.collection !== "bookings")) && (
+                                        <StyledButton>
+                                            View {singular(notification.collection)}
+                                            <FaRegEye size="20" />
+                                        </StyledButton>
+                                    )}
+
+                                    {(notification.collection !== "bookings" && notification.type === "delete") && (
+                                        <StyledButton type="remake">
+                                            Remake {singular(notification.collection)}
+                                            <CgRedo size="20" />
+                                        </StyledButton>
+                                    )}
                                 </StyledTd>
                             </StyledTr>
                         ))

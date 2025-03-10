@@ -15,6 +15,15 @@ export const filterNotifications = (
     else if (selectedMenu === "Delete") {
         filteredNotifications = filteredNotifications.filter((notification) => notification.type == "delete");
     }
+    else if (selectedMenu === "Bookings") {
+        filteredNotifications = filteredNotifications.filter((notification) => notification.collection == "bookings");
+    }
+    else if (selectedMenu === "Rooms") {
+        filteredNotifications = filteredNotifications.filter((notification) => notification.collection == "rooms");
+    }
+    else if (selectedMenu === "Employees") {
+        filteredNotifications = filteredNotifications.filter((notification) => notification.collection == "employees");
+    }
     switch (selectedOption) {
         case "Newest":
             filteredNotifications.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());

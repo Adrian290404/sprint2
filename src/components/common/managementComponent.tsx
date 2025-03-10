@@ -34,7 +34,7 @@ export const ManagementComponent = () => {
             case "/dashboard/customerReviews":
                 return ["All Customer Reviews", "Published", "Archived"];
             case "/record":
-                return ["All Notifications", "Create", "Update", "Delete"];
+                return ["All", "Create", "Update", "Delete", "Bookings", "Rooms", "Employees"];
             default:
                 return [];
         }
@@ -83,7 +83,7 @@ export const ManagementComponent = () => {
                 ))}
             </List>
             <div>
-                {location.pathname !== "/dashboard/customerReviews" && (
+                {location.pathname !== "/dashboard/customerReviews" && location.pathname !== "/record" && (
                     <Create onClick={navigateTo}> + New {page[location.pathname]} </Create>
                 )}
                 <Filter 

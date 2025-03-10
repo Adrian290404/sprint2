@@ -5,6 +5,7 @@ export const StyledTable = styled.table`
     border-collapse: collapse;
     margin-top: 1rem;
     background-color: #ffffff;
+    font-family: "Poppins", sans-serif;
 `;
 
 export const StyledThead = styled.thead`
@@ -15,13 +16,13 @@ export const StyledTh = styled.th`
     padding: 0.75rem;
     text-align: left;
     border-bottom: 2px solid #ccc;
-    color: #333;
+    color:rgb(36, 36, 36);
 `;
 
 export const StyledTd = styled.td`
     padding: 0.75rem;
     border-bottom: 1px solid #eee;
-    color: #555;
+    color:rgb(58, 58, 58);
     position: relative;
 `;
 
@@ -64,17 +65,24 @@ export const StyledTr = styled.tr<StyledTrProps>`
     }
 `;
 
-export const StyledButton = styled.button`
-    background-color: #3498db;
+interface ButtonProps {
+    type?: string;
+}
+
+export const StyledButton = styled.button<ButtonProps>`
+    background-color: ${({ type }) => type === "remake" ? "#e67e22" : "#3498db"};
     color: white;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
 
     &:hover {
-        background-color: #2980b9;
+        background-color: ${({ type }) => type === "remake" ? "#d35400" : "#2980b9"};
     }
 `;
 
@@ -94,3 +102,9 @@ export const Read = styled.div<ReadProps>`
           border-radius: 0 1em 1em 0;
     `}
 `;
+
+export const TextAndIcons = styled.div`
+    display: flex;
+    align-items: center;
+    gap: .5em;
+`

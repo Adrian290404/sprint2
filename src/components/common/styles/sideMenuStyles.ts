@@ -14,11 +14,14 @@ export const Navbar = styled.div`
 export const PageNavigation = styled.div`
     position: relative;
     display: flex;
-    padding: 1em 0;
     width: 100%;
     align-items: center;
     margin-bottom: 1em;
     cursor: pointer;
+    &:hover {
+        transform: scale(1.1);
+        transition: 0.1s ease-in-out;
+    }
 `;
 export const Marker = styled.div<MarkerProps>`
     position: absolute;
@@ -30,12 +33,16 @@ export const Marker = styled.div<MarkerProps>`
     align-items: center;
 `;
 export const Content = styled.div<ContentProps>`
-    margin-left: 2em;
+    padding: 1em 0 1em 2em ;
     display: flex;
     gap: 1em;
+    width: 100%;
     color: ${(props) => (props.active ? "#E23428" : "#799283")};
     font: normal normal normal 18px/27px Poppins;
     letter-spacing: 0px;
+    &:hover {
+        color:${(props) => (props.active ? "rgb(141, 30, 22)" : "rgb(71, 85, 76)")};
+    }
 `;
 export const UserContainer = styled.div`
     padding: 0 2em;

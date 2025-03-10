@@ -6,6 +6,7 @@ import { filterSlice } from './lists/filterSlice'
 import { usersSlice } from './users/usersSlice'
 import { bookingsSlice } from './bookings/bookingsSlice'
 import { reviewsSlice } from "./reviews/reviewsSlice"
+import { notificationsSlice } from './notifications/notificationsSlice'
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
         rooms: roomsSlice.reducer,
         users: usersSlice.reducer,
         bookings: bookingsSlice.reducer,
-        reviews: reviewsSlice.reducer
+        reviews: reviewsSlice.reducer,
+        notifications: notificationsSlice.reducer
     },
 })
 

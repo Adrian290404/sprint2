@@ -11,6 +11,7 @@ import { fetchUser } from "../../features/users/usersThunks";
 import { logout } from "../../features/login/authSlice";
 import { useEffect } from "react";
 import { AppDispatch } from "../../features/store";
+import { fetchCountNoRead } from "../../features/notifications/notificationsThunks";
 
 interface TopMenuComponentProps {
     onToggleSidebar: () => void;
@@ -26,6 +27,7 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
     const booking = useSelector((state: any) => state.bookings.booking);
     const room = useSelector((state: any) => state.rooms.room);
     const user = useSelector((state: any) => state.users.user);
+    const notificationsCount = useSelector((state: any) => state.notifications.countNoRead);
 
     useEffect(() => {
         if (location.pathname.includes("/bookings") && id && location.pathname.split("/")[2] !== "create") {
@@ -37,6 +39,7 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
         else if (location.pathname.includes("/users") && id && location.pathname.split("/")[2] !== "create") {
             dispatch(fetchUser(Number(id)));
         }
+        dispatch(fetchCountNoRead());
     }, [location.pathname, id, dispatch]);
 
     const getName = (): string => {
@@ -124,7 +127,7 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
                 </CursorPointer>
                 <CursorPointer onClick={goToRecord} type="normal">
                     <BiBell size={30} />
-                    <Notification>5</Notification>
+                    <Notification>{notificationsCount.unreadCount}</Notification>
                 </CursorPointer>
                 <CursorPointer onClick={handleLogout} type="exit">
                     <RiLogoutCircleRLine size={30} />

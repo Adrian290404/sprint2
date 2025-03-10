@@ -1,8 +1,19 @@
-import styled from "styled-components";
+import styled, { keyframes } from 'styled-components';
 
 interface SubTitleContainerProps {
     active?: boolean;
 };
+
+const fadeInScale = keyframes`
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+`;
 
 export const Container = styled.div`
     display: flex;
@@ -49,4 +60,5 @@ export const Notification = styled.p`
     color: white;
     font-size: .8rem;
     font-family: "Poppins", sans-serif;
+    animation: ${fadeInScale} 2s ease-in;
 `;

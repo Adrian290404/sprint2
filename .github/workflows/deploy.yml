@@ -19,6 +19,8 @@ jobs:
           cache: 'npm'
 
       - name: Instalar dependencias
+        env:
+          VITE_API_URL: ${{ secrets.VITE_API_URL }}
         run: npm install
 
       - name: Compilar la aplicación

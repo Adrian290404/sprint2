@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import redCircle from '../../../assets/redCircle.png'
 
 interface SubTitleContainerProps {
     active?: boolean;
@@ -50,15 +51,24 @@ export const SubTitleContainer = styled.div<SubTitleContainerProps>`
 export const Page = styled.p`
     color: #135846;
 `;
-export const Notification = styled.p`
-    background-color: red;
+export const Notification = styled.div`
     position: absolute;
-    top: -.3em;
-    right: -.6em;
-    border-radius: 50%;
-    padding: .1em .4em 0 .4em;
+    top: -0.3em;
+    right: -0.6em;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    text-align: center;
+    background-image: url(${redCircle});
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     color: white;
-    font-size: .8rem;
+    font-size: 0.8rem;
+    font-weight: bold;
     font-family: "Poppins", sans-serif;
+    border-radius: 50%;
     animation: ${fadeInScale} 2s ease-in;
 `;

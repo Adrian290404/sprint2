@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../features/store";
-import { fetchNotifications } from "../../../features/notifications/notificationsThunks";
+import { fetchNotifications, markAllAsRead } from "../../../features/notifications/notificationsThunks";
 import { StyledTable, StyledThead, StyledTr, StyledTh, StyledTd, StyledButton, Read } from "./styles/recordComponentStyles";
 import { Notification } from "../../../interfaces/notification";
 import { filterNotifications } from "./functions/filterNotifications";
@@ -25,6 +25,17 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
     useEffect(() => {
         dispatch(fetchNotifications());
     }, [dispatch]);
+
+    useEffect(() => {
+        return () => {
+            const markAndFetch = async () => {
+                await dispatch(markAllAsRead());
+                await dispatch(fetchNotifications());
+            };
+            markAndFetch();
+        };
+    }, [dispatch]);
+    
 
     if (loading) {
         return <p>Loading...</p>;

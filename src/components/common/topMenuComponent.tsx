@@ -127,7 +127,7 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
                 </CursorPointer>
                 <CursorPointer onClick={goToRecord} type="normal">
                     <BiBell size={30} />
-                    <Notification>{notificationsCount.unreadCount}</Notification>
+                    <Notification>{notificationsCount.unreadCount || 0}</Notification>
                 </CursorPointer>
                 <CursorPointer onClick={handleLogout} type="exit">
                     <RiLogoutCircleRLine size={30} />

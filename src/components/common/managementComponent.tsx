@@ -19,7 +19,8 @@ export const ManagementComponent = () => {
     const page: { [key: string]: string } = {
         "/bookings": "Booking",
         "/users": "Employee",
-        "/room": "Room"
+        "/room": "Room",
+        "/record": "Record"
     };
 
     const showMenu = (): string[] => {
@@ -32,6 +33,8 @@ export const ManagementComponent = () => {
                 return ["All Rooms", "Avaiable Rooms", "Booked Rooms"];
             case "/dashboard/customerReviews":
                 return ["All Customer Reviews", "Published", "Archived"];
+            case "/record":
+                return ["All Notifications", "Create", "Update", "Delete"];
             default:
                 return [];
         }
@@ -47,6 +50,8 @@ export const ManagementComponent = () => {
                 return ["Newest", "Highest price", "Lowest price"];
             case "/dashboard/customerReviews":
                 return ["Newest", "Best Valoration", "Worst Valoration"];
+            case "/record":
+                return ["Newest", "Oldest"];
             default:
                 return [];
         }

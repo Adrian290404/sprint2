@@ -53,7 +53,7 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
     const getImageById = (id: number): string | undefined => {
         if (users.length === 0) return undefined;
         const user = users.find((user: Employee) => user.id === id);
-        return user ? user.image : null;
+        return user ? user.image : undefined;
     };
 
     const getUserNameById = (id: number): string | null => {

@@ -6,6 +6,7 @@ import { filterRooms } from "./listComponent/functions/filterRooms";
 import { filterUsers } from "./listComponent/functions/filterUsers";
 import { filterBookings } from "./listComponent/functions/filterBookings";
 import { filterReviews } from "./listComponent/functions/filterReviews";
+import { filterNotifications } from "./listComponent/functions/filterNotifications";
 import { setPage } from "../../features/lists/paginationSlice";
 import { useEffect } from "react";
 
@@ -23,6 +24,7 @@ interface State {
     users: { users: any[] };
     bookings: { bookings: any[] };
     reviews: { reviews: any[] };
+    notifications: { notifications: any[] };
 }
 
 export const PaginationComponent = ({ currentPage, setCurrentPage }: PaginationComponentProps) => {
@@ -58,6 +60,11 @@ export const PaginationComponent = ({ currentPage, setCurrentPage }: PaginationC
             data = useSelector((state: State) => state.reviews.reviews);
             func = filterReviews;
             dataName = "reviews";
+            break;
+        case "/record":
+            data = useSelector((state: State) => state.notifications.notifications);
+            func = filterNotifications;
+            dataName = "notifications";
             break;
         default:
             return { pages: 1, itemsOnPage: 0, totalItems: 0, typeOfData: "data" };

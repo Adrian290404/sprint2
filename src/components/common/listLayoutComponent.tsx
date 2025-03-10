@@ -7,6 +7,7 @@ import { setPage } from "../../features/lists/paginationSlice";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { AppDispatch } from "../../features/store";
+import { RecordListComponent } from "./listComponent/recordListComponent";
 
 interface State {
     pagination: {
@@ -30,7 +31,13 @@ export const ListLayoutComponent = () => {
     return (
         <Background>
             <ManagementComponent />
-            <ListComponent currentPage={currentPage} />
+            {
+                location.pathname == "/record" ? (
+                    <RecordListComponent currentPage={currentPage} />
+                ) : (
+                    <ListComponent currentPage={currentPage} />
+                )
+            }
             <PaginationComponent currentPage={currentPage} setCurrentPage={handlePageChange} />
         </Background>
     );

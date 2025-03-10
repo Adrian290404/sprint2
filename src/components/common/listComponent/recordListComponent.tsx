@@ -3,10 +3,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../../../features/store";
 import { fetchNotifications } from "../../../features/notifications/notificationsThunks";
 import { StyledTable, StyledThead, StyledTr, StyledTh, StyledTd, StyledButton, Read } from "./styles/recordComponentStyles";
+import { Notification } from "../../../interfaces/notification";
+import { filterNotifications } from "./functions/filterNotifications";
+import { paginateData } from "./functions/paginateData";
 
-export const RecordListComponent = () => {
+interface ListComponentProps {
+    currentPage: number;
+}
+
+export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage }) => {
     const dispatch = useDispatch<AppDispatch>();
     const { notifications, loading, error } = useSelector((state: RootState) => state.notifications);
+    const { selectedMenu, selectedOption } = useSelector((state: any) => state.filter);
+
+    const filteredNotifications = filterNotifications(notifications, selectedMenu, selectedOption);
+    const paginatedNotifications = paginateData(
+        filteredNotifications.filter((notification): notification is Notification => notification !== undefined && notification !== null),
+        10
+    )[currentPage - 1] || [];
 
     useEffect(() => {
         dispatch(fetchNotifications());
@@ -33,8 +47,8 @@ export const RecordListComponent = () => {
                     </tr>
                 </StyledThead>
                 <tbody>
-                    {notifications && notifications.length > 0 ? (
-                        notifications.map((notification) => (
+                    {paginatedNotifications.length > 0 ? (
+                        paginatedNotifications.map((notification) => (
                             <StyledTr
                                 key={notification.id}
                                 unread={!notification.read}

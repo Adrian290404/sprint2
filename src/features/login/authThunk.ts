@@ -7,11 +7,13 @@ interface AuthUser {
     email: string;
 }
 
+const url = import.meta.env.VITE_API_URL + '/auth/login';
+
 export const loginThunk = (email: string, password: string) => async (dispatch: AppDispatch) => {
     dispatch(setError(null)); 
 
     try {
-        const response = await fetch('https://db5xe9k83b.execute-api.eu-west-3.amazonaws.com/api/auth/login', {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

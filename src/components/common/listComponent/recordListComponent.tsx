@@ -17,7 +17,7 @@ import { FaRegEye } from "react-icons/fa6";
 import { CgRedo } from "react-icons/cg";
 import { Employee } from "../../../interfaces/employee";
 import { Room } from "../../../interfaces/room";
-import { fetchRooms } from "../../../features/rooms/roomsThunks";
+import { fetchRoom, fetchRooms } from "../../../features/rooms/roomsThunks";
 import { fetchUsers } from "../../../features/users/usersThunks";
 import { fetchBookings } from "../../../features/bookings/bookingsThunks";
 
@@ -28,6 +28,7 @@ interface ListComponentProps {
 export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const room = useSelector((state: RootState) => state.rooms.room);
     const rooms = useSelector((state: RootState) => state.rooms.rooms);
     const users = useSelector((state: RootState) => state.users.users);
     const bookings = useSelector((state: RootState) => state.bookings.bookings);
@@ -72,21 +73,47 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
 
     const singular = (str: string) => str.slice(0, -1)
 
-    const handleRemake = (type: string, json: Room | Employee) => {
-        if (type === "rooms") {
-            navigate("/room/create", {
-                state: { roomData: json }
-            });
-        } 
-        else {
-            navigate("/users/create", {
-                state: { employeeData: json }
-            });
+    const handleRemake = async (collection: string, json: any) => {
+        if (collection === "rooms") {
+            const roomExists = rooms.some((room) => 
+                room.room_name === json.room_name &&
+                room.bed_type === json.bed_type &&
+                room.room_floor === json.room_floor &&
+                room.facilities === json.facilities
+            );
+            if (!roomExists) {
+                navigate("/room/create", {
+                    state: { roomData: json }
+                });
+            }
+            else{
+                alert(`Room with same details already exists in the system`);
+                return;
+            }
         }
+        else {
+            const userExists = users.some((user) => 
+                user.name === json.name &&
+                user.image === json.image &&
+                user.job_desk === json.job_desk &&
+                user.schedule === json.schedule &&
+                user.contact === json.contact
+            );
+        
+            if (!userExists) {
+                navigate("/users/create", {
+                    state: { employeeData: json }
+                });
+            } else {
+                alert(`Employee with same details already exists in the system`);
+                return;
+            }
+        }
+        
     }
     
-    const handleNavigate = async (type: string, id: number) => {
-        if (type === "rooms") {
+    const handleNavigate = (collection: string, id: number) => {
+        if (collection === "rooms") {
             const roomExists = rooms.some(room => room.id === id);
             if (!roomExists) {
                 alert(`Room with id ${id} not found`);
@@ -94,7 +121,7 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
             }
             navigate(`/room/${id}`);
         } 
-        else if (type === "employees") {
+        else if (collection === "employees") {
             const employeeExists = users.some(user => user.id === id);
             if (!employeeExists) {
                 alert(`Employee with id ${id} not found`);
@@ -102,7 +129,7 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
             }
             navigate(`/users/${id}`);
         }
-        else if (type === "bookings") {
+        else if (collection === "bookings") {
             const bookingExists = bookings.some(booking => booking.id === id);
             if (!bookingExists) {
                 alert(`Booking with id ${id} not found`);
@@ -171,7 +198,8 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
                                 <StyledTd>{notification.details.message}</StyledTd>
                                 <StyledTd>{new Date(notification.timestamp).toLocaleString()}</StyledTd>
                                 <StyledTd>
-                                    {((notification.collection === "bookings" && notification.type !== "delete") || 
+                                    {notification.details.seeContent && 
+                                    ((notification.collection === "bookings" && notification.type !== "delete") || 
                                     (notification.type !== "delete" && notification.collection !== "bookings")) && (
                                         <StyledButton onClick={() => handleNavigate( notification.collection, Number(notification.details.id))}>
                                             View {singular(notification.collection)}

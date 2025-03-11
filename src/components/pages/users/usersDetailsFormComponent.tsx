@@ -68,7 +68,7 @@ export const UsersDetailsFormComponent: React.FC<UsersDetailsFormComponentProps>
                     <Input
                         id="contact"
                         name="contact"
-                        type="number"
+                        type="text"
                         onChange={(e) => handleChange(e, setUserContact, contact)}
                         placeholder={contact}
                     />

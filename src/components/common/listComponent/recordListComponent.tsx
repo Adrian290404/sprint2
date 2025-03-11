@@ -17,6 +17,9 @@ import { FaRegEye } from "react-icons/fa6";
 import { CgRedo } from "react-icons/cg";
 import { Employee } from "../../../interfaces/employee";
 import { Room } from "../../../interfaces/room";
+import { fetchRooms } from "../../../features/rooms/roomsThunks";
+import { fetchUsers } from "../../../features/users/usersThunks";
+import { fetchBookings } from "../../../features/bookings/bookingsThunks";
 
 interface ListComponentProps {
     currentPage: number;
@@ -25,6 +28,9 @@ interface ListComponentProps {
 export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const rooms = useSelector((state: RootState) => state.rooms.rooms);
+    const users = useSelector((state: RootState) => state.users.users);
+    const bookings = useSelector((state: RootState) => state.bookings.bookings);
     const { notifications, loading, error } = useSelector((state: RootState) => state.notifications);
     const { selectedMenu, selectedOption } = useSelector((state: any) => state.filter);
 
@@ -35,7 +41,19 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
     )[currentPage - 1] || [];
 
     useEffect(() => {
-        dispatch(fetchNotifications());
+        const fetchData = async () => {
+            try {
+                await dispatch(fetchNotifications());
+                await dispatch(fetchRooms());
+                await dispatch(fetchUsers());
+                await dispatch(fetchBookings());
+            } 
+            catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+    
+        fetchData();
     }, [dispatch]);
 
     useEffect(() => {
@@ -66,6 +84,36 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
             });
         }
     }
+    
+    const handleNavigate = async (type: string, id: number) => {
+        if (type === "rooms") {
+            const roomExists = rooms.some(room => room.id === id);
+            if (!roomExists) {
+                alert(`Room with id ${id} not found`);
+                return;
+            }
+            navigate(`/room/${id}`);
+        } 
+        else if (type === "employees") {
+            const employeeExists = users.some(user => user.id === id);
+            if (!employeeExists) {
+                alert(`Employee with id ${id} not found`);
+                return;
+            }
+            navigate(`/users/${id}`);
+        }
+        else if (type === "bookings") {
+            const bookingExists = bookings.some(booking => booking.id === id);
+            if (!bookingExists) {
+                alert(`Booking with id ${id} not found`);
+                return;
+            }
+            navigate(`/bookings/${id}`);
+        }
+        else {
+            return;
+        }
+    };
 
     if (loading) {
         return <p>Loading...</p>;
@@ -125,7 +173,7 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
                                 <StyledTd>
                                     {((notification.collection === "bookings" && notification.type !== "delete") || 
                                     (notification.type !== "delete" && notification.collection !== "bookings")) && (
-                                        <StyledButton>
+                                        <StyledButton onClick={() => handleNavigate( notification.collection, Number(notification.details.id))}>
                                             View {singular(notification.collection)}
                                             <FaRegEye size="20" />
                                         </StyledButton>

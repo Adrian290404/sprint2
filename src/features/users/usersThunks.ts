@@ -42,7 +42,7 @@ export const createUser = createAsyncThunk<Employee, NewEmployee>('users/createU
 
 export const updateUser = createAsyncThunk<Employee, Employee>('users/updateUser', async (updatedUser, { rejectWithValue }) => {
     try {
-        return await apiRequest<Employee>(`${url}/${updateUser.id}`, 'PUT', updatedUser);
+        return await apiRequest<Employee>(`${url}/${updatedUser.id}`, 'PUT', updatedUser);
     } 
     catch (error: any) {
         return rejectWithValue(error.message);

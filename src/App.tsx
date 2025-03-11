@@ -19,6 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logout } from "./features/login/authSlice";
 import { RootState, AppDispatch } from "./features/store";
 import { loginThunk } from "./features/login/authThunk";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     const isLogged = useSelector((state: RootState) => state.auth.isLogged);
@@ -79,7 +80,19 @@ function App() {
                 {/* Redirige a login si no está logueado */}
                 {!isLogged && <Route path="*" element={<Navigate to="/" replace />} />}
             </Routes>
+            <ToastContainer 
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </BrowserRouter>
+        
     );
 }
 

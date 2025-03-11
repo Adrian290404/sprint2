@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useState, useEffect, FormEvent } from "react";
 import { BackgroundContainer, LogInContainer, Title, InputContainer, Input, Button, MarginRight, Credentials, CredentialsData, cursorPointer } from "../components/pages/login/styles/loginStyles";
 import { FaLock, FaUnlock, FaUser } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineAutoAwesome } from "react-icons/md";
 import { CursorPointer } from "../components/common/styles/icons";
@@ -106,19 +106,7 @@ export const LogInPage: React.FC<LogInPageProps> = ({ onLogin }) => {
                         </MdOutlineAutoAwesome>
                     </CursorPointer>
                 </Credentials>
-
             </LogInContainer>
-            <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
         </BackgroundContainer>
     );
 };

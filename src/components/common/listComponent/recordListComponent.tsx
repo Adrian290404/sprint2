@@ -15,11 +15,10 @@ import { MdCreateNewFolder } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa6";
 import { CgRedo } from "react-icons/cg";
-import { Employee } from "../../../interfaces/employee";
-import { Room } from "../../../interfaces/room";
-import { fetchRoom, fetchRooms } from "../../../features/rooms/roomsThunks";
+import { fetchRooms } from "../../../features/rooms/roomsThunks";
 import { fetchUsers } from "../../../features/users/usersThunks";
 import { fetchBookings } from "../../../features/bookings/bookingsThunks";
+import { toast } from "react-toastify";
 
 interface ListComponentProps {
     currentPage: number;
@@ -68,55 +67,56 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
     }, [dispatch]);
     
     const firstUpperCase = (word: string) => {
-        return word.charAt(0).toUpperCase() + word.slice(1)
-    }
+        return word.charAt(0).toUpperCase() + word.slice(1);
+    };
 
-    const singular = (str: string) => str.slice(0, -1)
+    const singular = (str: string) => str.slice(0, -1);
 
     const handleRemake = async (collection: string, json: any) => {
         if (collection === "rooms") {
-            const roomExists = rooms.some((room) => 
+            const roomFound = rooms.find((room) => 
                 room.room_name === json.room_name &&
                 room.bed_type === json.bed_type &&
                 room.room_floor === json.room_floor &&
                 room.facilities === json.facilities
             );
-            if (!roomExists) {
+            if (!roomFound) {
                 navigate("/room/create", {
                     state: { roomData: json }
                 });
             }
-            else{
-                alert(`Room with same details already exists in the system`);
+            else {
+                const id = roomFound.id;
+                toast.warn(`Room with same details already exists in the system. ID: ${id}`);
                 return;
             }
         }
         else {
-            const userExists = users.some((user) => 
+            const userFound = users.find((user) => 
                 user.name === json.name &&
                 user.image === json.image &&
                 user.job_desk === json.job_desk &&
                 user.schedule === json.schedule &&
                 user.contact === json.contact
             );
-        
-            if (!userExists) {
+            if (!userFound) {
                 navigate("/users/create", {
                     state: { employeeData: json }
                 });
-            } else {
-                alert(`Employee with same details already exists in the system`);
+            } 
+            else {
+                const id = userFound.id;
+                toast.warn(`Employee with same details already exists in the system. ID: ${id}`);
                 return;
             }
         }
-        
-    }
+    };
     
     const handleNavigate = (collection: string, id: number) => {
         if (collection === "rooms") {
             const roomExists = rooms.some(room => room.id === id);
             if (!roomExists) {
-                alert(`Room with id ${id} not found`);
+                toast.error(`Room with id ${id} not found`);
                 return;
             }
             navigate(`/room/${id}`);
@@ -124,7 +124,7 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
         else if (collection === "employees") {
             const employeeExists = users.some(user => user.id === id);
             if (!employeeExists) {
-                alert(`Employee with id ${id} not found`);
+                toast.error(`Employee with id ${id} not found`);
                 return;
             }
             navigate(`/users/${id}`);
@@ -132,7 +132,7 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
         else if (collection === "bookings") {
             const bookingExists = bookings.some(booking => booking.id === id);
             if (!bookingExists) {
-                alert(`Booking with id ${id} not found`);
+                toast.error(`Booking with id ${id} not found`);
                 return;
             }
             navigate(`/bookings/${id}`);
@@ -201,14 +201,14 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
                                     {notification.details.seeContent && 
                                     ((notification.collection === "bookings" && notification.type !== "delete") || 
                                     (notification.type !== "delete" && notification.collection !== "bookings")) && (
-                                        <StyledButton onClick={() => handleNavigate( notification.collection, Number(notification.details.id))}>
+                                        <StyledButton onClick={() => handleNavigate(notification.collection, Number(notification.details.id))}>
                                             View {singular(notification.collection)}
                                             <FaRegEye size="20" />
                                         </StyledButton>
                                     )}
 
                                     {(notification.collection !== "bookings" && notification.type === "delete") && (
-                                        <StyledButton type="remake" onClick={() => handleRemake( notification.collection, notification.details.redo)}>
+                                        <StyledButton type="remake" onClick={() => handleRemake(notification.collection, notification.details.redo)}>
                                             Remake {singular(notification.collection)}
                                             <CgRedo size="20" />
                                         </StyledButton>

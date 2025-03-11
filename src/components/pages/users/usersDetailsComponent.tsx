@@ -10,6 +10,7 @@ import { activeEmployee } from "../../common/listComponent/functions/activeEmplo
 import { UsersDetailsFormComponent } from "./usersDetailsFormComponent";
 import { ModalQuestionComponent } from "../../common/modalQuestionComponent";
 import { RootState, AppDispatch } from "../../../features/store";
+import { toast } from "react-toastify";
 
 export const UsersDetailsComponent: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -45,11 +46,12 @@ export const UsersDetailsComponent: React.FC = () => {
         setShowModal(false);
     };
 
-    const handleDelete = (): void => {
+    const handleDelete = async() => {
         if (id) {
-            dispatch(deleteUser(Number(id)));
+            await dispatch(deleteUser(Number(id)));
             closeModal();
-            navigate(-1);
+            toast.success("Employee deleted successfully")
+            await navigate(-1);
         }
     };
 

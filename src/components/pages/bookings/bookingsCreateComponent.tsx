@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { createBooking } from "../../../features/bookings/bookingsThunks";
 import { AppDispatch } from '../../../features/store';
 import { Booking } from '../../../interfaces/booking';
+import { toast } from 'react-toastify';
 
 interface User {
     id: number;
@@ -93,7 +94,8 @@ export const BookingsCreateComponent: React.FC = () => {
     
         try {
             await dispatch(createBooking(newBooking));  
-            navigate(`/bookings/${newBooking.id}`);
+            toast.success("Booking created successfully")
+            await navigate(`/bookings/${newBooking.id}`);
         } 
         catch (error) {
             setError("Error creating booking. Please try again later.");

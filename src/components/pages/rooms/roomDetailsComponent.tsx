@@ -11,6 +11,7 @@ import { MdDelete } from "react-icons/md"
 import { RoomDetailsFormComponent } from './roomDetailsFormComponent'
 import { ModalQuestionComponent } from '../../common/modalQuestionComponent'
 import { AppDispatch } from '../../../features/store'
+import { toast } from 'react-toastify'
 
 export const RoomDetailsComponent = () => {
     const { id } = useParams<{ id: string }>();
@@ -44,11 +45,12 @@ export const RoomDetailsComponent = () => {
         setShowModal(false);
     };
 
-    const handleDelete = (): void => {
+    const handleDelete = async() => {
         if (id) {
-            dispatch(deleteRoom(Number(id)));
+            await dispatch(deleteRoom(Number(id)));
             closeModal();
-            navigate(-1);
+            toast.success("Room deleted successfully")
+            await navigate(-1);
         }
     };
 

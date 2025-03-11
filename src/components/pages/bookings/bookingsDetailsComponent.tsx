@@ -16,6 +16,7 @@ import { ModalQuestionComponent } from "../../common/modalQuestionComponent";
 import { deleteBooking } from "../../../features/bookings/bookingsThunks";
 import { BookingDetailsFormComponent } from "./bookingsDetailsFormComponent";
 import { AppDispatch } from "../../../features/store";
+import { toast } from "react-toastify";
 
 export const BookingsDetailsComponent: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -90,10 +91,11 @@ export const BookingsDetailsComponent: React.FC = () => {
         setShowInformation(!showInformation);
     };
 
-    const handleDelete = () => {
-        dispatch(deleteBooking(Number(id)));
+    const handleDelete = async () => {
+        await dispatch(deleteBooking(Number(id)));
         closeModal();
-        navigate(-1);
+        toast.success("Booking deleted successfully")
+        await navigate(-1);
     };
 
     useEffect(() => {

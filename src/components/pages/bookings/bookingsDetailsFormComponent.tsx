@@ -5,6 +5,7 @@ import { updateBooking } from "../../../features/bookings/bookingsThunks";
 import { Container, Button, Buttons, FormContainer, Icon, Input, Label, Select, TwoFields } from "../../common/styles/detailsFormStyles";
 import { AppDispatch } from "../../../features/store";
 import { Booking } from "../../../interfaces/booking";
+import { toast } from "react-toastify";
 
 export const BookingDetailsFormComponent: FC<Booking> = ({ check_in: ci, check_out: co, user_id: userId, room_id: roomId, id, order_date: orderDate, special_request: request, status }) => {
     
@@ -80,6 +81,7 @@ export const BookingDetailsFormComponent: FC<Booking> = ({ check_in: ci, check_o
         };
         
         dispatch(updateBooking(updatedBooking)).then(() => {
+            toast.success("Booking updated successfully")
             navigate("/bookings");
         });
     };

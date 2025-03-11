@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateRoom } from '../../../features/rooms/roomsThunks'
 import { AppDispatch } from '../../../features/store'
+import { toast } from 'react-toastify'
 
 interface RoomDetailsFormProps {
     id: number
@@ -38,7 +39,7 @@ export const RoomDetailsFormComponent = ({id, image, name, bedType, floor, facil
         setter(value.trim() === "" ? emptyValue : (typeof emptyValue === "number" ? Number(value) : value))
     }    
 
-    const handleSubmit = (e: React.FormEvent): void => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         const updatedRoom = {
             id,
@@ -50,9 +51,10 @@ export const RoomDetailsFormComponent = ({id, image, name, bedType, floor, facil
             avaiable: isAvailable,
             image
         }
-        dispatch(updateRoom(updatedRoom)).then(() => {
-            navigate(0)
-        })
+
+        await dispatch(updateRoom(updatedRoom))
+        toast.success("Room updated successfully")
+        await navigate(-1)
     }
 
     return (

@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 import { createRoom } from "../../../features/rooms/roomsThunks"
 import { AppDispatch, RootState } from '../../../features/store'
 import { Room } from '../../../interfaces/room'
+import { toast } from 'react-toastify'
 
 export const RoomCreateComponent = () => {
     const facilitiesInputRef = useRef<HTMLInputElement | null>(null);
@@ -38,7 +39,7 @@ export const RoomCreateComponent = () => {
         navigate(-1);
     };
 
-    const handleSubmit = (e: FormEvent): void => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
     
         const formData = new FormData(e.target as HTMLFormElement);
@@ -53,8 +54,9 @@ export const RoomCreateComponent = () => {
             image: formData.get('image') as string,
         };
     
-        dispatch(createRoom(newRoom));
-        navigate(`/room/${newRoom.id}`);
+        await dispatch(createRoom(newRoom));
+        toast.success("Room created successfully")
+        await navigate(`/room/${newRoom.id}`);
     };
 
     return (

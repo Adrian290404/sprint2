@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { createUser } from '../../../features/users/usersThunks';
 import { RootState, AppDispatch } from '../../../features/store';
 import { Employee } from '../../../interfaces/employee'; 
+import { toast } from 'react-toastify';
 
 export const UsersCreateComponent = () => {
     const imageInputRef = useRef<HTMLInputElement | null>(null);
@@ -47,7 +48,7 @@ export const UsersCreateComponent = () => {
         navigate(-1);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         const formData = new FormData(e.currentTarget);
@@ -61,8 +62,9 @@ export const UsersCreateComponent = () => {
             contact: formData.get('contact') as string,
         };
 
-        dispatch(createUser(newUser));
-        navigate(`/users/${newUser.id}`);
+        await dispatch(createUser(newUser));
+        toast.success("Employee created successfully")
+        await navigate(`/users/${newUser.id}`);
     };
 
     return (

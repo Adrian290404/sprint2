@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../features/users/usersThunks';
 import { AppDispatch } from '../../../features/store';
+import { toast } from 'react-toastify';
 
 interface UsersDetailsFormComponentProps {
     id: number;
@@ -34,7 +35,7 @@ export const UsersDetailsFormComponent: React.FC<UsersDetailsFormComponentProps>
         setter(value.trim() === "" ? emptyValue : value);
     };
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const updatedUser = {
             id,
@@ -45,9 +46,10 @@ export const UsersDetailsFormComponent: React.FC<UsersDetailsFormComponentProps>
             schedule: userScheduled,
             contact: userContact,
         };
-        dispatch(updateUser(updatedUser)).then(() => {
-            navigate(0);
-        });
+
+        await dispatch(updateUser(updatedUser))
+        toast.success("Employee updated successfully")
+        await navigate(-1);
     };
 
     return (

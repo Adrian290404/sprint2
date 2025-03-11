@@ -3,7 +3,7 @@ import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Butt
 import { MdOutlineAutoAwesome } from "react-icons/md";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { createUser } from '../../../features/users/usersThunks';
 import { RootState, AppDispatch } from '../../../features/store';
 import { Employee } from '../../../interfaces/employee'; 
@@ -13,6 +13,9 @@ export const UsersCreateComponent = () => {
     const dispatch = useDispatch<AppDispatch>();
     const users = useSelector((state: RootState) => state.users.users); 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const userData = location.state?.employeeData as Employee | undefined;
 
     const newUserId = (): number => {
         const Ids = users.map(user => user.id).sort((a, b) => a - b);
@@ -32,13 +35,11 @@ export const UsersCreateComponent = () => {
 
     const formatDate = (): string => {
         const now = new Date();
-
         const day = String(now.getDate()).padStart(2, '0');
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const year = now.getFullYear();
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-
         return `${day}/${month}/${year} ${hours}:${minutes}`;
     };
 
@@ -61,7 +62,7 @@ export const UsersCreateComponent = () => {
         };
 
         dispatch(createUser(newUser));
-        navigate(`/users/${newUserId()}`);
+        navigate(`/users/${newUser.id}`);
     };
 
     return (
@@ -97,6 +98,7 @@ export const UsersCreateComponent = () => {
                     <Input
                         type="text"
                         name="name"
+                        defaultValue={userData ? userData.name : ""}
                         required
                     />
 
@@ -104,6 +106,7 @@ export const UsersCreateComponent = () => {
                     <Input
                         type="text"
                         name="job_desk"
+                        defaultValue={userData ? userData.job_desk : ""}
                         required
                     />
 
@@ -112,15 +115,18 @@ export const UsersCreateComponent = () => {
                         type="text"
                         name="schedule"
                         pattern="^(?:(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday), (Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday))?$"
+                        defaultValue={userData ? userData.schedule : ""}
                         required
                     />
 
                     <Label>Contact</Label>
                     <Input
-                        type="number"
+                        type="text"
                         name="contact"
+                        defaultValue={userData ? userData.contact : ""}
                         required
                     />
+
                     <Agrupate>
                         <Column>
                             <Label>Image</Label>
@@ -128,6 +134,7 @@ export const UsersCreateComponent = () => {
                                 type="url"
                                 name="image"
                                 ref={imageInputRef}
+                                defaultValue={userData ? userData.image : ""}
                                 required
                             />
                         </Column>

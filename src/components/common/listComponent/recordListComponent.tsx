@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { AppDispatch, RootState } from "../../../features/store";
 import { fetchNotifications, markAllAsRead } from "../../../features/notifications/notificationsThunks";
 import { StyledTable, StyledThead, StyledTr, StyledTh, StyledTd, StyledButton, Read, TextAndIcons } from "./styles/recordComponentStyles";
@@ -14,12 +15,15 @@ import { MdCreateNewFolder } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
 import { FaRegEye } from "react-icons/fa6";
 import { CgRedo } from "react-icons/cg";
+import { Employee } from "../../../interfaces/employee";
+import { Room } from "../../../interfaces/room";
 
 interface ListComponentProps {
     currentPage: number;
 }
 
 export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const { notifications, loading, error } = useSelector((state: RootState) => state.notifications);
     const { selectedMenu, selectedOption } = useSelector((state: any) => state.filter);
@@ -49,6 +53,19 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
     }
 
     const singular = (str: string) => str.slice(0, -1)
+
+    const handleRemake = (type: string, json: Room | Employee) => {
+        if (type === "rooms") {
+            navigate("/room/create", {
+                state: { roomData: json }
+            });
+        } 
+        else {
+            navigate("/users/create", {
+                state: { employeeData: json }
+            });
+        }
+    }
 
     if (loading) {
         return <p>Loading...</p>;
@@ -115,7 +132,7 @@ export const RecordListComponent: React.FC<ListComponentProps> = ({ currentPage 
                                     )}
 
                                     {(notification.collection !== "bookings" && notification.type === "delete") && (
-                                        <StyledButton type="remake">
+                                        <StyledButton type="remake" onClick={() => handleRemake( notification.collection, notification.details.redo)}>
                                             Remake {singular(notification.collection)}
                                             <CgRedo size="20" />
                                         </StyledButton>

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchRoom, deleteRoom } from '../../../features/rooms/roomsThunks'
-import { Container, Content, ImageContainer, Image, ImageInformation, TypeAndFloor, Details, Title, Info, Facilities, Price, Small, GoBack, Options, Icon } from './styles/roomDetailsStyles'
+import { Container, Content, ImageContainer, Image, ImageInformation, Details, Title, Info, Price, Small, GoBack, Options, Icon, Head, Description, Table, TdLabel, TdValue } from './styles/roomDetailsStyles'
 import available from "../../../assets/available.png"
 import booked from "../../../assets/booked.png"
-import { TiBackspaceOutline } from "react-icons/ti"
 import { CiEdit } from "react-icons/ci"
 import { MdDelete } from "react-icons/md"
+import backGif from '../../../assets/back.gif'
 import { RoomDetailsFormComponent } from './roomDetailsFormComponent'
 import { ModalQuestionComponent } from '../../common/modalQuestionComponent'
 import { AppDispatch } from '../../../features/store'
@@ -72,34 +72,49 @@ export const RoomDetailsComponent = () => {
                 <Details>
                     {showInformation ? (
                         <>
-                            <GoBack>
-                                <TiBackspaceOutline size={30} onClick={goBack} />
-                            </GoBack>
-                            <Options>
-                                <Icon>
-                                    <CiEdit size={30} onClick={editInfo} />
-                                </Icon>
-                                <Icon delete onClick={openModal}>
-                                    <MdDelete size={30} />
-                                </Icon>
-                            </Options>
-                            <Title>{room.room_name}</Title>
-                            <TypeAndFloor>
-                                <p>
-                                    <Info>Bed Type. </Info>
-                                    {room.bed_type}
-                                </p>
-                                <p>
-                                    <Info>Floor. </Info>
-                                    {room.room_floor}
-                                </p>
-                            </TypeAndFloor>
-                            <Facilities>
-                                <p>
-                                    <Info>Facilities.</Info>
-                                </p>
-                                <p>{room.facilities}</p>
-                            </Facilities>
+                            <Head>
+                                <GoBack onClick={goBack}>
+                                    <img src={backGif} width={40} />
+                                </GoBack>
+
+                                <div>
+                                    <Title>{room.room_name}</Title>  
+                                </div>
+                                  
+                                <Options>
+                                    <Icon onClick={editInfo}>
+                                        <CiEdit size={30} />
+                                    </Icon>
+                                    <Icon delete onClick={openModal}>
+                                        <MdDelete size={30} />
+                                    </Icon>
+                                </Options>
+                                                        
+                            </Head>
+                            <Description>
+                                <Table>
+                                    <tbody>
+                                        <tr>
+                                            <TdLabel>
+                                                <Info>Bed Type</Info>
+                                            </TdLabel>
+                                            <TdValue>{room.bed_type}</TdValue>
+                                        </tr>
+                                        <tr>
+                                            <TdLabel>
+                                                <Info>Floor</Info>
+                                            </TdLabel>
+                                            <TdValue>{room.room_floor}</TdValue>
+                                        </tr>
+                                        <tr>
+                                            <TdLabel withoutBorder>
+                                                <Info>Facilities</Info>
+                                            </TdLabel>
+                                            <TdValue withoutBorder>{room.facilities}</TdValue>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Description>
                         </>
                     ) : (
                         <RoomDetailsFormComponent

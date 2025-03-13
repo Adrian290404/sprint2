@@ -1,6 +1,7 @@
 import { FormContainer, FormField, TwoFields, Label, Input, CheckboxContainer, CheckboxLabel, Buttons, Icon, Button } from '../../common/styles/detailsFormStyles'
 import { useState } from 'react'
-import { TiArrowBackOutline } from "react-icons/ti"
+import { GiSave } from "react-icons/gi";
+import backGif from '../../../assets/back.gif'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { updateRoom } from '../../../features/rooms/roomsThunks'
@@ -127,10 +128,10 @@ export const RoomDetailsFormComponent = ({id, image, name, bedType, floor, facil
                     </div>
                 </TwoFields>
                 <Buttons>
-                    <Icon title="go back">
-                        <TiArrowBackOutline size={30} onClick={changePage} />
+                    <Icon title="go back" onClick={changePage}>
+                        <img src={backGif} width={40} />
                     </Icon>
-                    <Button type="submit">Save Changes</Button>
+                    <Button type="submit"><GiSave size={20} />Save Changes</Button>
                 </Buttons>
             </form>
         </FormContainer>

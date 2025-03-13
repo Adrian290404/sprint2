@@ -68,6 +68,9 @@ export const Button = styled.button<ButtonProps>`
     border-radius: .8em;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: .5em;
     ${(props) => props.bookings && "margin-top: 2em"};
     &:hover {
         background-color: #0056b3;

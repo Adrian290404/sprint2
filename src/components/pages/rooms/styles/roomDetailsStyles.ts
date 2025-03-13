@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-interface IconProps {
-    delete?: boolean;
-};
-
 export const Container = styled.div`
     background-color: #f8f8f8;
     width: 100%;
@@ -41,46 +37,6 @@ export const ImageInformation = styled.img`
     top: .5em;
     left: .5em;
 `;
-export const Details = styled.div`
-    padding: 1em 2em 2em 2em;
-    font-size: 1.2rem;
-    position: relative;
-`;
-export const GoBack = styled.div`
-    position: absolute;
-    top: 1.5em;
-    left: 1em;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    color: #9E9E9E;
-    &:hover {
-        transform: scale(1.05);
-        transform: translateY(-2px);
-        color: #616161;
-    }
-`;
-export const Title = styled.h1`
-    font-size: 2rem;
-    color: #222;
-    text-align: center;
-    text-decoration: underline;
-`;
-export const TypeAndFloor = styled.div`
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 1.5em;
-`;
-export const Info = styled.span`
-    font-weight: 600;
-    color: black;
-`;
-export const Facilities = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-top: 1.5em;
-    text-align: center;
-    gap: .5em;
-`;
 export const Price = styled.p`
     display: inline;
     font-weight: bold;
@@ -98,20 +54,75 @@ export const Small = styled.span`
     font-size: .6rem;
     color: #222;
 `;
+export const Details = styled.div`
+    font-size: 1.2rem;
+`;
+export const Head = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .8em 1em;
+    border-bottom: 4px solid #BEAD8E;
+`;
+export const GoBack = styled.div`
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    &:hover {
+        transform: scale(1.05);
+        transform: translateY(-2px);
+    }
+`;
+export const Title = styled.h1`
+    font-size: 2rem;
+    font-family: "Playfair Display", serif;
+    color:rgb(117, 107, 86);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: .3em;
+`;
 export const Options = styled.div`
     display: flex;
-    position: absolute;
     gap: .8em;
-    top: 1.5em;
-    right: 1em;
 `;
+
+interface IconProps {
+    delete?: boolean;
+};
+
 export const Icon = styled.div<IconProps>`
     cursor: pointer;
     transition: transform 0.2s ease;
-    color: ${(props) => (props.delete ? "#E57373" : "#64B5F6")};
     &:hover {
         transform: scale(1.05);
         transform: translateY(-2px);
         color: ${(props) => (props.delete ? "#D32F2F" : "#1976D2")};
     }
+`;
+export const Description = styled.div`
+    padding: 1em 2em;
+`;
+export const Table = styled.table`
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+`;
+
+interface TdProps{
+    withoutBorder?: boolean
+}
+
+export const TdLabel = styled.td<TdProps>`
+    border-bottom: ${(props) => (props.withoutBorder ? "none" : "2px solid #BEAD8E")};
+    padding: .3em 2.5em .3em .5em;
+    vertical-align: top;
+`;
+export const TdValue = styled.td<TdProps>`
+    border-bottom: ${(props) => (props.withoutBorder ? "none" : "2px solid #BEAD8E")};
+    padding: 8px;
+    vertical-align: top;
+`;
+export const Info = styled.span`
+    font-weight: 600;
+    color: #000;
+    white-space: nowrap;  
 `;

@@ -1,10 +1,10 @@
-import { Container, CardContainer, ProfileImage, CardContent, EmployeeName, InfoGroup, InfoText, Clock, Agrupate, GoBack, Options, Icon } from "./styles/userDetailsStyles";
+import { Container, CardContainer, ProfileImage, EmployeeName, GoBack, Options, Icon, ImageContainer, NameContainer, Head, JobDesk, Table, TdLabel, Info, TdValue, Description } from "./styles/userDetailsStyles";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchUser, deleteUser } from "../../../features/users/usersThunks";
 import { MdOutlineCalendarToday, MdOutlineSchedule, MdOutlineLocalPhone, MdDelete } from "react-icons/md";
-import { TiBackspaceOutline } from "react-icons/ti";
+import backGif from '../../../assets/back.gif'
 import { CiEdit } from "react-icons/ci";
 import { activeEmployee } from "../../common/listComponent/functions/activeEmployee";
 import { UsersDetailsFormComponent } from "./usersDetailsFormComponent";
@@ -66,43 +66,54 @@ export const UsersDetailsComponent: React.FC = () => {
     return (
         <Container>
             <CardContainer>
-                <ProfileImage src={user.image} alt={`${user.name}'s profile`} />
-                <CardContent>
-                    <EmployeeName>{user.name}</EmployeeName>
+                <Head>
+                    <ImageContainer>
+                        <GoBack>
+                            <img src={backGif} width={40} onClick={goBack} />
+                        </GoBack>
+                        <ProfileImage src={user.image} alt={`${user.name}'s profile`} />
+                    </ImageContainer>
+                    <NameContainer>
+                        <div>
+                            <EmployeeName>{user.name}</EmployeeName>
+                            <JobDesk>{user.job_desk}</JobDesk>
+                        </div>     
+                        <Options>
+                            <Icon>
+                                <CiEdit size={30} onClick={editInfo} />
+                            </Icon>
+                            <Icon delete>
+                                <MdDelete size={30} onClick={openModal} />
+                            </Icon>
+                        </Options>
+                    </NameContainer>                    
+                </Head>
                     {showInformation ? (
                         <>
-                            <GoBack>
-                                <TiBackspaceOutline size={30} onClick={goBack} />
-                            </GoBack>
-                            <Options>
-                                <Icon>
-                                    <CiEdit size={30} onClick={editInfo} />
-                                </Icon>
-                                <Icon delete>
-                                    <MdDelete size={30} onClick={openModal} />
-                                </Icon>
-                            </Options>
-                            <InfoGroup center>
-                                <InfoText>{user.job_desk}</InfoText>
-                            </InfoGroup>
-                            <Agrupate>
-                                <InfoGroup>
-                                    <MdOutlineCalendarToday size={25} />
-                                    <InfoText>{user.join}</InfoText>
-                                </InfoGroup>
-                                <InfoGroup>
-                                    <MdOutlineLocalPhone size={25} />
-                                    <InfoText>{user.contact}</InfoText>
-                                </InfoGroup>
-                                <InfoGroup>
-                                    <Clock active={activeEmployee(user.schedule)}>
-                                        <MdOutlineSchedule size={25} />
-                                    </Clock>
-                                    <InfoText>
-                                        {user.schedule.replace(/, /g, " - ")}
-                                    </InfoText>
-                                </InfoGroup>
-                            </Agrupate>
+                            <Description>
+                                <Table>
+                                    <tbody>
+                                        <tr>
+                                            <TdLabel>
+                                                <Info>Join date</Info>
+                                            </TdLabel>
+                                            <TdValue>{user.join}</TdValue>
+                                        </tr>
+                                        <tr>
+                                            <TdLabel>
+                                                <Info>Contact</Info>
+                                            </TdLabel>
+                                            <TdValue>{user.contact}</TdValue>
+                                        </tr>
+                                        <tr>
+                                            <TdLabel withoutBorder>
+                                                <Info>Schedule</Info>
+                                            </TdLabel>
+                                            <TdValue withoutBorder>{user.schedule.replace(/, /g, " - ")} ({activeEmployee(user.schedule) ? "active now" : "inactive"})</TdValue>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            </Description>
                         </>
                     ) : (
                         <UsersDetailsFormComponent
@@ -116,7 +127,6 @@ export const UsersDetailsComponent: React.FC = () => {
                             changePage={editInfo}
                         />
                     )}
-                </CardContent>
             </CardContainer>
             <ModalQuestionComponent
                 isOpen={showModal}

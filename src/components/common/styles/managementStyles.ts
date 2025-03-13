@@ -21,6 +21,10 @@ export const Item = styled.li<ItemProps>`
     padding: .6em 2em;
     cursor: pointer;
     ${({ isSelected }) => (isSelected ? "border-bottom: 1px solid #135846; color: #135846" : "border-bottom: 1px solid #d4d4d4; color: #6e6e6e")};
+    &:hover{
+        background-color: #f2f2f2;
+        color: #135846;
+    }
 `;
 export const Create = styled.button`
     color: #FFFFFF;

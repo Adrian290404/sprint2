@@ -84,7 +84,9 @@ export const ManagementComponent = () => {
             </List>
             <div>
                 {location.pathname !== "/dashboard/customerReviews" && location.pathname !== "/record" && (
-                    <Create onClick={navigateTo}> + New {page[location.pathname]} </Create>
+                    <Create onClick={navigateTo}>
+                        + New {page[location.pathname]} 
+                    </Create>
                 )}
                 <Filter 
                     value={selectedOption} 

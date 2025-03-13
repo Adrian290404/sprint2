@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { updateUser } from '../../../features/users/usersThunks';
 import { AppDispatch } from '../../../features/store';
 import { toast } from 'react-toastify';
+import { GiSave } from 'react-icons/gi';
 
 interface UsersDetailsFormComponentProps {
     id: number;
@@ -87,10 +88,7 @@ export const UsersDetailsFormComponent: React.FC<UsersDetailsFormComponentProps>
                     />
                 </FormField>
                 <Buttons>
-                    <Icon title="go back">
-                        <TiArrowBackOutline size={30} onClick={changePage} />
-                    </Icon>
-                    <Button type="submit">Save Changes</Button>
+                    <Button type="submit"><GiSave size={20} />Save Changes</Button>
                 </Buttons>
             </form>
         </FormContainer>

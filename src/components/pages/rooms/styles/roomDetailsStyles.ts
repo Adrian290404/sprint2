@@ -75,7 +75,7 @@ export const GoBack = styled.div`
 export const Title = styled.h1`
     font-size: 2rem;
     font-family: "Playfair Display", serif;
-    color:rgb(117, 107, 86);
+    color:#222;
     text-align: center;
     font-weight: bold;
     margin-bottom: .3em;

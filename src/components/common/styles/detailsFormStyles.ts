@@ -8,7 +8,7 @@ export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 0 1em;
+    padding: 1em 3em;
     font-size: 0.875rem;
 `;
 export const FormField = styled.div`
@@ -19,6 +19,12 @@ export const TwoFields = styled.div`
     justify-content: space-between;
     align-items: end;
     margin-bottom: 1em;
+    gap: 2em;
+    & > div {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
 `;
 export const Label = styled.label`
     color: #333;
@@ -26,10 +32,14 @@ export const Label = styled.label`
     font-weight: 600;
 `;
 export const Input = styled.input`
+    &[type='number']::-webkit-inner-spin-button, &[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
     width: 100%;
-    padding: .6em;
-    border: 1px solid #ccc;
-    border-radius: .5em;
+    padding: .6em 0;
+    border: none;
+    border-bottom: 2px solid #BEAD8E;
     outline: none;
 `;
 export const CheckboxContainer = styled.div`

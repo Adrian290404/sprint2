@@ -24,6 +24,7 @@ export const Item = styled.li<ItemProps>`
     &:hover{
         background-color: #f2f2f2;
         color: #135846;
+        border-radius: 1em 1em 0 0;
     }
 `;
 export const Create = styled.button`

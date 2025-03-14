@@ -24,6 +24,7 @@ export const StyledTd = styled.td`
     border-bottom: 1px solid #eee;
     color:rgb(58, 58, 58);
     position: relative;
+    vertical-align: middle;
 `;
 
 interface StyledTrProps {
@@ -32,6 +33,8 @@ interface StyledTrProps {
 }
 
 export const StyledTr = styled.tr<StyledTrProps>`
+    height: 40px;
+
     background-color: ${props => {
         switch (props.type) {
         case "create":
@@ -73,7 +76,7 @@ export const StyledButton = styled.button<ButtonProps>`
     background-color: ${({ type }) => type === "remake" ? "#e67e22" : "#3498db"};
     color: white;
     border: none;
-    padding: 0.5rem 1rem;
+    padding: 0.3em 1em;
     border-radius: 0.25rem;
     cursor: pointer;
     transition: background-color 0.3s ease;

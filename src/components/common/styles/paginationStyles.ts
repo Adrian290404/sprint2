@@ -24,3 +24,30 @@ export const Button = styled.button<ButtonProps>`
     color: ${(props) => (props.controller ? "#135846" : (props.isSelected ? "#FFFFFF" : "#393939"))};
     cursor: pointer;
 `;
+export const Input = styled.input`
+    &[type='number']::-webkit-inner-spin-button, &[type='number']::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    padding: 1em 0;
+    margin: 0.2em;
+    border: none;
+    border-radius: 1em;
+    background: #FFFFFF;
+    color: #393939;
+    cursor: pointer;
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+
+    &:focus {
+        outline: none;
+    }
+`;
+export const Content = styled.div`
+    display: "flex";
+    align-items: "center";
+    gap: 0.5em;
+`;

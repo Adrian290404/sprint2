@@ -34,7 +34,7 @@ export const UsersList: React.FC<UsersListProps> = ({ currentPage, handleNavigat
     return (
         <>
             {paginatedUsers.map((employee: Employee) => (
-                <Row key={employee.id} $type="body">
+                <Row key={employee.id}>
                     <Td>
                         <Container onClick={() => handleNavigate(employee.id)}>
                             <Image type="employee" src={employee.image} alt={employee.name} />

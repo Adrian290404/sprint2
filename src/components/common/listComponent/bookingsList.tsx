@@ -78,12 +78,6 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
         }
     };
 
-    const getRoomNameById = (id: number): string | null => {
-        if (rooms.length === 0) return null;
-        const room = rooms.find((room: Room) => room.id === id);
-        return room ? room.room_name : null;
-    };
-
     if (isLoading) {
         return <p>Loading...</p>;
     }

@@ -13,6 +13,7 @@ import { AppDispatch } from "../../../features/store";
 import { Booking } from "../../../interfaces/booking";
 import { Room } from "../../../interfaces/room";
 import { Employee } from "../../../interfaces/employee";
+import { toast } from "react-toastify";
 
 interface BookingsListProps {
     currentPage: number;
@@ -50,16 +51,31 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
         10
     )[currentPage - 1] || [];
 
-    const getImageById = (id: number): string | undefined => {
-        if (users.length === 0) return undefined;
-        const user = users.find((user: Employee) => user.id === id);
-        return user ? user.image : undefined;
+    const getImageById = (id: number, type: "user" | "room"): string | undefined => {
+        if (type === "user"){
+            if (users.length === 0) return undefined;
+            const user = users.find((user: Employee) => user.id === id);
+            return user ? user.image : undefined;
+        }
+        else{
+            if (rooms.length === 0) return undefined;
+            const room = rooms.find((room: Room) => room.id === id);
+            return room? room.image : undefined;
+        }
+        
     };
 
-    const getUserNameById = (id: number): string | null => {
-        if (users.length === 0) return null;
-        const user = users.find((user: Employee) => user.id === id);
-        return user ? user.name : null;
+    const getNameById = (id: number, type: "user" |"room"): string | null => {
+        if (type === "user"){
+            if (users.length === 0) return null;
+            const user = users.find((user: Employee) => user.id === id);
+            return user? user.name : null;
+        }
+        else{
+            if (rooms.length === 0) return null;
+            const room = rooms.find((room: Room) => room.id === id);
+            return room? room.room_name : null;
+        }
     };
 
     const getRoomNameById = (id: number): string | null => {
@@ -75,17 +91,29 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
     return (
         <>
             {paginatedBookings.map((booking: Booking) => (
-                <Row key={booking.id} $type="body">
+                <Row key={booking.id} onClick={() => handleNavigate(booking.id)}>
                     <Td>
-                        <Container onClick={() => handleNavigate(booking.id)}>
-                            <Image type="guest" src={getImageById(booking.user_id)} />
+                        <Container>
+                            <Image type="guest" src={getImageById(booking.user_id, "user")} />
                             <InfoContainer>
-                                <p>{getUserNameById(booking.user_id)}</p>
-                                <TextLight>#{booking.id}</TextLight>
+                                <p>{getNameById(booking.user_id, "user")}</p>
+                                <TextLight>#{booking.user_id}</TextLight>
                             </InfoContainer>
                         </Container>
                     </Td>
-                    <Td top>{formatDate(booking.order_date)}</Td>
+                    <Td>                        
+                        <Container>
+                            <Image type="bookingRoom" src={getImageById(booking.room_id, "room")} />
+                            <InfoContainer>
+                                <p>{getNameById(booking.room_id, "room")}</p>
+                                <TextLight>#{booking.room_id}</TextLight>
+                            </InfoContainer>
+                        </Container>     
+                    </Td>  
+                    <Td>
+                        {formatDate(booking.order_date)}
+                        <TextLight>Booking #{booking.id}</TextLight>
+                    </Td>      
                     <Td>
                         <p>{formatDateHalf1(booking.check_in)}</p>
                         <GuestHour>{formatDateHalf2(booking.check_in)}</GuestHour>
@@ -98,16 +126,16 @@ export const BookingsList: React.FC<BookingsListProps> = ({ currentPage, handleN
                         <GuestNotes
                             active={booking.special_request !== ""}
                             disabled={!booking.special_request}
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 if (booking.special_request) {
-                                    alert(booking.special_request);
+                                    toast.info(booking.special_request);
                                 }
                             }}
                         >
                             View Notes
                         </GuestNotes>
                     </Td>
-                    <Td top>{getRoomNameById(booking.room_id)}</Td>
                     <Td>
                         <GuestStatus className={booking.status}>{booking.status}</GuestStatus>
                     </Td>

@@ -23,7 +23,7 @@ export const ListComponent: React.FC<ListComponentProps> = ({ currentPage }) => 
 
     const dataMapping: DataMapping = {
         "/bookings": {
-            headers: ["Guest", "Order Date", "Check In", "Check Out", "Special Request", "Room Type", "Status"],
+            headers: ["Guest", "Room", "Order Date", "Check In", "Check Out", "Special Request", "Status"],
             Component: BookingsList,
         },
         "/room": {
@@ -49,7 +49,7 @@ export const ListComponent: React.FC<ListComponentProps> = ({ currentPage }) => 
     return (
         <Table>
             <thead>
-                <Row>
+                <Row th>
                     {headers.map((header, index) => (
                         <Th key={index}>{header}</Th>
                     ))}

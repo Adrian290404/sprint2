@@ -32,7 +32,7 @@ export const RoomsList: React.FC<RoomsListProps> = ({ currentPage, handleNavigat
     return (
         <>
             {paginatedRooms.map((room: Room) => (
-                <Row key={room.id} $type="body">
+                <Row key={room.id}>
                     <Td>
                         <Container onClick={() => handleNavigate(room.id)}>
                             <Image type="room" src={room.image} alt={room.room_name} />

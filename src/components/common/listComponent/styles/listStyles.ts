@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 interface RowProps {
-    $type?: string;
+    th?: boolean;
 }
 interface TdProps {
     top?: boolean;
 };
 interface ImageProps {
-    type?: "guest" | "room" | "employee";
+    type?: "guest" | "bookingRoom" | "room" | "employee";
 };
 interface TextLightProps {
     type?: "room" | "employee";
@@ -37,10 +37,14 @@ export const Table = styled.table`
     border-radius: 0.7em;
 `;
 export const Row = styled.tr<RowProps>`
+    cursor: pointer;
     text-align: left;
     border: none;
     &.body{
         border-top: 2px solid #f8f8f8;
+    }
+    &:hover{
+        ${(props) => (props.th ? "" : "background-color:rgb(226, 226, 226);")}
     }
 `;
 export const Th = styled.th`
@@ -49,6 +53,7 @@ export const Th = styled.th`
     font-size: 1rem;
     font-weight: 600;
     font-family: "Poppins", sans-serif;
+    border-bottom: 3px solid #BEAD8E;
 `;
 export const Td = styled.td<TdProps>`
     padding: 1em;
@@ -61,7 +66,6 @@ export const Td = styled.td<TdProps>`
 export const Container = styled.div`
     display: flex;
     font-weight: 500;
-    cursor: pointer;
     align-items: center;
 `;
 export const InfoContainer = styled.div`
@@ -71,6 +75,7 @@ export const InfoContainer = styled.div`
 export const Image = styled.img<ImageProps>`
     border-radius: 1em;
     ${(props) => props.type === "guest" && "width: 45px; height: 45px"};
+    ${(props) => props.type === "bookingRoom" && "width: 85px; height: 45px"};
     ${(props) => props.type === "room" && "width: 150px; height: 77px"};
     ${(props) => props.type === "employee" && "width: 88px; height: 88px"};
     object-fit: cover;

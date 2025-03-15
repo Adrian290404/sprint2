@@ -106,12 +106,13 @@ export const GuestNotes = styled.button<GuestNotesProps>`
             : "border: 1px solid #799283; color: #799283;"}
 `;
 export const GuestStatus = styled.button<GuestStatusProps>`
-    width: 80%;
+    width: 100%;
     padding: 0.6em;
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
     border-radius: 1em;
     border: none;
+    text-align: center;
     &.Refund{
         color: #E23428; 
         background-color: #FFEDEC;

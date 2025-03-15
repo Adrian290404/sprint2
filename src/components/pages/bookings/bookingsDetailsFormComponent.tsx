@@ -1,160 +1,204 @@
-import { FC, FormEvent, useState } from "react";
+import { FC, FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { updateBooking } from "../../../features/bookings/bookingsThunks";
-import { Container, Button, Buttons, FormContainer, Icon, Input, Label, Select, TwoFields } from "../../common/styles/detailsFormStyles";
+import { Container, Button, Buttons, FormContainer, Input, Label, FormField, TextArea, AutocompleteContainer, SuggestionsList, Select, Error } from "../../common/styles/detailsFormStyles";
 import { AppDispatch } from "../../../features/store";
 import { Booking } from "../../../interfaces/booking";
 import { toast } from "react-toastify";
+import { fetchRooms } from "../../../features/rooms/roomsThunks";
+import { fetchUsers } from "../../../features/users/usersThunks";
+import { GiSave } from "react-icons/gi";
 
-export const BookingDetailsFormComponent: FC<Booking> = ({ check_in: ci, check_out: co, user_id: userId, room_id: roomId, id, order_date: orderDate, special_request: request, status }) => {
-    
-    const convertToDatetimeLocal = (dateString: string): string => {
-        const date = new Date(dateString);
-    
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() es 0-indexado
-        const day = String(date.getDate()).padStart(2, "0");
-        const hours = String(date.getHours()).padStart(2, "0");
-        const minutes = String(date.getMinutes()).padStart(2, "0");
-    
-        return `${year}-${month}-${day}T${hours}:${minutes}`;
-    };    
-
-    const [checkIn, setCheckIn] = useState<string>(convertToDatetimeLocal(ci));
-    const [checkOut, setCheckOut] = useState<string>(convertToDatetimeLocal(co));
-    const [state, setState] = useState<string>(status);
-    const [selectedGuest, setSelectedGuest] = useState<number>(userId);
-    const [selectedRoom, setSelectedRoom] = useState<number>(roomId);
-    const [error, setError] = useState<string>("");
-
+export const BookingDetailsFormComponent: FC<Booking> = ({check_in, check_out, user_id, room_id, id, order_date, special_request, status}) => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
     const rooms = useSelector((state: any) => state.rooms.rooms);
-    const roomsAlphabetic = [...rooms].sort((a: any, b: any) => a.room_name.localeCompare(b.room_name));
     const users = useSelector((state: any) => state.users.users);
-    const usersAlphabetic = [...users].sort((a: any, b: any) => a.name.localeCompare(b.name));
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<any>>) => {
-        setter(e.target.value);
+    const convertToDatetimeLocal = (dateString: string): string => {
+        const date = new Date(dateString);
+        return date.toISOString().slice(0, 16);
     };
 
-    const handleChangeStatus = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setState(e.target.value);
-    };
+    const [checkIn, setCheckIn] = useState<string>(convertToDatetimeLocal(check_in));
+    const [checkOut, setCheckOut] = useState<string>(convertToDatetimeLocal(check_out));
+    
+    const [request, setRequest] = useState<string>(special_request || "");
+    const [state, setState] = useState<string>(status);
+    
+    const [selectedGuest, setSelectedGuest] = useState<number>(user_id);
+    const [selectedRoom, setSelectedRoom] = useState<number>(room_id);
 
-    const formatDate = (date: Date): string => {
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        const hours = String(date.getHours()).padStart(2, '0');
-        const minutes = String(date.getMinutes()).padStart(2, '0');
-        return `${month}/${day}/${year} ${hours}:${minutes}`;
-    };
+    const [searchUser, setSearchUser] = useState<string>(
+        users.find((u: any) => u.id === user_id)?.name || ""
+    );
+    const [searchRoom, setSearchRoom] = useState<string>(
+        rooms.find((r: any) => r.id === room_id)?.room_name || ""
+    );
+
+    useEffect(() => {
+        dispatch(fetchRooms());
+        dispatch(fetchUsers());
+    }, [dispatch]);
+
+    const [showUserSuggestions, setShowUserSuggestions] = useState<boolean>(false);
+    const [showRoomSuggestions, setShowRoomSuggestions] = useState<boolean>(false);
+
+    const filteredUsers = users.filter((u: any) =>
+        u.name.toLowerCase().startsWith(searchUser.toLowerCase())
+    );
+    const filteredRooms = rooms.filter((r: any) =>
+        r.room_name.toLowerCase().startsWith(searchRoom.toLowerCase())
+    );
+
+    const [error, setError] = useState<string>("");
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
-        const formData = new FormData(e.target as HTMLFormElement);
-        const checkIn = new Date(formData.get("checkIn") as string);
-        const checkOut = new Date(formData.get("checkOut") as string);
+
+        const checkInDate = new Date(checkIn);
+        const checkOutDate = new Date(checkOut);
         const currentDate = new Date();
-    
-        if (checkIn < currentDate) {
+
+        if (checkInDate < currentDate) {
             setError("Check-In date cannot be in the past");
             return;
         }
-        if (checkOut <= checkIn) {
+        if (checkOutDate <= checkInDate) {
             setError("Check-Out date must be after Check-In date");
             return;
         }
-    
+
         const updatedBooking = {
             user_id: selectedGuest,
             room_id: selectedRoom,
-            id: id,
-            order_date: orderDate,
-            check_in: formatDate(new Date(formData.get("checkIn") as string)),
-            check_out: formatDate(new Date(formData.get("checkOut") as string)),
+            id,
+            order_date,
+            check_in: checkIn,
+            check_out: checkOut,
             special_request: request,
             status: state
         };
-        
+
         dispatch(updateBooking(updatedBooking)).then(() => {
-            toast.success("Booking updated successfully")
+            toast.success("Booking updated successfully");
             navigate("/bookings");
         });
     };
-    
 
     return (
         <Container>
             <FormContainer>
                 <form onSubmit={handleSubmit}>
-                    {error && <p style={{ color: "red" }}>{error}</p>}
-                    <TwoFields>
-                        <div>
-                            <Label>Check In</Label>
-                            <Input
-                                id="checkIn"
-                                name="checkIn"
-                                type="datetime-local"
-                                value={checkIn}
-                                onChange={(e) => handleChange(e, setCheckIn)}
-                            />
-                        </div>
-                        <div>
-                            <Label>Check Out</Label>
-                            <Input
-                                id="checkOut"
-                                name="checkOut"
-                                type="datetime-local"
-                                value={checkOut}
-                                onChange={(e) => handleChange(e, setCheckOut)}
-                            />
-                        </div>
-                    </TwoFields>
-                    <TwoFields>
-                        <div>
-                            <Label>User</Label>
-                            <Select
-                                value={selectedGuest}
-                                onChange={(e) => setSelectedGuest(Number(e.target.value))}
-                                required
-                            >
-                                {usersAlphabetic.map((user) => (
-                                    <option key={user.id} value={user.id}>
-                                        {user.name}
-                                    </option>
+                    {error && <Error>{error}</Error>}
+                    <FormField>
+                        <Label>Check In</Label>
+                        <Input
+                            type="datetime-local"
+                            value={checkIn}
+                            onChange={(e) => setCheckIn(e.target.value)}
+                        />
+                    </FormField>
+                    <FormField>
+                        <Label>Check Out</Label>
+                        <Input
+                            type="datetime-local"
+                            value={checkOut}
+                            onChange={(e) => setCheckOut(e.target.value)}
+                        />
+                    </FormField>
+                    <FormField>
+                        <Label>User</Label>
+                        <AutocompleteContainer>
+                        <Input
+                            type="text"
+                            value={searchUser}
+                            onChange={(e) => {
+                                setSearchUser(e.target.value);
+                                setShowUserSuggestions(true);
+                            }}
+                            onFocus={() => setShowUserSuggestions(true)}
+                            onBlur={() => {
+                                setTimeout(() => setShowUserSuggestions(false), 200);
+                            }}
+                            placeholder="Search user..."
+                        />
+                        {showUserSuggestions && filteredUsers.length > 0 && (
+                            <SuggestionsList>
+                                {filteredUsers.map((u: any) => (
+                                    <li
+                                        key={u.id}
+                                        onClick={() => {
+                                            setSearchUser(u.name);
+                                            setSelectedGuest(u.id);
+                                            setShowUserSuggestions(false);
+                                        }}
+                                    >
+                                        {u.name}
+                                    </li>
                                 ))}
-                            </Select>
-                        </div>
-                        <div>
-                            <Label>Room</Label>
-                            <Select
-                                value={selectedRoom}
-                                onChange={(e) => setSelectedRoom(Number(e.target.value))}
-                                required
-                            >
-                                {roomsAlphabetic.map((room) => (
-                                    <option key={room.id} value={room.id}>
-                                        {room.room_name}
-                                    </option>
-                                ))}
-                            </Select>
-                        </div>
-                        <div>
-                            <Label>Status</Label>
-                            <Select className={state} value={state} onChange={handleChangeStatus} >
-                                <option value="Pending">Pending</option>
-                                <option value="Booked">Booked</option>
-                                <option value="Cancelled">Cancelled</option>
-                                <option value="Refund">Refund</option>
-                            </Select>
-                        </div>
-                    </TwoFields>
+                            </SuggestionsList>
+                        )}
+                        </AutocompleteContainer>
+                    </FormField>
+                    <FormField>
+                        <Label>Room</Label>
+                        <AutocompleteContainer>
+                        <Input
+                            type="text"
+                            value={searchRoom}
+                            onChange={(e) => {
+                                setSearchRoom(e.target.value);
+                                setShowRoomSuggestions(true);
+                            }}
+                            onFocus={() => setShowRoomSuggestions(true)}
+                            onBlur={() => {
+                                setTimeout(() => setShowRoomSuggestions(false), 200);
+                            }}
+                            placeholder="Search room..."
+                        />
+                            {showRoomSuggestions && filteredRooms.length > 0 && (
+                                <SuggestionsList>
+                                    {filteredRooms.map((r: any) => (
+                                        <li
+                                            key={r.id}
+                                            onClick={() => {
+                                                setSearchRoom(r.room_name);
+                                                setSelectedRoom(r.id);
+                                                setShowRoomSuggestions(false);
+                                            }}
+                                        >
+                                            {r.room_name}
+                                        </li>
+                                    ))}
+                                </SuggestionsList>
+                            )}
+                        </AutocompleteContainer>
+                    </FormField>
+                    <FormField>
+                        <Label>Status</Label>
+                        <Select 
+                            className={state} 
+                            value={state} 
+                            onChange={(e) => setState(e.target.value)}
+                        >
+                            <option value="Pending">Pending</option>
+                            <option value="Booked">Booked</option>
+                            <option value="Cancelled">Cancelled</option>
+                            <option value="Refund">Refund</option>
+                        </Select>
+                    </FormField>
+                    <FormField>
+                        <Label>Special Request</Label>
+                        <TextArea
+                            value={request}
+                            onChange={(e) => setRequest(e.target.value)}
+                        />
+                    </FormField>
                     <Buttons>
-                        <Button bookings type="submit">Save Changes</Button>
+                        <Button type="submit"><GiSave size={20} />Save Changes</Button>
                     </Buttons>
                 </form>
             </FormContainer>

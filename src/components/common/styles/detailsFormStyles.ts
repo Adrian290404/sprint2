@@ -4,6 +4,13 @@ interface ButtonProps {
     bookings?: boolean;
 };
 
+interface SelectProps {
+    Refund?: boolean;
+    Booked?: boolean;
+    Pending?: boolean;
+    Cancelled?: boolean;
+}
+
 export const FormContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -89,7 +96,7 @@ export const Button = styled.button<ButtonProps>`
         transform: translateY(-2px);
     }
 `;
-export const Select = styled.select`
+export const Select = styled.select<SelectProps>`
     padding: 0.8em;
     font-size: 0.875rem;
     border: 1px solid #ddd;
@@ -120,3 +127,47 @@ export const Select = styled.select`
 export const Container = styled.div`
     padding: 2em;
 `;
+export const TextArea = styled.textarea`
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    min-height: 8em;
+    padding: .7em;
+    border: 1px solid #ddd;
+    border-radius: .5em;
+    font-size: .8rem;
+    color: #333;
+    resize: none;
+    outline: none;
+    &:focus {
+        border-color: #BEAD8E;
+        box-shadow: 0 0 5px rgba(0, #BEAD8E, 0.5);
+    }
+`;
+export const AutocompleteContainer = styled.div`
+    position: relative; 
+`;
+export const SuggestionsList = styled.ul`
+    position: absolute;
+    top: 2em;
+    left: 0;
+    right: 0;
+    max-height: 14em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1;
+    overflow-y: auto;
+
+    li {
+        padding: .2em;
+        cursor: pointer;
+        &:hover {
+            background-color: #f2f2f2;
+        }
+    }
+`;
+export const Error = styled.p`
+    color: red;
+`

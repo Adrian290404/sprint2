@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchUser, deleteUser } from "../../../features/users/usersThunks";
-import { MdOutlineCalendarToday, MdOutlineSchedule, MdOutlineLocalPhone, MdDelete } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import backGif from '../../../assets/back.gif'
 import { CiEdit } from "react-icons/ci";
 import { activeEmployee } from "../../common/listComponent/functions/activeEmployee";

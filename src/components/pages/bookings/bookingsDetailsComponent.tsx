@@ -7,11 +7,11 @@ import { fetchRoom } from "../../../features/rooms/roomsThunks";
 import { Background, Button, Container, FacilityList, ID, InfoRow, LeftSection, Name, ProfileDetails, ProfileImage, ProfileInfo, RightSection, RoomDetails, RoomImage, Icon, Contact, InfoContainer, InfoTitle, Info, Separator, Especificator, FacilitiesTitle, Element, RoomStatus, RoomContainer, Options, Row, Action, GoBookings } from "./styles/bookingDetailsStyles";
 import { FaPhone } from "react-icons/fa6";
 import { TbMessageFilled } from "react-icons/tb";
-import { TiBackspaceOutline } from "react-icons/ti";
+import backGif from '../../../assets/back.gif'
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
-import { FaUserPen } from "react-icons/fa6";
-import { GiBed } from "react-icons/gi";
+import { GiHouseKeys } from "react-icons/gi";
+import { IoPeopleCircleSharp } from "react-icons/io5";
 import { ModalQuestionComponent } from "../../common/modalQuestionComponent";
 import { deleteBooking } from "../../../features/bookings/bookingsThunks";
 import { BookingDetailsFormComponent } from "./bookingsDetailsFormComponent";
@@ -132,7 +132,7 @@ export const BookingsDetailsComponent: React.FC = () => {
                 <LeftSection>
                     <GoBookings>
                         <Action type="back" onClick={() => navigate(-1)}>
-                            <TiBackspaceOutline size={30} />
+                            <img src={backGif} width={40} />
                         </Action>
                     </GoBookings>
                     <Options>
@@ -144,10 +144,10 @@ export const BookingsDetailsComponent: React.FC = () => {
                                 <MdDelete size={30} />
                             </Action>                        
                             <Action type="user" onClick={() => navigate(`/users/${booking.user_id}`)}>
-                                <FaUserPen size={30} />
+                                <IoPeopleCircleSharp size={30} />
                             </Action>
                             <Action type="room" onClick={() => navigate(`/room/${booking.room_id}`)}>
-                                <GiBed size={35} />
+                                <GiHouseKeys size={30} />
                             </Action>
                         </Row>
                     </Options>

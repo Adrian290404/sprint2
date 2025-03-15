@@ -192,7 +192,7 @@ export const Options = styled.div`
 export const Row = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 1.5em;
+    gap: .5em;
     align-items: flex-end;
     justify-content: end;
     align-items: center;
@@ -206,43 +206,30 @@ export const Action = styled.div<ActionProps>`
     cursor: pointer;
     transition: transform 0.2s ease;
     ${(props) =>
-        props.type === "back" &&
-        `
-            color: #9e9e9e;
-            &:hover {
-                transform: scale(1.05);
-                transform: translateY(-2px);
-                color: #616161;
-            }
-        `}
-    ${(props) =>
         props.type === "edit" &&
         `
-            color: #64b5f6;
             &:hover {
                 transform: scale(1.05);
                 transform: translateY(-2px);
-                color: #1976d2;
+                color: #1976D2;
             }
         `}
     ${(props) =>
         props.type === "delete" &&
         `
-            color: #e57373;
             &:hover {
                 transform: scale(1.05);
                 transform: translateY(-2px);
-                color: #d32f2f;
+                color: #D32F2F;
             }
         `}
     ${(props) =>
         (props.type === "user" || props.type === "room") &&
         `
-            color: #81c784;
             &:hover {
                 transform: scale(1.05);
                 transform: translateY(-2px);
-                color: #388e3c;
+                color:rgb(153, 153, 153);
             }
         `}
 `;

@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { Container, Content, Form, Agrupate, Column, Label, Input, Button, Title, GoBack, Select, Textarea, Error } from '../../common/styles/createStyles';
-import { TiBackspaceOutline } from "react-icons/ti";
+import backGif from '../../../assets/back.gif'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createBooking } from "../../../features/bookings/bookingsThunks";
@@ -107,7 +107,7 @@ export const BookingsCreateComponent: React.FC = () => {
         <Container>
             <Content>
                 <GoBack onClick={goBack}>
-                    <TiBackspaceOutline size={30} />
+                    <img src={backGif} width={40} />
                 </GoBack>
                 <Title>Create New Booking</Title>
                 <Form onSubmit={handleSubmit}>

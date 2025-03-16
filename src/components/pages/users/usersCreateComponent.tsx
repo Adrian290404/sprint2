@@ -1,7 +1,7 @@
 import { useRef, FormEvent } from 'react';
 import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Title, GoBack } from '../../common/styles/createStyles';
 import { MdOutlineAutoAwesome } from "react-icons/md";
-import { TiBackspaceOutline } from "react-icons/ti";
+import backGif from '../../../assets/back.gif'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { createUser } from '../../../features/users/usersThunks';
@@ -71,7 +71,7 @@ export const UsersCreateComponent = () => {
         <Container>
             <Content>
                 <GoBack onClick={goBack}>
-                    <TiBackspaceOutline size={30} />
+                    <img src={backGif} width={40} />
                 </GoBack>
                 <Title>Create New User</Title>
                 <Form onSubmit={handleSubmit}>

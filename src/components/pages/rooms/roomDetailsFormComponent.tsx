@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { updateRoom } from '../../../features/rooms/roomsThunks'
 import { AppDispatch } from '../../../features/store'
 import { toast } from 'react-toastify'
+import { CustomCheckbox } from '../../common/styles/createStyles';
 
 interface RoomDetailsFormProps {
     id: number
@@ -115,15 +116,15 @@ export const RoomDetailsFormComponent = ({id, image, name, bedType, floor, facil
                         />
                     </div>
                     <div>
+                        <Label>Available</Label>
                         <CheckboxContainer>
-                            <input
+                            <CustomCheckbox
                                 id="available"
                                 name="available"
                                 type="checkbox"
                                 checked={isAvailable}
                                 onChange={handleCheckboxChange}
                             />
-                            <CheckboxLabel>Available</CheckboxLabel>
                         </CheckboxContainer>
                     </div>
                 </TwoFields>

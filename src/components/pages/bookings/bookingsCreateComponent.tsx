@@ -1,12 +1,12 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
-import { Container, Content, Form, Agrupate, Column, Label, Input, Button, Title, GoBack, Select, Textarea, Error } from '../../common/styles/createStyles';
-import backGif from '../../../assets/back.gif'
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useState, FormEvent, ChangeEvent, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { createBooking } from "../../../features/bookings/bookingsThunks";
-import { AppDispatch } from '../../../features/store';
-import { Booking } from '../../../interfaces/booking';
-import { toast } from 'react-toastify';
+import { AppDispatch } from "../../../features/store";
+import { Booking } from "../../../interfaces/booking";
+import { toast } from "react-toastify";
+import backGif from "../../../assets/back.gif";
+import { Container, Content, Form, Agrupate, Column, Label, Input, Button, Title, GoBack, Select, TextArea, Error, Head, AutocompleteContainer, SuggestionsList } from "../../common/styles/createStyles";
 
 interface User {
     id: number;
@@ -20,20 +20,39 @@ interface Room {
 
 export const BookingsCreateComponent: React.FC = () => {
     const [status, setStatus] = useState<string>("Pending");
-    const [selectedGuest, setSelectedGuest] = useState<string>("default");
-    const [selectedRoom, setSelectedRoom] = useState<string>("default");
     const [error, setError] = useState<string>("");
-    
+
+    const [searchUser, setSearchUser] = useState<string>("");
+    const [searchRoom, setSearchRoom] = useState<string>("");
+    const [selectedGuest, setSelectedGuest] = useState<number | null>(null);
+    const [selectedRoom, setSelectedRoom] = useState<number | null>(null);
+
+    const [showUserSuggestions, setShowUserSuggestions] = useState<boolean>(false);
+    const [showRoomSuggestions, setShowRoomSuggestions] = useState<boolean>(false);
+
     const dispatch = useDispatch<AppDispatch>();
-    const bookings = useSelector((state: any) => state.bookings.bookings);
-    const rooms = useSelector((state: any) => state.rooms.rooms);
-    const roomsAlphabetic = [...rooms].sort((a: Room, b: Room) => a.room_name.localeCompare(b.room_name));
-    const users = useSelector((state: any) => state.users.users);
-    const usersAlphabetic = [...users].sort((a: User, b: User) => a.name.localeCompare(b.name));
     const navigate = useNavigate();
 
+    const bookings = useSelector((state: any) => state.bookings.bookings);
+    const rooms = useSelector((state: any) => state.rooms.rooms);
+    const users = useSelector((state: any) => state.users.users);
+
+    const roomsAlphabetic: Room[] = [...rooms].sort((a, b) =>
+        a.room_name.localeCompare(b.room_name)
+    );
+    const usersAlphabetic: User[] = [...users].sort((a, b) =>
+        a.name.localeCompare(b.name)
+    );
+
+    const filteredUsers = usersAlphabetic.filter((u) =>
+        u.name.toLowerCase().startsWith(searchUser.toLowerCase())
+    );
+    const filteredRooms = roomsAlphabetic.filter((r) =>
+        r.room_name.toLowerCase().startsWith(searchRoom.toLowerCase())
+    );
+
     const newBookingId = (): number => {
-        const Ids = bookings.map(booking => booking.id).sort((a, b) => a - b);
+        const Ids = bookings.map((booking: Booking) => booking.id).sort((a, b) => a - b);
         for (let i = 1; i <= Ids.length; i++) {
             if (!Ids.includes(i)) {
                 return i;
@@ -42,14 +61,7 @@ export const BookingsCreateComponent: React.FC = () => {
         return Ids.length + 1;
     };
 
-    const handleChangeStatus = (e: ChangeEvent<HTMLSelectElement>): void => {
-        setStatus(e.target.value);
-    };
-
-    const formatDate = (date: Date): string => {
-        return date.toISOString();
-    };
-    
+    const formatDate = (date: Date): string => date.toISOString();
 
     const goBack = (): void => {
         navigate(-1);
@@ -58,32 +70,31 @@ export const BookingsCreateComponent: React.FC = () => {
     const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
         setError("");
-    
-        if (selectedGuest === "default" || selectedRoom === "default") {
+
+        if (selectedGuest === null || selectedRoom === null) {
             setError("Please select a valid Guest and Room.");
             return;
         }
-    
+
         const formData = new FormData(e.target as HTMLFormElement);
         const checkIn = new Date(formData.get("checkIn") as string);
         const checkOut = new Date(formData.get("checkOut") as string);
         const currentDate = new Date();
-    
+
         if (checkIn < currentDate) {
             setError("Check-In date cannot be in the past.");
             return;
         }
-    
         if (checkOut <= checkIn) {
             setError("Check-Out date must be after Check-In date.");
             return;
         }
-    
+
         const specialRequest = (formData.get("notes") as string) || "";
-    
+
         const newBooking: Booking = {
-            user_id: parseInt(selectedGuest),
-            room_id: parseInt(selectedRoom),
+            user_id: selectedGuest,
+            room_id: selectedRoom,
             id: newBookingId(),
             order_date: formatDate(new Date()),
             check_in: formatDate(checkIn),
@@ -91,10 +102,10 @@ export const BookingsCreateComponent: React.FC = () => {
             special_request: specialRequest,
             status: status
         };
-    
+
         try {
-            await dispatch(createBooking(newBooking));  
-            toast.success("Booking created successfully")
+            await dispatch(createBooking(newBooking));
+            toast.success("Booking created successfully");
             await navigate(`/bookings/${newBooking.id}`);
         } 
         catch (error) {
@@ -106,19 +117,23 @@ export const BookingsCreateComponent: React.FC = () => {
     return (
         <Container>
             <Content>
-                <GoBack onClick={goBack}>
-                    <img src={backGif} width={40} />
-                </GoBack>
-                <Title>Create New Booking</Title>
+                <Head>
+                    <GoBack onClick={goBack}>
+                        <img src={backGif} width={40} alt="Go Back" />
+                    </GoBack>
+                    <Title>Create New Booking</Title>
+                </Head>
+
                 <Form onSubmit={handleSubmit}>
-                    {error && <p style={{ color: "red" }}>{error}</p>}
+                    {error && <Error>{error}</Error>}
                     <Agrupate>
                         <Column>
                             <Label>Booking ID</Label>
                             <Input type="text" name="id" disabled value={newBookingId()} />
                         </Column>
                         <Column>
-                            <Select value={status} onChange={handleChangeStatus}>
+                            <Label>Status</Label>
+                            <Select create value={status} onChange={(e) => setStatus(e.target.value)}>
                                 <option value="Pending">Pending</option>
                                 <option value="Booked">Booked</option>
                                 <option value="Cancelled">Cancelled</option>
@@ -139,36 +154,77 @@ export const BookingsCreateComponent: React.FC = () => {
                     <Agrupate>
                         <Column>
                             <Label>Guest</Label>
-                            <Select
-                                value={selectedGuest}
-                                onChange={(e) => setSelectedGuest(e.target.value)}
-                                required
-                            >
-                                <option value="default">-- Select --</option>
-                                {usersAlphabetic.map((user) => (
-                                    <option key={user.id} value={user.id.toString()}>
-                                        {user.name}
-                                    </option>
-                                ))}
-                            </Select>
+                            <AutocompleteContainer>
+                                <Input
+                                    type="text"
+                                    value={searchUser}
+                                    onChange={(e) => {
+                                        setSearchUser(e.target.value);
+                                        setShowUserSuggestions(true);
+                                    }}
+                                    onFocus={() => setShowUserSuggestions(true)}
+                                    onBlur={() => {
+                                        setTimeout(() => setShowUserSuggestions(false), 200);
+                                    }}
+                                    placeholder="Search user..."
+                                    required
+                                />
+                                {showUserSuggestions && filteredUsers.length > 0 && (
+                                    <SuggestionsList>
+                                        {filteredUsers.map((u: User) => (
+                                        <li
+                                            key={u.id}
+                                            onClick={() => {
+                                            setSearchUser(u.name);
+                                            setSelectedGuest(u.id);
+                                            setShowUserSuggestions(false);
+                                            }}
+                                        >
+                                            {u.name}
+                                        </li>
+                                        ))}
+                                    </SuggestionsList>
+                                )}
+                            </AutocompleteContainer>
                         </Column>
                         <Column>
                             <Label>Room</Label>
-                            <Select
-                                value={selectedRoom}
-                                onChange={(e) => setSelectedRoom(e.target.value)}
-                                required
-                            >
-                                <option value="default">-- Select --</option>
-                                {roomsAlphabetic.map((room) => (
-                                    <option key={room.id} value={room.id.toString()}>
-                                        {room.room_name}
-                                    </option>
-                                ))}
-                            </Select>
+                            <AutocompleteContainer>
+                                <Input
+                                    type="text"
+                                    value={searchRoom}
+                                    onChange={(e) => {
+                                        setSearchRoom(e.target.value);
+                                        setShowRoomSuggestions(true);
+                                    }}
+                                    onFocus={() => setShowRoomSuggestions(true)}
+                                    onBlur={() => {
+                                        setTimeout(() => setShowRoomSuggestions(false), 200);
+                                    }}
+                                    placeholder="Search room..."
+                                    required
+                                />
+                                {showRoomSuggestions && filteredRooms.length > 0 && (
+                                    <SuggestionsList>
+                                        {filteredRooms.map((r: Room) => (
+                                        <li
+                                            key={r.id}
+                                            onClick={() => {
+                                            setSearchRoom(r.room_name);
+                                            setSelectedRoom(r.id);
+                                            setShowRoomSuggestions(false);
+                                            }}
+                                        >
+                                            {r.room_name}
+                                        </li>
+                                        ))}
+                                    </SuggestionsList>
+                                )}
+                            </AutocompleteContainer>
                         </Column>
                     </Agrupate>
-                    <Textarea name="notes" placeholder="Notes..." />
+                    <Label>Special Request</Label>
+                    <TextArea name="notes" placeholder="Notes..." />
                     <Button type="submit">Create Booking</Button>
                 </Form>
             </Content>

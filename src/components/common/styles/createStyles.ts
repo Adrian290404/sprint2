@@ -5,7 +5,7 @@ interface AgrupateProps {
 };
 
 interface SelectProps {
-    $type?: "Refund" | "Booked" | "Pending" | "Cancelled";
+    create?: boolean;
 };
 
 export const Container = styled.div`
@@ -92,44 +92,44 @@ export const Input = styled.input`
     outline: none;
 `;
 export const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;     /* Alinear verticalmente con la etiqueta */
-  gap: 0.5em;             /* Espacio entre el checkbox y el texto */
-  margin-top: 1em;        /* Espacio superior para separarlo de otros elementos */
+    display: flex;
+    align-items: center;     
+    gap: 0.5em;             
+    margin-top: 1em;        
 `;
 
 export const CustomCheckbox = styled.input.attrs({ type: "checkbox" })`
-  appearance: none;
-  -webkit-appearance: none;
+    appearance: none;
+    -webkit-appearance: none;
 
-  width: 18px;
-  height: 18px;
-  border: 2px solid #BEAD8E;
-  border-radius: 4px;
-  cursor: pointer;
-  position: relative;
-  transition: background-color 0.2s, border-color 0.2s;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #BEAD8E;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.2s, border-color 0.2s;
 
-  &:hover {
-    border-color: #9c8a70; /* Un tono más oscuro al pasar el mouse */
-  }
+    &:hover {
+        border-color: #9c8a70;
+    }
 
-  &:checked {
-    background-color: #BEAD8E;
-    border-color: #BEAD8E;
-  }
+    &:checked {
+        background-color: #BEAD8E;
+        border-color: #BEAD8E;
+    }
 
-  &:checked::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 5px;
-    width: 3px;
-    height: 7px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
+    &:checked::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 5px;
+        width: 3px;
+        height: 7px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
 `;
 export const Button = styled.button`
     padding: 1em;
@@ -149,50 +149,62 @@ export const Select = styled.select<SelectProps>`
     padding: 0.8em;
     font-size: 0.875rem;
     border: 1px solid #ddd;
-    border-radius: 0.4em;
     background-color: #fff;
     color: #333;
     appearance: none;
     cursor: pointer;
     outline: none;
 
-    ${({ $type }) =>
-        $type === "Refund" &&
-        `
-        color: #E23428;
-        background-color: #FFEDEC;
-    `}
-    ${({ $type }) =>
-        $type === "Booked" &&
-        `
-        color: #5AD07A;
-        background-color: #E8FFEE;
-    `}
-    ${({ $type }) =>
-        $type === "Pending" &&
-        `
-        color: #6D6D6D;
-        background-color: #E2E2E2;
-    `}
-    ${({ $type }) =>
-        $type === "Cancelled" &&
-        `
-        color: #BEBEBE;
-        background-color: #575757;
-    `}
+    &:focus {
+        border-color: #BEAD8E;
+        box-shadow: 0 0 5px rgba(0, #BEAD8E, 0.5);
+    }
+
+    border: none;
+    border-bottom: 3px solid #BEAD8E;
+
 `;
-export const Textarea = styled.textarea`
-    padding: 0.8em;
-    font-size: 0.875rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
-    color: #333;
+export const TextArea = styled.textarea`
     width: 100%;
-    height: 8em;
-    outline: none;
+    font-family: "Poppins", sans-serif;
+    min-height: 8em;
+    padding: .7em;
+    border: 1px solid #ddd;
+    border-radius: .5em;
+    font-size: .8rem;
+    color: #333;
     resize: none;
+    outline: none;
+    &:focus {
+        border-color: #BEAD8E;
+        box-shadow: 0 0 5px rgba(0, #BEAD8E, 0.5);
+    }
 `;
 export const Error = styled.p`
     color: red;
+`;
+export const AutocompleteContainer = styled.div`
+    position: relative;
+`;
+export const SuggestionsList = styled.ul`
+    position: absolute;
+    top: 2em;
+    left: 0;
+    right: 0;
+    max-height: 14em;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 1;
+    overflow-y: auto;
+
+    li {
+        padding: .2em;
+        cursor: pointer;
+        &:hover {
+            background-color: #f2f2f2;
+        }
+    }
 `;

@@ -37,14 +37,13 @@ export const Table = styled.table`
     border-radius: 0.7em;
 `;
 export const Row = styled.tr<RowProps>`
-    cursor: pointer;
     text-align: left;
     border: none;
     &.body{
         border-top: 2px solid #f8f8f8;
     }
     &:hover{
-        ${(props) => (props.th ? "" : "background-color:rgb(226, 226, 226);")}
+        ${(props) => (props.th ? "" : "background-color:rgb(226, 226, 226); cursor: pointer;")}
     }
 `;
 export const Th = styled.th`

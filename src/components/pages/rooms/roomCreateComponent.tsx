@@ -1,5 +1,5 @@
 import { useRef, FormEvent } from 'react'
-import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Checkbox, Title, GoBack } from '../../common/styles/createStyles'
+import { Container, Content, Form, Agrupate, Column, Label, Input, Button, Title, GoBack, Head, CheckboxContainer, CustomCheckbox } from '../../common/styles/createStyles'
 import { MdOutlineAutoAwesome } from "react-icons/md"
 import backGif from '../../../assets/back.gif'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +8,7 @@ import { createRoom } from "../../../features/rooms/roomsThunks"
 import { AppDispatch, RootState } from '../../../features/store'
 import { Room } from '../../../interfaces/room'
 import { toast } from 'react-toastify'
+import { CursorPointer } from '../../common/styles/icons'
 
 export const RoomCreateComponent = () => {
     const facilitiesInputRef = useRef<HTMLInputElement | null>(null);
@@ -62,10 +63,12 @@ export const RoomCreateComponent = () => {
     return (
         <Container>
             <Content>
-                <GoBack onClick={goBack}>
-                    <img src={backGif} width={40}/>
-                </GoBack>
-                <Title>Create New Room</Title>
+                <Head>
+                    <GoBack onClick={goBack}>
+                        <img src={backGif} width={40}/>
+                    </GoBack>
+                    <Title>Create New Room</Title>                    
+                </Head>
                 <Form onSubmit={handleSubmit}>
                     <Agrupate>
                         <div>
@@ -88,11 +91,12 @@ export const RoomCreateComponent = () => {
                         </div>
                         <div>
                             <Label>Available</Label>
-                            <Checkbox
-                                type="checkbox"
-                                name="available"
-                                defaultChecked={roomData ? roomData.avaiable : false}
-                            />
+                            <CheckboxContainer>
+                                <CustomCheckbox
+                                    name="available"
+                                    defaultChecked={roomData ? roomData.avaiable : false}
+                                />
+                            </CheckboxContainer>
                         </div>
                     </Agrupate>
                     <Label>Room Name</Label>
@@ -127,12 +131,12 @@ export const RoomCreateComponent = () => {
                                 required
                             />
                         </Column>
-                        <Default>
+                        <CursorPointer type="normal">
                             <MdOutlineAutoAwesome
-                                size={30}
+                                size={30}   
                                 onClick={() => handleSetDefaultValue(facilitiesInputRef, "AC, Shower, Two Queen Beds, Towel, Kitchenette, Sofa, LED TV, Wifi")}
                             />
-                        </Default>
+                        </CursorPointer>
                     </Agrupate>
                     <Agrupate>
                         <Column>
@@ -145,12 +149,12 @@ export const RoomCreateComponent = () => {
                                 required
                             />
                         </Column>
-                        <Default>
+                        <CursorPointer type="normal">
                             <MdOutlineAutoAwesome
-                                size={30}
+                                size={30}   
                                 onClick={() => handleSetDefaultValue(imageInputRef, "https://cdn.pixabay.com/photo/2016/08/19/06/53/coming-soon-1604663_1280.png")}
                             />
-                        </Default>
+                        </CursorPointer>
                     </Agrupate>
                     <Button type="submit">Create Room</Button>
                 </Form>

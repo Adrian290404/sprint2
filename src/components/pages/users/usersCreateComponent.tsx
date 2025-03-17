@@ -1,5 +1,5 @@
 import { useRef, FormEvent } from 'react';
-import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Title, GoBack } from '../../common/styles/createStyles';
+import { Container, Content, Form, Agrupate, Default, Column, Label, Input, Button, Title, GoBack, Head } from '../../common/styles/createStyles';
 import { MdOutlineAutoAwesome } from "react-icons/md";
 import backGif from '../../../assets/back.gif'
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import { createUser } from '../../../features/users/usersThunks';
 import { RootState, AppDispatch } from '../../../features/store';
 import { Employee } from '../../../interfaces/employee'; 
 import { toast } from 'react-toastify';
+import { CursorPointer } from '../../common/styles/icons';
 
 export const UsersCreateComponent = () => {
     const imageInputRef = useRef<HTMLInputElement | null>(null);
@@ -70,10 +71,12 @@ export const UsersCreateComponent = () => {
     return (
         <Container>
             <Content>
-                <GoBack onClick={goBack}>
-                    <img src={backGif} width={40} />
-                </GoBack>
-                <Title>Create New User</Title>
+                <Head>
+                    <GoBack onClick={goBack}>
+                        <img src={backGif} width={40} />
+                    </GoBack>
+                    <Title>Create New User</Title>                    
+                </Head>
                 <Form onSubmit={handleSubmit}>
                     <Agrupate>
                         <Column>
@@ -140,12 +143,12 @@ export const UsersCreateComponent = () => {
                                 required
                             />
                         </Column>
-                        <Default>
+                        <CursorPointer type="normal">
                             <MdOutlineAutoAwesome
-                                size={30}
+                                size={30}   
                                 onClick={() => handleSetDefaultValue(imageInputRef, "https://cdn.pixabay.com/photo/2017/07/18/23/40/group-2517459_1280.png")}
                             />
-                        </Default>
+                        </CursorPointer>
                     </Agrupate>
                     <Button type="submit">Create User</Button>
                 </Form>

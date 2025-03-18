@@ -4,25 +4,27 @@ export const StyledTable = styled.table`
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
-    background-color: #ffffff;
     font-family: "Poppins", sans-serif;
 `;
 
 export const StyledThead = styled.thead`
-    background-color: #dcdcdc;
+    background-color: ${({ theme }) => theme.recordHeadBackground};
+    transition: background-color 0.3s ease;
 `;
 
 export const StyledTh = styled.th`
     padding: 0.75rem;
     text-align: left;
-    border-bottom: 2px solid #ccc;
-    color:rgb(36, 36, 36);
+    border-bottom: 2px solid ${({ theme }) => theme.recordThBorder};
+    color:${({ theme }) => theme.recordTh};
+    transition: color 0.3s ease, border-bottom 0.3s ease;
 `;
 
 export const StyledTd = styled.td`
     padding: 0.75rem;
-    border-bottom: 1px solid #eee;
-    color:rgb(58, 58, 58);
+    border-bottom: 1px solid ${({ theme }) => theme.recordTdBorder};
+    color:${({ theme }) => theme.recordTd};;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
     position: relative;
     vertical-align: middle;
 `;
@@ -38,13 +40,13 @@ export const StyledTr = styled.tr<StyledTrProps>`
     background-color: ${props => {
         switch (props.type) {
         case "create":
-            return "#e0f8e9"; 
+            return props.theme.recordCreateBg; 
         case "update":
-            return "#e0eaf8";
+            return props.theme.recordUpdateBg;
         case "delete":
-            return "#f8e0e0";
+            return props.theme.recordDeleteBg;
         default:
-            return "#ffffff";
+            return props.theme.recordDefaultBg;
         }
     }};
 
@@ -52,20 +54,22 @@ export const StyledTr = styled.tr<StyledTrProps>`
         background-color: ${props => {
             switch (props.type) {
                 case "create":
-                return "#d4f7dc";
+                    return props.theme.recordCreateBgEven;
                 case "update":
-                return "#d4e7f7";
+                    return props.theme.recordUpdateBgEven;
                 case "delete":
-                return "#f7d4d4";
+                    return props.theme.recordDeleteBgEven;
                 default:
-                return "#f9f9f9";
+                    return props.theme.recordDefaultBgEven;
             }
         }};
     }
 
     &:hover {
-        background-color:rgb(204, 202, 202);
+        background-color: ${props => props.theme.recordHoverBg};
     }
+    
+    transition: background-color 0.3s ease;
 `;
 
 interface ButtonProps {
@@ -73,19 +77,19 @@ interface ButtonProps {
 }
 
 export const StyledButton = styled.button<ButtonProps>`
-    background-color: ${({ type }) => type === "remake" ? "#e67e22" : "#3498db"};
-    color: white;
+    background-color: ${({ theme, type }) => type === "remake" ? theme.recordRemakeButtonBg : theme.recordDefaultButtonBg};
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: ${({ theme }) => theme.background};
     border: none;
     padding: 0.3em 1em;
     border-radius: 0.25rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
     display: flex;
     align-items: center;
     gap: 0.5em;
 
     &:hover {
-        background-color: ${({ type }) => type === "remake" ? "#d35400" : "#2980b9"};
+        background-color: ${({ theme, type }) => type === "remake" ? theme.recordRemakeButtonHover : theme.recordDefaultButtonHover};
     }
 `;
 
@@ -95,14 +99,15 @@ interface ReadProps {
 
 export const Read = styled.div<ReadProps>`
     ${props => !props.show && css`
-          background-color:rgb(0, 119, 255);    
-          position: absolute;
-          top: 0;
-          left: 0;
-          padding: .2em;
-          margin: 0;
-          height: 100%;
-          border-radius: 0 1em 1em 0;
+        background-color:${({ theme }) => theme.recordRead}; 
+        transition: background-color 0.3s ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: .2em;
+        margin: 0;
+        height: 100%;
+        border-radius: 0 1em 1em 0;
     `}
 `;
 

@@ -1,5 +1,6 @@
 export const lightTheme = {
     mode: "light",
+    // LAYOUT
     text: "#000000",
     background: "#FFFFFF",
     icons: "#5E5E5E",
@@ -16,9 +17,17 @@ export const lightTheme = {
     filterBorder: "#d4d4d4",
     filterHover: "#f2f2f2",
     paginationText: "#393939",
+
+    // DASHBOARD
+    kpiIcon: "#e23428",
+    kpiIconBackground: "#ffedec",
+    kpiCardShadow: "#00000014",
+    kpiCardNumber: "#393939",
+    kpiCardText: "#787878",
 };
 export const darkTheme = {
     mode: "dark",
+    // LAYOUT
     text: "#FFFFFF",
     background: "#121212",
     icons: "#777777",
@@ -35,4 +44,11 @@ export const darkTheme = {
     filterBorder: "#3A3A3A",
     filterHover: "#333333",
     paginationText: "#565656",
+
+    // DASHBOARD
+    kpiIcon: "#ff6f61",
+    kpiIconBackground: "#333333",
+    kpiCardShadow: "#00000060",
+    kpiCardNumber: "#e0e0e0",
+    kpiCardText: "#b0b0b0",
 };

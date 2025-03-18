@@ -33,22 +33,24 @@ export const PageNavigation = styled.div`
 export const Marker = styled.div<MarkerProps>`
     position: absolute;
     left: -.2em;
-    background-color: ${(props) => (props.active ? "#E23428" : "transparent")};
+    background-color: ${(props) => (props.active ? props.theme.sideMenuOptionsActive : "transparent")};
+    transition: background-color 0.3s ease;
     height: 80%;
     border-radius: 2em;
     padding: .3em;
     align-items: center;
 `;
 export const Content = styled.div<ContentProps>`
-    padding: 1em 0 1em 2em ;
+    padding: 1em 0 1em 2em;
     display: flex;
     gap: 1em;
     width: 100%;
-    color: ${(props) => (props.active ? "#E23428" : "#799283")};
+    color: ${(props) => (props.active ? props.theme.sideMenuOptionsActive : props.theme.sideMenuOptionsInactive)};
+    transition: color 0.3s ease;
     font: normal normal normal 18px/27px Poppins;
     letter-spacing: 0px;
     &:hover {
-        color:${(props) => (props.active ? "rgb(141, 30, 22)" : "rgb(71, 85, 76)")};
+        color: ${(props) => (props.active ? props.theme.sideMenuOptionsActiveHover : props.theme.sideMenuOptionsInactiveHover)};
     }
 `;
 export const UserContainer = styled.div`
@@ -58,10 +60,11 @@ export const UserContainer = styled.div`
 `;
 export const UserContent = styled.div`
     padding: 3em 0 1em 0;
-    background-color: #FFFFFF;
+    background-color: ${({ theme }) => theme.background};
     width: 100%;
-    box-shadow: 0px 1.25rem 1.875rem #00000014;
+    box-shadow: 0px 1.25rem 1.875rem ${({ theme }) => theme.userInformationShadow};
     border-radius: 0 0 1.5em 1.5em;
+    transition: background-color 0.3s ease, box-shadow 0.3 ease;
 `;
 export const UserImage = styled.img`
     width: 4.375rem;
@@ -73,14 +76,16 @@ export const UserName = styled.h2`
     font-size: .9rem;
     font-weight: 400;
     letter-spacing: 0px;
-    color: #393939;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
 `;
 export const UserEmail = styled.h3`
     font-family: "Poppins", sans-serif;
     font-size: .6rem;
     font-weight: 300;
     letter-spacing: 0px;
-    color: #B2B2B2;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
     margin: 1em 0;
 `;
 export const EditButton = styled.button`
@@ -102,14 +107,16 @@ export const EditButton = styled.button`
     }
 `;
 export const Footer = styled.footer`
-    color: #799283;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
     font-family: "Poppins", sans-serif;
     font-size: 0.55rem;
     font-weight: 300;
     padding: 4em 0 0 3em;
 `;
 export const FooterTitle = styled.footer`
-    color: #212121;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
     font-size: 0.775rem;
     font-weight: 600;
 `;

@@ -19,7 +19,6 @@ export const Layout = styled.div`
 `;
 export const Sidebar = styled.aside<SidebarProps>`
     background-color: ${({ theme }) => theme.background};
-    transition: background-color 0.3s ease;
     position: fixed;
     top: 0;
     left: ${(props) => (props.isVisible ? "0" : "-15.4em")};
@@ -29,7 +28,6 @@ export const Sidebar = styled.aside<SidebarProps>`
 `;
 export const Header = styled.header<HeaderProps>`
     background-color: ${({ theme }) => theme.background};
-    
     height: 5.4em;
     position: fixed;
     z-index: 1;
@@ -46,6 +44,7 @@ export const Content = styled.main<ContentProps>`
 `;
 export const Background = styled.div`
     background-color: ${({ theme }) => theme.pageContent};
+    transition: background-color 0.3s ease;
     padding: 2em;
     width: 100%;
     min-height: 100%;

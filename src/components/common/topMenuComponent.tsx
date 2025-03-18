@@ -1,8 +1,11 @@
 import { CgMail } from "react-icons/cg";
 import { BiBell } from "react-icons/bi";
+import { FiMoon } from "react-icons/fi";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { IoIosSunny } from "react-icons/io";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { Container, Left, Right, Title, SubTitleContainer, TitleContainer, Page, Notification } from "./styles/topMenuStyles";
-import { Hamburguer, CursorPointer } from "./styles/icons";
+import { CursorPointer } from "./styles/icons";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchRoom } from "../../features/rooms/roomsThunks";
@@ -12,13 +15,15 @@ import { logout } from "../../features/login/authSlice";
 import { useEffect } from "react";
 import { AppDispatch } from "../../features/store";
 import { fetchCountNoRead } from "../../features/notifications/notificationsThunks";
+import { useTheme } from "styled-components";
 
 interface TopMenuComponentProps {
     onToggleSidebar: () => void;
     onLogout: () => void;
+    toggleTheme: () => void;
 }
 
-export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponentProps) => {
+export const TopMenuComponent = ({ onToggleSidebar, onLogout, toggleTheme }: TopMenuComponentProps) => {
     const location = useLocation();
     const { id } = useParams<{ id: string }>();
     const dispatch = useDispatch<AppDispatch>();
@@ -108,19 +113,30 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout }: TopMenuComponent
         navigate("/contact");
     };
 
+    const theme = useTheme();
+
     return (
         <Container>
             <Left>
-                <Hamburguer size={30} onClick={onToggleSidebar} />
-                    <TitleContainer>
-                        <Title>{getName() !== "" ? getTitle(true) : getTitle(false)}</Title>
-                        <SubTitleContainer active={getName() !== ""}>
-                            <Page>{getName() !== "" && (getTitle(false) + " / ")}</Page>
-                            <p>&nbsp;{getName() !== "" && getName()}</p>
-                        </SubTitleContainer>
-                    </TitleContainer>
+                <CursorPointer type="normal">
+                    <HiOutlineMenuAlt2 size={30} onClick={onToggleSidebar} />
+                </CursorPointer>
+                <TitleContainer>
+                    <Title>{getName() !== "" ? getTitle(true) : getTitle(false)}</Title>
+                    <SubTitleContainer active={getName() !== ""}>
+                        <Page>{getName() !== "" && (getTitle(false) + " / ")}</Page>
+                        <p>&nbsp;{getName() !== "" && getName()}</p>
+                    </SubTitleContainer>
+                </TitleContainer>
             </Left>
             <Right>
+                <CursorPointer type="normal" onClick={toggleTheme}>
+                    {theme.mode === "dark" ? (
+                        <IoIosSunny size={30} />
+                    ) : (
+                        <FiMoon size={30} />
+                    )}
+                </CursorPointer>
                 <CursorPointer onClick={goToContacts} type="normal">
                     <CgMail size={30} />
                     <Notification>5</Notification>

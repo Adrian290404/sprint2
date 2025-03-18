@@ -6,9 +6,10 @@ import { useState } from "react";
 
 interface LayoutComponentProps {
     onLogout: () => void;
+    toggleTheme: () => void;
 }
 
-export const LayoutComponent = ({ onLogout }: LayoutComponentProps) => {
+export const LayoutComponent = ({ onLogout, toggleTheme }: LayoutComponentProps) => {
     const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
 
     const toggleSidebar = () => {
@@ -21,7 +22,11 @@ export const LayoutComponent = ({ onLogout }: LayoutComponentProps) => {
                 <SideMenuComponent />
             </Sidebar>
             <Header isVisible={isSidebarVisible}>
-                <TopMenuComponent onToggleSidebar={toggleSidebar} onLogout={onLogout} />
+                <TopMenuComponent 
+                    onToggleSidebar={toggleSidebar} 
+                    onLogout={onLogout} 
+                    toggleTheme={toggleTheme} 
+                />
             </Header>
             <Content isSidebarVisible={isSidebarVisible}>
                 <Outlet />

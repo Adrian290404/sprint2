@@ -22,6 +22,8 @@ export const Container = styled.div`
     height: 100%;
     align-items: center;
     justify-content: space-between;
+    background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease;
 `;
 export const Left = styled.div`
     display: flex;
@@ -39,17 +41,21 @@ export const Title = styled.h1`
     font-family: "Poppins", sans-serif;
     font-size: 1.75rem;
     font-weight: 600;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
 `;
 export const TitleContainer = styled.div`
     margin-left: 3em;
 `;
 export const SubTitleContainer = styled.div<SubTitleContainerProps>`
-    color: #6E6E6E;
+    color: ${({ theme }) => theme.subtitle};
+    transition: color 0.3s ease;
     font-weight: 500;
     ${(props) => (props.active ? "display: flex" : "display: none")};
 `;
 export const Page = styled.p`
-    color: #135846;
+    color: ${({ theme }) => theme.pageInformation};
+    transition: color 0.3s ease;
 `;
 export const Notification = styled.div`
     position: absolute;

@@ -20,79 +20,86 @@ import { logout } from "./features/login/authSlice";
 import { RootState, AppDispatch } from "./features/store";
 import { loginThunk } from "./features/login/authThunk";
 import { ToastContainer } from "react-toastify";
+import { ThemeProvider } from "styled-components";
+import { lightTheme, darkTheme } from "./themes";
+import { useState } from "react";
 
 function App() {
     const isLogged = useSelector((state: RootState) => state.auth.isLogged);
     const dispatch = useDispatch<AppDispatch>();
 
+    const [isDarkMode, setIsDarkMode] = useState(false);
+    const toggleTheme = () => setIsDarkMode((prev) => !prev);
+
     return (
-        <BrowserRouter>
-            <Routes>
-                {/* Login Page */}
-                <Route
-                    path="/"
-                    element={
-                        !isLogged ? (
-                            <LogInPage onLogin={(username, password) => dispatch(loginThunk(username, password))} />
-                        ) : (
-                            <Navigate to="/dashboard" />
-                        )
-                    }
+        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+            <BrowserRouter>
+                <Routes>
+                    {/* Login Page */}
+                    <Route
+                        path="/"
+                        element={
+                            !isLogged ? (
+                                <LogInPage onLogin={(username, password) => dispatch(loginThunk(username, password))} />
+                            ) : (
+                                <Navigate to="/dashboard" />
+                            )
+                        }
+                    />
+
+                    {/* Private Routes */}
+                    {isLogged && (
+                        <Route path="/" element={<LayoutComponent onLogout={() => dispatch(logout())} toggleTheme={toggleTheme} />}>
+                            <Route path="dashboard">
+                                <Route index element={<DashBoardPage />} />
+                                <Route path="customerReviews" element={<DashBoardCustomerReviewPage />} />
+                            </Route>
+
+                            {/* CRUD Rooms */}
+                            <Route path="room">
+                                <Route index element={<RoomListPage />} />
+                                <Route path="create" element={<RoomCreatePage />} />
+                                <Route path=":id" element={<RoomDetailsPage />} />
+                            </Route>
+
+                            {/* CRUD Bookings */}
+                            <Route path="bookings">
+                                <Route index element={<BookingsListPage />} />
+                                <Route path="create" element={<BookingsCreatePage />} />
+                                <Route path=":id" element={<BookingsDetailsPage />} />
+                            </Route>
+
+                            <Route path="profile" element={<ProfilePage />} />
+                            <Route path="contact" element={<ContactPage />} />
+
+                            {/* CRUD Users */}
+                            <Route path="users">
+                                <Route index element={<UsersListPage />} />
+                                <Route path="create" element={<UsersCreatePage />} />
+                                <Route path=":id" element={<UsersDetailsPage />} />
+                            </Route>
+
+                            {/* Record */}
+                            <Route path="record" element={<RecordPage />}></Route>
+                        </Route>
+                    )}
+
+                    {/* Redirige a login si no está logueado */}
+                    {!isLogged && <Route path="*" element={<Navigate to="/" replace />} />}
+                </Routes>
+                <ToastContainer 
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
                 />
-
-                {/* Private Routes */}
-                {isLogged && (
-                    <Route path="/" element={<LayoutComponent onLogout={() => dispatch(logout())} />}>
-                        <Route path="dashboard">
-                            <Route index element={<DashBoardPage />} />
-                            <Route path="customerReviews" element={<DashBoardCustomerReviewPage />} />
-                        </Route>
-
-                        {/* CRUD Rooms */}
-                        <Route path="room">
-                            <Route index element={<RoomListPage />} />
-                            <Route path="create" element={<RoomCreatePage />} />
-                            <Route path=":id" element={<RoomDetailsPage />} />
-                        </Route>
-
-                        {/* CRUD Bookings */}
-                        <Route path="bookings">
-                            <Route index element={<BookingsListPage />} />
-                            <Route path="create" element={<BookingsCreatePage />} />
-                            <Route path=":id" element={<BookingsDetailsPage />} />
-                        </Route>
-
-                        <Route path="profile" element={<ProfilePage />} />
-                        <Route path="contact" element={<ContactPage />} />
-
-                        {/* CRUD Users */}
-                        <Route path="users">
-                            <Route index element={<UsersListPage />} />
-                            <Route path="create" element={<UsersCreatePage />} />
-                            <Route path=":id" element={<UsersDetailsPage />} />
-                        </Route>
-
-                        {/* Record */}
-                        <Route path="record" element={<RecordPage />}></Route>
-                    </Route>
-                )}
-
-                {/* Redirige a login si no está logueado */}
-                {!isLogged && <Route path="*" element={<Navigate to="/" replace />} />}
-            </Routes>
-            <ToastContainer 
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
-        </BrowserRouter>
-        
+            </BrowserRouter>
+        </ThemeProvider>
     );
 }
 

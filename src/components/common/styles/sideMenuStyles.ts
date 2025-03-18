@@ -8,6 +8,13 @@ interface ContentProps {
     active?: boolean;
 };
 
+interface ImageProps {
+    dark?: boolean;
+}
+
+export const Image = styled.img<ImageProps>`
+    ${(props) => (props.dark && "filter: invert(1) hue-rotate(180deg)")};
+`
 export const Navbar = styled.div`
     padding-top: 1.5em;
 `;

@@ -22,8 +22,6 @@ export const Container = styled.div`
     height: 100%;
     align-items: center;
     justify-content: space-between;
-    background-color: ${({ theme }) => theme.background};
-    transition: background-color 0.3s ease;
 `;
 export const Left = styled.div`
     display: flex;

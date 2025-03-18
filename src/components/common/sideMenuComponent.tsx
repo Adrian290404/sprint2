@@ -7,9 +7,10 @@ import { TbCalendarCheck } from "react-icons/tb";
 import { IoPeopleCircleSharp } from "react-icons/io5";
 import { TbMessageChatbotFilled } from "react-icons/tb";
 import { TiDocumentText } from "react-icons/ti";
-import { Navbar, PageNavigation, Marker, Content, UserContainer, UserContent, UserImage, UserName, UserEmail, EditButton, Footer, FooterTitle } from "./styles/sideMenuStyles";
+import { Image, Navbar, PageNavigation, Marker, Content, UserContainer, UserContent, UserImage, UserName, UserEmail, EditButton, Footer, FooterTitle } from "./styles/sideMenuStyles";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RootState } from "../../features/store";
+import { useTheme } from "styled-components";
 
 interface User {
     email?: string;
@@ -25,9 +26,11 @@ export const SideMenuComponent: React.FC = () => {
         navigate(destination);
     };
 
+    const theme = useTheme();
+
     return (
         <>
-            <img src={logo} alt="Logo" />
+            <Image dark={theme.mode === "dark"} src={logo} alt="Logo" />
             <Navbar>
                 <PageNavigation onClick={() => changePageHandler("/dashboard")}>
                     <Marker active={location.pathname === "/dashboard" || location.pathname.split("/")[1] === "dashboard"}></Marker>

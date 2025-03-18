@@ -24,6 +24,12 @@ export const lightTheme = {
     kpiCardShadow: "#00000014",
     kpiCardNumber: "#393939",
     kpiCardText: "#787878",
+    latestReviewText: "#4e4e4e",
+    cardBorder: "#ebebeb",
+    latestReviewName: "#262626",
+    latestReviewTime: "#799283",
+    checkIcon: "#5ad07a",
+    arrowBackground: "#135846",
 };
 export const darkTheme = {
     mode: "dark",
@@ -51,4 +57,10 @@ export const darkTheme = {
     kpiCardShadow: "#00000060",
     kpiCardNumber: "#e0e0e0",
     kpiCardText: "#b0b0b0",
+    latestReviewText: "#d0d0d0",
+    cardBorder: "#2e2e2e",
+    latestReviewName: "#b3b3b3",
+    latestReviewTime: "#a5b9a2",
+    checkIcon: "#7ce5a6",
+    arrowBackground: "#2c6e58",
 };

@@ -11,17 +11,17 @@ export const Container = styled.div`
     font-family: "Poppins", sans-serif;
     font-size: .8rem;
     font-weight: 400;
-    color: #393939;
+    color: ${({ theme }) => theme.text};
     align-items: center;
     margin-top: 2em;
 `;
 export const Button = styled.button<ButtonProps>`
     padding: ${(props) => (props.controller ? "1em 2em" : "1em 1.2em")};
     margin: 0.2em;
-    border: ${(props) => (props.controller ? "1px solid #135846" : "none")};
+    border: ${(props) => (props.controller ? `1px solid ${props.theme.filterActive}` : "none")};
     border-radius: 1em;
-    background: ${(props) => (props.isSelected ? "#135846" : "#FFFFFF")};
-    color: ${(props) => (props.controller ? "#135846" : (props.isSelected ? "#FFFFFF" : "#393939"))};
+    background: ${(props) => (props.isSelected ? props.theme.filterActive : props.theme.background)};
+    color: ${(props) => (props.controller ? props.theme.filterActive : (props.isSelected ? props.theme.background : props.theme.text))};
     cursor: pointer;
 `;
 export const Input = styled.input`
@@ -34,8 +34,7 @@ export const Input = styled.input`
     margin: 0.2em;
     border: none;
     border-radius: 1em;
-    background: #FFFFFF;
-    color: #393939;
+    background: ${({ theme }) => theme.background};;
     cursor: pointer;
     text-align: center;
     font-family: "Poppins", sans-serif;

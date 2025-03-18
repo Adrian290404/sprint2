@@ -15,6 +15,7 @@ export const lightTheme = {
     filterInactive: "#6e6e6e",
     filterBorder: "#d4d4d4",
     filterHover: "#f2f2f2",
+    paginationText: "#393939",
 };
 export const darkTheme = {
     mode: "dark",
@@ -33,4 +34,5 @@ export const darkTheme = {
     filterInactive: "#B0B0B0",
     filterBorder: "#3A3A3A",
     filterHover: "#333333",
+    paginationText: "#565656",
 };

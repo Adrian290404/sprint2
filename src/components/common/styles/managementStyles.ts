@@ -10,7 +10,6 @@ export const Container = styled.div`
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
     font-weight: 400;
-    color: #6e6e6e;
 `;
 export const List = styled.ul`
     display: flex;
@@ -20,29 +19,37 @@ export const List = styled.ul`
 export const Item = styled.li<ItemProps>`
     padding: .6em 2em;
     cursor: pointer;
-    ${({ isSelected }) => (isSelected ? "border-bottom: 1px solid #135846; color: #135846" : "border-bottom: 1px solid #d4d4d4; color: #6e6e6e")};
+    transition: color 0.3s ease;
+    ${({ isSelected, theme }) => (isSelected ? `border-bottom: 1px solid ${theme.filterActive}; color: ${theme.filterActive}` : `border-bottom: 1px solid ${theme.filterBorder}; color: ${theme.filterInactive}`)};
     &:hover{
-        background-color: #f2f2f2;
-        color: #135846;
+        background-color: ${({ theme }) => theme.filterHover};
+        color: ${({ theme }) => theme.filterActive};
         border-radius: 1em 1em 0 0;
     }
 `;
 export const Create = styled.button`
     color: #FFFFFF;
-    background-color: #135846;
+    background-color:rgb(24, 109, 86);
     font-weight: 500;
     padding: .8em 2.5em;
     border: none;
     border-radius: 1em;
     cursor: pointer;
     margin-right: 1em;
+    transition: background-color 0.3s ease;
+    &:hover {
+        background-color: #0f4d3d;
+        transition: background-color 0.3s ease;
+    }
 `;
 export const Filter = styled.select`
+    background-color: ${({ theme }) => theme.background};
     padding: .8em 2.5em;
     border-radius: 1em;
     appearance: none;
-    color: #135846;
-    border: 1px solid #135846;
+    color: ${({ theme }) => theme.filterActive};
+    border: 1px solid ${({ theme }) => theme.filterActive};
     outline: none;
     cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
 `;

@@ -26,11 +26,11 @@ export const ManagementComponent = () => {
     const showMenu = (): string[] => {
         switch (location.pathname) {
             case "/bookings":
-                return ["All Guest", "Pending", "Booked", "Cancelled", "Refund"];
+                return ["All Bookings", "Pending", "Booked", "Cancelled", "Refund"];
             case "/users":
                 return ["All Employee", "Active Employee", "Inactive Employee"];
             case "/room":
-                return ["All Rooms", "Avaiable Rooms", "Booked Rooms"];
+                return ["All Rooms", "Available Rooms", "Booked Rooms"];
             case "/dashboard/customerReviews":
                 return ["All Customer Reviews", "Published", "Archived"];
             case "/record":

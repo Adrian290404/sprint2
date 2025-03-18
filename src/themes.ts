@@ -11,6 +11,10 @@ export const lightTheme = {
     sideMenuOptionsActiveHover: "rgb(141, 30, 22)",
     sideMenuOptionsInactiveHover: "rgb(71, 85, 76)",
     userInformationShadow: "#00000014",
+    filterActive: "#135846",
+    filterInactive: "#6e6e6e",
+    filterBorder: "#d4d4d4",
+    filterHover: "#f2f2f2",
 };
 export const darkTheme = {
     mode: "dark",
@@ -25,4 +29,8 @@ export const darkTheme = {
     sideMenuOptionsActiveHover: "#D64545",
     sideMenuOptionsInactiveHover: "#6B8E75",
     userInformationShadow: "rgba(0, 0, 0, 0.5)",
+    filterActive: "#4A7C7C",
+    filterInactive: "#B0B0B0",
+    filterBorder: "#3A3A3A",
+    filterHover: "#333333",
 };

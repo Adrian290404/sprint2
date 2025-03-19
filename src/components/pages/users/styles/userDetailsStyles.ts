@@ -4,19 +4,12 @@ interface IconProps {
     delete?: boolean;
 };
 
-interface InfoGroupProps {
-    center?: boolean;
-};
-
-interface ClockProps {
-    active: boolean;
-};
-
 export const Container = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #f8f8f8;
+    background-color: ${({ theme }) => theme.pageContent};
+    transition: background-color 0.3s ease;
 `;
 export const CardContainer = styled.div`
     position: absolute;
@@ -24,13 +17,14 @@ export const CardContainer = styled.div`
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 2em 0;
-    background: #FFFFFF;
-    box-shadow: 0px 16px 30px #00000014;
+    background-color: ${({ theme }) => theme.background};
+    box-shadow: 0px 16px 30px ${({ theme }) => theme.userInformationShadow};
     border-radius: 1em;
     width: 90%;
     max-width: 35em;
     font-family: "Poppins", sans-serif;
-    color: #333;
+    color: ${({ theme }) => theme.roomText};
+    transition: background-color 0.3s ease, color 0.3s ease;
 `;
 export const Head = styled.div`
     display: flex;
@@ -63,12 +57,14 @@ export const NameContainer = styled.div`
 `;
 export const EmployeeName = styled.h2`
     font-size: 2rem;
-    color: #222;
+    color: ${({ theme }) => theme.roomTitle};
+    transition: color 0.3s ease;
     font-family: "Playfair Display", serif;
 `;
 export const JobDesk = styled.p`
     font-size: 1rem;
-    color: #222;
+    color: ${({ theme }) => theme.roomTitle};
+    transition: color 0.3s ease;
 `;
 export const Options = styled.div`
     display: flex;
@@ -109,6 +105,7 @@ export const TdValue = styled.td<TdProps>`
 `;
 export const Info = styled.span`
     font-weight: 600;
-    color: #000;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
     white-space: nowrap;  
 `;

@@ -13,12 +13,14 @@ export const Background = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${({ theme }) => theme.pageContent};
+    transition: background-color 0.3s ease;
     padding: 2em;
 `;
 export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease;
     border-radius: 0.5em;
     box-shadow: 0px 16px 30px ${({ theme }) => theme.userInformationShadow};;
     font-family: "Poppins", sans-serif;
@@ -47,10 +49,12 @@ export const ProfileDetails = styled.div`
 export const Name = styled.h2`
     font-size: 1.8em;
     color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
 `;
 export const ID = styled.span`
     font-size: 0.75rem;
     color: ${({ theme }) => theme.bookingID};;
+    transition: color 0.3s ease;
     margin: 0.5em 0 3em 0;
 `;
 export const Icon = styled.div`
@@ -97,10 +101,12 @@ export const InfoContainer = styled.div`
 `;
 export const InfoTitle = styled.p`
     color: ${({ theme }) => theme.bookingInfoTitleColor};
+    transition: color 0.3s ease;
     margin-bottom: 0.6em;
 `;
 export const Info = styled.p<InfoProps>`
     color: ${({ theme }) => theme.bookingInfoColor};
+    transition: color 0.3s ease;
     font-weight: 500;
     font-size: ${(props) => (props.room ? "1.3rem" : "0.9rem")};
 `;
@@ -118,15 +124,18 @@ export const Separator = styled.hr`
 `;
 export const Especificator = styled.span`
     color: ${({ theme }) => theme.bookingID};
+    transition: color 0.3s ease;
     font-size: 0.7rem;
 `;
 export const RoomDetails = styled.div`
     font-size: 0.9rem;
     margin-top: 2em;
     color: ${({ theme }) => theme.bookingRoomDetailsColor};
+    transition: color 0.3s ease;
 `;
 export const FacilitiesTitle = styled.p`
     color: ${({ theme }) => theme.bookingFacilitiesTitleColor};
+    transition: color 0.3s ease;
     font-size: 0.8rem;
     margin-top: 2em;
 `;
@@ -142,6 +151,7 @@ export const Element = styled.li`
     background-color: ${({ theme }) => theme.bookingIconBorder};
     color: ${({ theme }) => theme.bookingButtonBg};
     border-radius: 0.6em;
+    transition: background-color 0.3s ease, color 0.3s ease;
 `;
 export const RightSection = styled.div`
     flex: 1;
@@ -197,6 +207,8 @@ export const RoomStatus = styled.p<RoomStatusProps>`
             background-color: ${theme.formCancelledBgColor};
             box-shadow: 0 4px 8px rgba(190, 190, 190, 0.3);
         `}
+
+    transition: background-color 0.3s ease, color 0.3s ease;
 `;
 export const Options = styled.div`
     display: flex;
@@ -222,7 +234,7 @@ export const GoBookings = styled.div`
 export const Action = styled.div<ActionProps>`
     cursor: pointer;
     color: ${({ theme }) => theme.text};
-    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, color 0.3 ease;
     ${(props) =>
         props.type === "edit" &&
         `

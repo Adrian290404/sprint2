@@ -96,6 +96,9 @@ export const lightTheme = {
     bookingRoomDetailsColor: "#363636",
     bookingFacilitiesTitleColor: "#6E6E6E",
 
+    // BOOKING LIST
+    bookingListNotes: "#EEF9F2",
+
 };
 export const darkTheme = {
     mode: "dark",
@@ -194,5 +197,8 @@ export const darkTheme = {
     bookingInfoColor: "#E0E0E0",
     bookingRoomDetailsColor: "#D0D0D0",
     bookingFacilitiesTitleColor: "#AFAFAF",
+
+    // BOOKING LIST
+    bookingListNotes: "#2A4F3D",
 
 };

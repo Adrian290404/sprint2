@@ -33,14 +33,15 @@ interface ActionProps {
 export const Table = styled.table`
     width: 100%;
     border-collapse: collapse;
-    background-color: #ffffff;
+    background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease;
     border-radius: 0.7em;
 `;
 export const Row = styled.tr<RowProps>`
     text-align: left;
     border: none;
     &.body{
-        border-top: 2px solid #f8f8f8;
+        border-top: 2px solid ${({ theme }) => theme.pageContent};;
     }
     &:hover{
         ${(props) => (props.th ? "" : "background-color:rgb(226, 226, 226); cursor: pointer;")}
@@ -48,7 +49,8 @@ export const Row = styled.tr<RowProps>`
 `;
 export const Th = styled.th`
     padding: 1em;
-    color: #393939;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
     font-size: 1rem;
     font-weight: 600;
     font-family: "Poppins", sans-serif;
@@ -56,7 +58,8 @@ export const Th = styled.th`
 `;
 export const Td = styled.td<TdProps>`
     padding: 1em;
-    color: #393939;
+    color: ${({ theme }) => theme.paginationText};
+    transition: color 0.3s ease;
     font-size: 1rem;
     font-weight: 400;
     font-family: "Poppins", sans-serif;
@@ -81,7 +84,8 @@ export const Image = styled.img<ImageProps>`
     box-sizing: border-box;
 `;
 export const TextLight = styled.p<TextLightProps>`
-    color: #799283;
+    color: ${({ theme }) => theme.sideMenuOptionsInactive};
+    transition: color 0.3s ease;
     font-size: 0.875rem;
     font-weight: 300;
     ${(props) => props.type === "room" && "margin-bottom: .5em"};
@@ -99,11 +103,22 @@ export const GuestNotes = styled.button<GuestNotesProps>`
     font-family: "Poppins", sans-serif;
     font-size: 1rem;
     border-radius: 1em;
-    ${(props) =>
-        props.active
-            ? "cursor: pointer; background-color: #EEF9F2; color: #212121; border: none;"
-            : "border: 1px solid #799283; color: #799283;"}
+    
+    ${({ active, theme }) =>
+        active
+            ? `
+                cursor: pointer;
+                background-color: ${theme.bookingListNotes};
+                color: ${theme.bookingInfoColor};
+                border: none;
+            `
+            : `
+                border: 1px solid ${theme.bookingID};
+                color: ${theme.bookingID};
+            `}
+    transition: color 0.3s ease, background-color 0.3 ease;
 `;
+
 export const GuestStatus = styled.button<GuestStatusProps>`
     width: 100%;
     padding: 0.6em;
@@ -112,39 +127,48 @@ export const GuestStatus = styled.button<GuestStatusProps>`
     border-radius: 1em;
     border: none;
     text-align: center;
-    &.Refund{
-        color: #E23428; 
-        background-color: #FFEDEC;
+
+    &.Refund {
+        color: ${({ theme }) => theme.formRefundColor}; 
+        background-color: ${({ theme }) => theme.formRefundBgColor};
     }
-    &.Booked{
-        color: #5AD07A; 
-        background-color: #E8FFEE;
+
+    &.Booked {
+        color: ${({ theme }) => theme.formBookedColor}; 
+        background-color: ${({ theme }) => theme.formBookedBgColor};
     }
-    &.Pending{
-        color: #6D6D6D; 
-        background-color: #E2E2E2;
+
+    &.Pending {
+        color: ${({ theme }) => theme.formPendingColor}; 
+        background-color: ${({ theme }) => theme.formPendingBgColor};
     }
-    &.Cancelled{
-        color: #BEBEBE; 
-        background-color: #575757;
+
+    &.Cancelled {
+        color: ${({ theme }) => theme.formCancelledColor}; 
+        background-color: ${({ theme }) => theme.formCancelledBgColor};
     }
+
+    transition: color 0.3s ease, background-color 0.3s ease;
 `;
 
 // ROOMS LIST
 export const RoomId = styled.p`
-    color: #799283;
+    color: ${({ theme }) => theme.bookingId};
+    transition: color 0.3s ease;
     font-size: 0.875rem;
     font-weight: 300;
     margin-bottom: 0.5em;
 `;
 export const RoomPrice = styled.p`
     display: inline;
-    color: #212121;
+    color: ${({ theme }) => theme.bookingInfoColor};
+    transition: color 0.3s ease;
     font-weight: 600;
 `;
 export const RoomLittleText = styled.p`
     display: inline;
-    color: #799283;
+    color: ${({ theme }) => theme.sideMenuOptionsInactive};
+    transition: color 0.3s ease;
     font-size: 0.875rem;
 `;
 export const RoomStatus = styled.button<RoomStatusProps>`
@@ -154,8 +178,9 @@ export const RoomStatus = styled.button<RoomStatusProps>`
     font-size: 1rem;
     border-radius: 1em;
     border: none;
-    color: #ffffff;
-    background-color: ${(props) => (props.avaiable ? "#5AD07A" : "#E23428")};
+    color: ${({ theme }) => theme.background};
+    background-color: ${(props) => (props.avaiable ? props.theme.checkIcon : props.theme.sideMenuOptionsActive)};
+    transition: color 0.3s ease, background-color 0.3s ease;
 `;
 
 // EMPLOYEES LIST
@@ -165,12 +190,14 @@ export const ConciergeStatus = styled.p<ConciergeStatusProps>`
     font-size: 1rem;
     border: none;
     background: transparent;
-    color: ${(props) => (props.active ? "#5AD07A" : "#E23428")};
+    color: ${(props) => (props.active ? props.theme.checkIcon : props.theme.sideMenuOptionsActive)};
+    transition: color 0.3s ease;
 `;
 
 // REVIEWS LIST
 export const Rating = styled.div`
-    color: #135846;
+    color: ${({ theme }) => theme.pageInformation};
+    transition: color 0.3s ease;
     margin-bottom: 1em;
 `;
 export const Action = styled.button<ActionProps>`
@@ -182,6 +209,7 @@ export const Action = styled.button<ActionProps>`
     font-weight: 500;
     font-size: 1rem;
     margin-right: 3em;
-    ${(props) => props.publish && "color: #5AD07A"};
-    ${(props) => props.archive && "color: #E23428"};
+    ${(props) => props.publish && `color: ${props.theme.checkIcon}`};
+    ${(props) => props.archive && `color: ${props.theme.kpiIcon}`};
+    transition: color 0.3s ease;
 `;

@@ -55,7 +55,9 @@ export const RoomDetailsComponent = () => {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <Container>
+            <p>Loading...</p>
+        </Container>;
     }
 
     return (

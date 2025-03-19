@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
     background-color: ${({ theme }) => theme.pageContent};
+    color: ${({ theme }) => theme.text};
     transition: background-color 0.3s ease;
     width: 100%;
     height: 100%;
@@ -73,8 +74,8 @@ export const GoBack = styled.div`
     cursor: pointer;
     transition: transform 0.2s ease;
     &:hover {
-        transform: scale(1.05);
-        transform: translateY(-2px);
+        transform: scale(1.2);
+        transition: 0.3s ease-in-out;
     }
 `;
 export const Title = styled.h1`
@@ -99,8 +100,8 @@ export const Icon = styled.div<IconProps>`
     cursor: pointer;
     transition: transform 0.2s ease;
     &:hover {
-        transform: scale(1.05);
-        transform: translateY(-2px);
+        transform: scale(1.2);
+        transition: 0.3s ease-in-out;
         color: ${(props) => (props.delete ? "#D32F2F" : "#1976D2")};
     }
 `;

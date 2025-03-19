@@ -172,7 +172,7 @@ export const SuggestionsList = styled.ul`
         padding: .2em;
         cursor: pointer;
         &:hover {
-            background-color: ${({ theme }) => theme.filterHover};;
+            background-color: ${({ theme }) => theme.filterHover};
         }
     }
 `;

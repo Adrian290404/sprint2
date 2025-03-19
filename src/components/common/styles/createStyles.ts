@@ -11,7 +11,8 @@ interface SelectProps {
 export const Container = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #f9f9f9;
+    background-color: ${({ theme }) => theme.pageContent};
+    transition: background-color 0.3s ease;
     font-family: "Poppins", sans-serif;
     position: relative;
 `;
@@ -21,8 +22,9 @@ export const Content = styled.div`
     max-width: 35em;
     width: 90%;
     margin: 0 auto;
-    background-color: #FFFFFF;
-    box-shadow: 0px 16px 30px #00000014;
+    background-color: ${({ theme }) => theme.background};
+    box-shadow: 0px 16px 30px ${({ theme }) => theme.userInformationShadow};
+    transition: background-color 0.3s ease;
     border-radius: 1em;
     position: absolute;
     top: 50%;
@@ -40,16 +42,15 @@ export const Head = styled.div`
 export const GoBack = styled.div`
     cursor: pointer;
     transition: transform 0.2s ease;
-    color: rgb(92, 92, 92);
     &:hover {
-        transform: scale(1.05);
-        transform: translateY(-2px);
-        color: rgb(0, 0, 0);
+        transform: scale(1.2);
+        transition: 0.3s ease-in-out;
     }
 `;
 export const Title = styled.h1`
     margin-bottom: .3em;
-    color: #333;
+    color: ${({ theme }) => theme.roomText};
+    transition: color 0.3s ease;
     text-align: center;
     font-family: "Playfair Display", serif;
 `;
@@ -76,7 +77,8 @@ export const Default = styled.div`
     display: flex;
 `;
 export const Label = styled.label`
-    color: #333;
+    color: ${({ theme }) => theme.roomText};
+    transition: color 0.3s ease;
     display: block;
     font-weight: 600;
 `;
@@ -90,6 +92,9 @@ export const Input = styled.input`
     border: none;
     border-bottom: 2px solid #BEAD8E;
     outline: none;
+    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease, color 0.3s ease;
 `;
 export const CheckboxContainer = styled.div`
     display: flex;
@@ -149,11 +154,12 @@ export const Select = styled.select<SelectProps>`
     padding: 0.8em;
     font-size: 0.875rem;
     border: 1px solid #ddd;
-    background-color: #fff;
-    color: #333;
+    background-color: ${({ theme }) => theme.background};
+    color: ${({ theme }) => theme.roomText};
     appearance: none;
     cursor: pointer;
     outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
 
     &:focus {
         border-color: #BEAD8E;
@@ -172,7 +178,9 @@ export const TextArea = styled.textarea`
     border: 1px solid #ddd;
     border-radius: .5em;
     font-size: .8rem;
-    color: #333;
+    color: ${({ theme }) => theme.roomText};
+    background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease, color 0.3s ease;
     resize: none;
     outline: none;
     &:focus {
@@ -195,16 +203,18 @@ export const SuggestionsList = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.background};
+    border: 1px solid ${({ theme }) => theme.formSelectBorder};
     z-index: 1;
     overflow-y: auto;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 
     li {
         padding: .2em;
         cursor: pointer;
         &:hover {
-            background-color: #f2f2f2;
+            background-color: ${({ theme }) => theme.filterHover};
         }
     }
 `;

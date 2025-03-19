@@ -81,6 +81,21 @@ export const lightTheme = {
     roomText: "#333",
     roomTitle: "#222",
 
+    // BOOKING DETAILS
+    bookingID: "#799283",
+    bookingIconColor: "#135846",
+    bookingIconBorder: "#e8f2ef",
+    bookingIconHoverBg: "#e8f2ef",
+    bookingIconHoverColor: "#135846",
+    bookingButtonBg: "#135846",
+    bookingButtonColor: "#FFFFFF",
+    bookingButtonHoverBg: "#0E3F32",
+    bookingButtonHoverColor: "#FFFFFF",
+    bookingInfoTitleColor: "#6E6E6E",
+    bookingInfoColor: "#212121",
+    bookingRoomDetailsColor: "#363636",
+    bookingFacilitiesTitleColor: "#6E6E6E",
+
 };
 export const darkTheme = {
     mode: "dark",
@@ -164,5 +179,20 @@ export const darkTheme = {
     // ROOM DETAILS
     roomText: "#CCCCCC",
     roomTitle: "#999",
+
+    // BOOKING DETAILS
+    bookingID: "#A3B18A",
+    bookingIconColor: "#1DBF73",
+    bookingIconBorder: "#2C6E58",
+    bookingIconHoverBg: "#2C6E58",
+    bookingIconHoverColor: "#A3F7B5",
+    bookingButtonBg: "#1DBF73",
+    bookingButtonColor: "#FFFFFF",
+    bookingButtonHoverBg: "#148C55",
+    bookingButtonHoverColor: "#E3FFF1",
+    bookingInfoTitleColor: "#AFAFAF",
+    bookingInfoColor: "#E0E0E0",
+    bookingRoomDetailsColor: "#D0D0D0",
+    bookingFacilitiesTitleColor: "#AFAFAF",
 
 };

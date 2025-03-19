@@ -22,6 +22,7 @@ export const FormContainer = styled.div<FormProps>`
     padding: 1em 3em;
     font-size: 0.875rem;
     background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease;
     ${({ type }) => type === "room" && "border-radius: 0 0 1em 1em"};
 `;
 export const FormField = styled.div`
@@ -41,6 +42,7 @@ export const TwoFields = styled.div`
 `;
 export const Label = styled.label`
     color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
     display: block;
     font-weight: 800;
 `;
@@ -54,6 +56,7 @@ export const Input = styled.input`
     border: none;
     color: ${({ theme }) => theme.text};
     background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease, color 0.3s ease;
     border-bottom: 2px solid #BEAD8E;
     outline: none;
 `;
@@ -66,6 +69,7 @@ export const CheckboxContainer = styled.div`
 export const CheckboxLabel = styled.label`
     font-size: 14px;
     color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
 `;
 export const Buttons = styled.div`
     display: flex;
@@ -102,6 +106,7 @@ export const Select = styled.select<SelectProps>`
     border-radius: 0.4em;
     background-color: ${({ theme }) => theme.background};
     color: ${({ theme }) => theme.text};
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
     appearance: none;
     cursor: pointer;
     outline: none;
@@ -138,6 +143,7 @@ export const TextArea = styled.textarea`
     background-color: ${({ theme }) => theme.background};
     resize: none;
     outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
     &:focus {
         border-color: #BEAD8E;
         box-shadow: 0 0 5px rgba(0, #BEAD8E, 0.5);
@@ -160,6 +166,7 @@ export const SuggestionsList = styled.ul`
     border: 1px solid ${({ theme }) => theme.formSelectBorder};
     z-index: 1;
     overflow-y: auto;
+    transition: background-color 0.3s ease, color 0.3s ease, border 0.3s ease;
 
     li {
         padding: .2em;

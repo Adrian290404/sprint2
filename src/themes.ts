@@ -77,6 +77,10 @@ export const lightTheme = {
     formCancelledBgColor: "#575757",
     formSelectBorder: "#ddd",
 
+    // ROOM DETAILS
+    roomText: "#333",
+    roomTitle: "#222",
+
 };
 export const darkTheme = {
     mode: "dark",
@@ -156,5 +160,9 @@ export const darkTheme = {
     formCancelledColor: "#A5A5A5",  
     formCancelledBgColor: "#2C2C2C", 
     formSelectBorder: "#666",
+
+    // ROOM DETAILS
+    roomText: "#CCCCCC",
+    roomTitle: "#999",
 
 };

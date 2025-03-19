@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background-color: #f8f8f8;
+    background-color: ${({ theme }) => theme.pageContent};
+    transition: background-color 0.3s ease;
     width: 100%;
     height: 100%;
     padding: 0;
@@ -12,10 +13,12 @@ export const Content = styled.div`
     width: 90%;
     max-width: 40em;
     border-radius: 1em;
-    box-shadow: 0px 16px 30px #00000014;
-    background-color: #FFFFFF;
+    box-shadow: 0px 16px 30px ${({ theme }) => theme.userInformationShadow};
+    background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease;
     font-family: "Poppins", sans-serif;
-    color: #333;
+    color: ${({ theme }) => theme.roomText};
+    transition: background-color 0.3s ease, color 0.3s ease;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -42,7 +45,8 @@ export const Price = styled.p`
     font-weight: bold;
     color: black;
     font-size: 1.2rem;
-    background-color: #FFFFFF;
+    background-color: ${({ theme }) => theme.background};
+    transition: background-color 0.3s ease;
     color: #BEAD8E;
     border-radius: .6em .6em 0 0;
     padding: .5em 1em;
@@ -52,7 +56,8 @@ export const Price = styled.p`
 `;
 export const Small = styled.span`
     font-size: .6rem;
-    color: #222;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
 `;
 export const Details = styled.div`
     font-size: 1.2rem;
@@ -75,7 +80,8 @@ export const GoBack = styled.div`
 export const Title = styled.h1`
     font-size: 2rem;
     font-family: "Playfair Display", serif;
-    color:#222;
+    color: ${({ theme }) => theme.roomTitle};;
+    transition: color 0.3s ease;
     text-align: center;
     font-weight: bold;
     margin-bottom: .3em;
@@ -123,6 +129,7 @@ export const TdValue = styled.td<TdProps>`
 `;
 export const Info = styled.span`
     font-weight: 600;
-    color: #000;
+    color: ${({ theme }) => theme.text};
+    transition: color 0.3s ease;
     white-space: nowrap;  
 `;

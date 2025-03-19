@@ -56,11 +56,15 @@ export const UsersDetailsComponent: React.FC = () => {
     };
 
     if (isLoading) {
-        return <p>Loading...</p>; 
+        return <Container>
+            <p>Loading...</p>
+        </Container>;
     }
 
     if (!user) {
-        return <p>User not found.</p>; 
+        return <Container>
+            <p>User not found.</p>
+        </Container>;
     }
 
     return (

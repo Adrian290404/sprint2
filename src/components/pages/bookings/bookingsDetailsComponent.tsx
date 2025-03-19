@@ -123,7 +123,9 @@ export const BookingsDetailsComponent: React.FC = () => {
     }, [dispatch, id]);
 
     if (isLoading || !booking || !user || !room) {
-        return <p>Loading...</p>;
+        return <Background>
+            <p>Loading...</p>
+        </Background>;
     }
 
     return (

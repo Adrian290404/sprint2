@@ -13,6 +13,7 @@ export const Background = styled.div`
     width: 100%;
     height: 100%;
     background-color: ${({ theme }) => theme.pageContent};
+    color: ${({ theme }) => theme.text};
     transition: background-color 0.3s ease;
     padding: 2em;
 `;

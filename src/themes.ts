@@ -1,5 +1,6 @@
 export const lightTheme = {
     mode: "light",
+
     // LAYOUT
     text: "#000000",
     background: "#FFFFFF",
@@ -51,6 +52,16 @@ export const lightTheme = {
     recordRemakeButtonHover: "#d35400", 
     recordDefaultButtonHover: "#2980b9",
     recordRead: "#0077ff",
+
+    // MODAL
+    modalShadow: "#0000008F",
+    modalButtonCancelBg: "#e0e0e0",
+    modalButtonCancelText: "#333333",
+    modalButtonCancelBgHover: "#bdbdbd",
+    modalButtonConfirmBg: "#e74c3c",
+    modalButtonConfirmText: "#ffffff",
+    modalButtonConfirmBgHover: "#c0392b",
+
 };
 export const darkTheme = {
     mode: "dark",
@@ -105,4 +116,14 @@ export const darkTheme = {
     recordRemakeButtonHover: "#a34e12", 
     recordDefaultButtonHover: "#236093",
     recordRead: "#3399ff;",
+
+    // MODAL
+    modalShadow: "#000000",
+    modalButtonCancelBg: "#555555",
+    modalButtonCancelText: "#ffffff",
+    modalButtonCancelBgHover: "#777777",
+    modalButtonConfirmBg: "#d14343",
+    modalButtonConfirmText: "#ffffff",
+    modalButtonConfirmBgHover: "#b52e2e",
+
 };

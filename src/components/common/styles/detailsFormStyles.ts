@@ -11,12 +11,18 @@ interface SelectProps {
     Cancelled?: boolean;
 }
 
-export const FormContainer = styled.div`
+interface FormProps {
+    type?: string;
+}
+
+export const FormContainer = styled.div<FormProps>`
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 1em 3em;
     font-size: 0.875rem;
+    background-color: ${({ theme }) => theme.background};
+    ${({ type }) => type === "room" && "border-radius: 0 0 1em 1em"};
 `;
 export const FormField = styled.div`
     margin-bottom: 1em;
@@ -34,9 +40,9 @@ export const TwoFields = styled.div`
     }
 `;
 export const Label = styled.label`
-    color: #333;
+    color: ${({ theme }) => theme.text};
     display: block;
-    font-weight: 600;
+    font-weight: 800;
 `;
 export const Input = styled.input`
     &[type='number']::-webkit-inner-spin-button, &[type='number']::-webkit-outer-spin-button {
@@ -46,6 +52,8 @@ export const Input = styled.input`
     width: 100%;
     padding: .6em 0;
     border: none;
+    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.background};
     border-bottom: 2px solid #BEAD8E;
     outline: none;
 `;
@@ -53,10 +61,11 @@ export const CheckboxContainer = styled.div`
     display: flex;
     align-items: center;
     gap: .6em;
+    margin-top: 1em;
 `;
 export const CheckboxLabel = styled.label`
     font-size: 14px;
-    color: #333;
+    color: ${({ theme }) => theme.text};
 `;
 export const Buttons = styled.div`
     display: flex;
@@ -64,20 +73,10 @@ export const Buttons = styled.div`
     gap: 2em;
     align-items: center;
 `;
-export const Icon = styled.div`
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    color: #9E9E9E;
-    &:hover {
-        transform: scale(1.05);
-        transform: translateY(-2px);
-        color: #616161;
-    }
-`;
 export const Button = styled.button<ButtonProps>`
     padding: .5em .7em;
-    background-color: #007bff;
-    color: #FFFFFF;
+    background-color: ${({ theme }) => theme.formButton};
+    color: ${({ theme }) => theme.background};
     font-family: "Poppins", sans-serif;
     font-size: 0.875rem;
     font-weight: 600;
@@ -90,38 +89,38 @@ export const Button = styled.button<ButtonProps>`
     gap: .5em;
     ${(props) => props.bookings && "margin-top: 2em"};
     &:hover {
-        background-color: #0056b3;
+        background-color: ${({ theme }) => theme.formButtonHover};
         color: #EBF1EF;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        box-shadow: 0px 4px 6px ${({ theme }) => theme.formButtonHoverShadow};
         transform: translateY(-2px);
     }
 `;
 export const Select = styled.select<SelectProps>`
     padding: 0.8em;
     font-size: 0.875rem;
-    border: 1px solid #ddd;
+    border: 1px solid ${({ theme }) => theme.formSelectBorder};
     border-radius: 0.4em;
-    background-color: #fff;
-    color: #333;
+    background-color: ${({ theme }) => theme.background};
+    color: ${({ theme }) => theme.text};
     appearance: none;
     cursor: pointer;
     outline: none;
 
     &.Refund {
-        color: #E23428;
-        background-color: #FFEDEC;
+        color: ${({ theme }) => theme.formRefundColor};
+        background-color: ${({ theme }) => theme.formRefundBgColor};
     }
     &.Booked {
-        color: #5AD07A;
-        background-color: #E8FFEE;
+        color: ${({ theme }) => theme.formBookedColor};
+        background-color: ${({ theme }) => theme.formBookedBgColor};
     }
     &.Pending {
-        color: #6D6D6D;
-        background-color: #E2E2E2;
+        color: ${({ theme }) => theme.formPendingColor};
+        background-color: ${({ theme }) => theme.formPendingBgColor};
     }
     &.Cancelled {
-        color: #BEBEBE;
-        background-color: #575757;
+        color: ${({ theme }) => theme.formCancelledColor};
+        background-color: ${({ theme }) => theme.formCancelledBgColor};
     }
 `;
 export const Container = styled.div`
@@ -132,10 +131,11 @@ export const TextArea = styled.textarea`
     font-family: "Poppins", sans-serif;
     min-height: 8em;
     padding: .7em;
-    border: 1px solid #ddd;
+    border: 1px solid ${({ theme }) => theme.formSelectBorder};
     border-radius: .5em;
     font-size: .8rem;
-    color: #333;
+    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.background};
     resize: none;
     outline: none;
     &:focus {
@@ -155,8 +155,9 @@ export const SuggestionsList = styled.ul`
     margin: 0;
     padding: 0;
     list-style: none;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    color: ${({ theme }) => theme.text};
+    background-color: ${({ theme }) => theme.background};
+    border: 1px solid ${({ theme }) => theme.formSelectBorder};
     z-index: 1;
     overflow-y: auto;
 
@@ -164,7 +165,7 @@ export const SuggestionsList = styled.ul`
         padding: .2em;
         cursor: pointer;
         &:hover {
-            background-color: #f2f2f2;
+            background-color: ${({ theme }) => theme.filterHover};;
         }
     }
 `;

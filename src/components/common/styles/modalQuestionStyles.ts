@@ -30,7 +30,7 @@ export const Buttons = styled.div`
     margin-top: 2em;
 `;
   
-export const ModalButton = styled.button<ButtonProps>`
+export const Button = styled.button<ButtonProps>`
     cursor: pointer;
     font-size: 1.5rem;
     padding: 1em 3em;

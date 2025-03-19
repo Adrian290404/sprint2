@@ -62,9 +62,25 @@ export const lightTheme = {
     modalButtonConfirmText: "#ffffff",
     modalButtonConfirmBgHover: "#c0392b",
 
+    // FORM
+    formLabel: "#333",
+    formButton: "#007bff",
+    formButtonHover: "#0056b3",
+    formButtonHoverShadow: "#0000ff",
+    formRefundColor: "#E23428",
+    formRefundBgColor: "#FFEDEC",
+    formBookedColor: "#5AD07A",
+    formBookedBgColor: "#E8FFEE",
+    formPendingColor: "#6D6D6D",
+    formPendingBgColor: "#E2E2E2",
+    formCancelledColor: "#BEBEBE",
+    formCancelledBgColor: "#575757",
+    formSelectBorder: "#ddd",
+
 };
 export const darkTheme = {
     mode: "dark",
+
     // LAYOUT
     text: "#FFFFFF",
     background: "#121212",
@@ -125,5 +141,20 @@ export const darkTheme = {
     modalButtonConfirmBg: "#d14343",
     modalButtonConfirmText: "#ffffff",
     modalButtonConfirmBgHover: "#b52e2e",
+
+    // FORM
+    formLabel: "#888",
+    formButton: "#66aaff",
+    formButtonHover: "#3c6db4",
+    formButtonHoverShadow: "#003366",
+    formRefundColor: "#FF6B6B", 
+    formRefundBgColor: "#3E0A0A",  
+    formBookedColor: "#A0D24B",
+    formBookedBgColor: "#1B4221", 
+    formPendingColor: "#A8A8A8", 
+    formPendingBgColor: "#444444",  
+    formCancelledColor: "#A5A5A5",  
+    formCancelledBgColor: "#2C2C2C", 
+    formSelectBorder: "#666",
 
 };

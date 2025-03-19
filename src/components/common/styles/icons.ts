@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 interface iconsProps {
-    type: string;
+    type?: string;
 };
 
 // TOP MENU

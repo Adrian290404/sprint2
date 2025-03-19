@@ -1,4 +1,4 @@
-import { FormContainer, FormField, TwoFields, Label, Input, CheckboxContainer, CheckboxLabel, Buttons, Icon, Button } from '../../common/styles/detailsFormStyles'
+import { FormContainer, FormField, TwoFields, Label, Input, CheckboxContainer, CheckboxLabel, Buttons, Button } from '../../common/styles/detailsFormStyles'
 import { useState } from 'react'
 import { GiSave } from "react-icons/gi";
 import backGif from '../../../assets/back.gif'
@@ -8,6 +8,7 @@ import { updateRoom } from '../../../features/rooms/roomsThunks'
 import { AppDispatch } from '../../../features/store'
 import { toast } from 'react-toastify'
 import { CustomCheckbox } from '../../common/styles/createStyles';
+import { CursorPointer } from '../../common/styles/icons';
 
 interface RoomDetailsFormProps {
     id: number
@@ -60,7 +61,7 @@ export const RoomDetailsFormComponent = ({id, image, name, bedType, floor, facil
     }
 
     return (
-        <FormContainer>
+        <FormContainer type="room">
             <form onSubmit={handleSubmit}>
                 <FormField>
                     <Label>Room name</Label>
@@ -129,9 +130,9 @@ export const RoomDetailsFormComponent = ({id, image, name, bedType, floor, facil
                     </div>
                 </TwoFields>
                 <Buttons>
-                    <Icon title="go back" onClick={changePage}>
-                        <img src={backGif} width={40} />
-                    </Icon>
+                    <CursorPointer onClick={changePage}>
+                        <img src={backGif} width={40}  />
+                    </CursorPointer>
                     <Button type="submit"><GiSave size={20} />Save Changes</Button>
                 </Buttons>
             </form>

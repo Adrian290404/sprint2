@@ -1,4 +1,4 @@
-import { FormContainer, FormField, Label, Input, Buttons, Icon, Button } from '../../common/styles/detailsFormStyles';
+import { FormContainer, FormField, Label, Input, Buttons, Button } from '../../common/styles/detailsFormStyles';
 import { useState, ChangeEvent, FormEvent } from 'react';
 import { TiArrowBackOutline } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';

@@ -102,6 +102,7 @@ export const TopMenuComponent = ({ onToggleSidebar, onLogout, toggleTheme }: Top
     };
 
     const handleLogout = () => {
+        theme.mode === "dark" && toggleTheme();
         dispatch(logout());
     };
 

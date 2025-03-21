@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchReviews, updateReview } from './reviewsThunks';
 import { Review } from '../../interfaces/review';
+import { fetchReviews, fetchReview, fetchRandomReviewsThunk, createReviewThunk, updateReviewThunk } from './reviewsThunks';
 
 interface ReviewsState {
     reviews: Review[];
@@ -8,32 +8,36 @@ interface ReviewsState {
 }
 
 const initialState: ReviewsState = {
-    reviews: JSON.parse(localStorage.getItem("reviews") || "[]"),
-    review: null
+    reviews: [],
+    review: null,
 };
 
 export const reviewsSlice = createSlice({
     name: 'reviews',
     initialState,
     reducers: {
-        saveReviewsToLocalStorage(state) {
-            localStorage.setItem("reviews", JSON.stringify(state.reviews));
-        }
     },
     extraReducers: (builder) => {
         builder
             .addCase(fetchReviews.fulfilled, (state, action: PayloadAction<Review[]>) => {
                 state.reviews = action.payload;
-                localStorage.setItem("reviews", JSON.stringify(state.reviews));
             })
-            .addCase(updateReview.fulfilled, (state, action: PayloadAction<Review>) => {
-                const index = state.reviews.findIndex((review) => review.order_id === action.payload.order_id);
+            .addCase(fetchReview.fulfilled, (state, action: PayloadAction<Review>) => {
+                state.review = action.payload;
+            })
+            .addCase(fetchRandomReviewsThunk.fulfilled, (state, action: PayloadAction<Review[]>) => {
+                state.reviews = action.payload;
+            })
+            .addCase(createReviewThunk.fulfilled, (state, action: PayloadAction<Review>) => {
+                state.reviews.push(action.payload);
+            })
+            .addCase(updateReviewThunk.fulfilled, (state, action: PayloadAction<Review>) => {
+                const index = state.reviews.findIndex(review => review.order_id === action.payload.order_id);
                 if (index !== -1) {
                     state.reviews[index] = action.payload;
-                    localStorage.setItem("reviews", JSON.stringify(state.reviews));
                 }
             });
     }
 });
 
-export const { saveReviewsToLocalStorage } = reviewsSlice.actions;
+export default reviewsSlice.reducer;

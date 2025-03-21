@@ -10,47 +10,48 @@ import { RootState, AppDispatch } from "../../../features/store";
 import { Review } from "../../../interfaces/review";
 
 interface ReviewsListProps {
-    currentPage: number;
+  currentPage: number;
 }
 
 export const ReviewsList: React.FC<ReviewsListProps> = ({ currentPage }) => {
-    const dispatch = useDispatch<AppDispatch>();
-    const reviews = useSelector((state: RootState) => state.reviews.reviews);
-    const { selectedMenu, selectedOption } = useSelector((state: RootState) => state.filter);
+  const dispatch = useDispatch<AppDispatch>();
 
-    const filteredReviews = filterReviews(reviews, selectedMenu, selectedOption);
-    const paginatedReviews = paginateData(
-        filteredReviews.filter((review): review is Review => review !== undefined && review !== null),
-        10
-    )[currentPage - 1] || [];
+  const reviews = useSelector((state: RootState) => state.reviews.reviews);
+  const { selectedMenu, selectedOption } = useSelector((state: RootState) => state.filter);
 
-    useEffect(() => {
-        if (reviews.length === 0) {
-        dispatch(fetchReviews());
-        }
-    }, [dispatch, reviews.length]);
+  const filteredReviews = filterReviews(reviews, selectedMenu, selectedOption);
+  const validReviews = filteredReviews.filter(
+    (review): review is Review => review !== undefined && review !== null
+  );
+  const paginatedReviews = paginateData(validReviews, 10)[currentPage - 1] || [];
 
-    return (
-        <>
-            {paginatedReviews.map((review: Review) => (
-                <Row key={review.order_id} className="body">
-                <Td top>#{review.order_id}</Td>
-                <Td top>{formatDate(review.date)}</Td>
-                <Td top>{review.customer}</Td>
-                <Td>
-                    <Rating>{showRating(review.rating)}</Rating>
-                    {review.review}
-                </Td>
-                <Td top>
-                    {review.action === "pending" && (
-                    <>
-                        <Action publish>Publish</Action>
-                        <Action archive>Archive</Action>
-                    </>
-                    )}
-                </Td>
-                </Row>
-            ))}
-        </>
-    );
+  useEffect(() => {
+    if (reviews.length === 0) {
+      dispatch(fetchReviews());
+    }
+  }, [dispatch, reviews.length]);
+
+  return (
+    <>
+      {paginatedReviews.map((review: Review) => (
+        <Row key={review.order_id} className="body">
+          <Td top>#{review.order_id}</Td>
+          <Td top>{formatDate(review.date)}</Td>
+          <Td top>{review.customer}</Td>
+          <Td>
+            <Rating>{showRating(review.rating)}</Rating>
+            {review.review}
+          </Td>
+          <Td top>
+            {review.action === "pending" && (
+              <>
+                <Action publish>Publish</Action>
+                <Action archive>Archive</Action>
+              </>
+            )}
+          </Td>
+        </Row>
+      ))}
+    </>
+  );
 };

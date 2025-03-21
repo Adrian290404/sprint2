@@ -44,7 +44,10 @@ export const Row = styled.tr<RowProps>`
         border-top: 2px solid ${({ theme }) => theme.pageContent};;
     }
     &:hover{
-        ${(props) => (props.th ? "" : "background-color:rgb(226, 226, 226); cursor: pointer;")}
+        ${(props) => props.th ? "" : `
+            background-color: ${props.theme.recordHoverBg}; 
+            cursor: pointer;
+        `}
     }
 `;
 export const Th = styled.th`

@@ -29,6 +29,9 @@ export const PageNavigation = styled.div`
         transform: scale(1.1);
         transition: 0.1s ease-in-out;
     }
+    @media (max-height: 800px) {
+        margin-bottom: 0.5em;
+    }
 `;
 export const Marker = styled.div<MarkerProps>`
     position: absolute;
@@ -39,6 +42,10 @@ export const Marker = styled.div<MarkerProps>`
     border-radius: 2em;
     padding: .3em;
     align-items: center;
+    @media (max-height: 800px) {
+        padding: 0.2em;
+        height: 60%;
+    }
 `;
 export const Content = styled.div<ContentProps>`
     padding: 1em 0 1em 2em;
@@ -51,6 +58,11 @@ export const Content = styled.div<ContentProps>`
     letter-spacing: 0px;
     &:hover {
         color: ${(props) => (props.active ? props.theme.sideMenuOptionsActiveHover : props.theme.sideMenuOptionsInactiveHover)};
+    }
+    @media (max-height: 800px) {
+        padding: 0.5em 0 0.5em 2em;
+        gap: 0.5em;
+        font-size: 14px;
     }
 `;
 export const UserContainer = styled.div`
